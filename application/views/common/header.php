@@ -152,7 +152,7 @@
 						<a href="javascript:void(0)">Inventory</a>
 						<ul>
 							<li><a href="<?php echo base_url();?>inventory/stock">Stock</a></li>
-							<li><a href="<?php echo base_url();?>inventory/delivery">Delivery</a></li>
+							<li><a href="<?php echo base_url();?>inventory/newdelivery">New Delivery</a></li>
 						</ul>
 					</li>
 					<li>
@@ -162,7 +162,7 @@
 						<a href="javascript:void(0)">Settings</a>
 						<ul>
 							<li>
-								<a class="isParent" href="javascript:void(0)">Goods</a>
+								<a class="isParent" href="javascript:void(0)">Products</a>
 								<ul>
 									<li><a href="<?php echo base_url();?>article">Article</a></li>
 									<li><a href="<?php echo base_url();?>construction">Construction</a></li>
