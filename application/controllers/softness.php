@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Raw extends CI_Controller
+class Softness extends CI_Controller
 {
 	function __construct()
 	{
@@ -11,7 +11,7 @@ class Raw extends CI_Controller
 		$this->load->library('tank_auth_groups','','tank_auth');
 		$this->load->library('breadcrumbs');
 		$this->lang->load('tank_auth');
-		$this->load->model('raw_model');
+		$this->load->model('softness_model');
 	}
 
 	function index()
@@ -20,7 +20,7 @@ class Raw extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'Raw Materials';
+		$data['title'] = 'Softness';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -41,12 +41,12 @@ class Raw extends CI_Controller
 			'js/pages/ebro_notifications.js'));
 
 		$this->breadcrumbs->push('Settings', '#');
-		$this->breadcrumbs->push('Raw Materials', '#');
+		$this->breadcrumbs->push('Softness', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
 
 		$this->load->view('common/header', $data);
-		$this->load->view('raw/index', $data);
+		$this->load->view('softness/index', $data);
 		$this->load->view('common/footer', $data);
 	}
 
@@ -56,22 +56,22 @@ class Raw extends CI_Controller
 			redirect('');
 		}
 
-		if ( isset($_POST['raw_name']) ) {
+		if ( isset($_POST['softness_name']) ) {
 			$data['data'] = array(
-				'raw_name'			=> $this->input->post('raw_name'),
+				'softness_name'			=> $this->input->post('softness_name'),
 				'editor_id' 					=> $this->session->userdata('user_id')
 			);
 
-			$this->raw_model->add_raw($data['data']);
-			$this->session->set_flashdata('msg', 'Raw <b>\''.$this->input->post('raw_name').'\'</b> added successfully!');
+			$this->softness_model->add_softness($data['data']);
+			$this->session->set_flashdata('msg', 'Softness <b>\''.$this->input->post('softness_name').'\'</b> added successfully!');
 			$this->session->set_flashdata('msg_type', 'success');
 		}
 		else {
-			$this->session->set_flashdata('msg', 'Invalid raw input!');
+			$this->session->set_flashdata('msg', 'Invalid softness input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/raw');
+		redirect('/softness');
 	}
 
 	function edit()
@@ -80,21 +80,21 @@ class Raw extends CI_Controller
 			redirect('');
 		}
 
-		if (isset($_POST['raw_id']) && isset($_POST['raw_name']) ) {
+		if (isset($_POST['softness_id']) && isset($_POST['softness_name']) ) {
 			$data['data'] = array(
-				'raw_name'			=> $this->input->post('raw_name'),		
+				'softness_name'			=> $this->input->post('softness_name'),		
 				'editor_id' 					=> $this->session->userdata('user_id')
 			);
 
-			$this->raw_model->edit_raw($this->input->post('raw_id'), $data['data']);
-			$this->session->set_flashdata('msg', 'Raw <b>\''.$this->input->post('raw_name').'\'</b> updated successfully!');
+			$this->softness_model->edit_softness($this->input->post('softness_id'), $data['data']);
+			$this->session->set_flashdata('msg', 'Softness <b>\''.$this->input->post('softness_name').'\'</b> updated successfully!');
 			$this->session->set_flashdata('msg_type', 'success');
 		}
 		else {
-			$this->session->set_flashdata('msg', 'Invalid raw input!');
+			$this->session->set_flashdata('msg', 'Invalid softness input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/raw');
+		redirect('/softness');
 	}
 
 	function delete($id)
@@ -104,21 +104,21 @@ class Raw extends CI_Controller
 		}
 
 		if ( isset($id) ) {
-			if($this->raw_model->delete_raw($id)) {
-				$this->session->set_flashdata('msg', 'Raw deleted successfully!');
+			if($this->softness_model->delete_softness($id)) {
+				$this->session->set_flashdata('msg', 'Softness deleted successfully!');
 				$this->session->set_flashdata('msg_type', 'success');
 			}
 			else {
-				$this->session->set_flashdata('msg', 'Invalid raw delete input!');
+				$this->session->set_flashdata('msg', 'Invalid softness delete input!');
 				$this->session->set_flashdata('msg_type', 'warning');
 			}						
 		}
 		else {
-			$this->session->set_flashdata('msg', 'Invalid raw delete input!');
+			$this->session->set_flashdata('msg', 'Invalid softness delete input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/raw');
+		redirect('/softness');
 	}
 
 	function data()
@@ -127,6 +127,6 @@ class Raw extends CI_Controller
 			redirect('');
 		}
 
-		print_r($this->raw_model->get_raw_data());
+		print_r($this->softness_model->get_softness_data());
 	}
 }

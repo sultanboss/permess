@@ -1008,7 +1008,7 @@
 	}
 
 	.modal-dialog {
-	    padding-top: 130px;
+	    padding-top: 60px;
 	}
 
 	.stickyNote-queue {
@@ -1119,6 +1119,34 @@
 
 	.report-tab {
 		padding-top: 40px;
+	}
+
+	.color-red {
+		color: #D04533 !important;
+	}
+
+	.color-green {
+		color: #329F42 !important;
+	}
+
+	.color-orange {
+		color: #FAA733 !important;
+	}
+
+	.color-blue {
+		color: #50BCDC !important;
+	}
+
+	.pad5 {
+		line-height: 25px;
+	}
+
+	.double-input {
+		padding-top: 10px;
+	}
+
+	.double-text {
+		height: 95px !important;
 	}
 
 

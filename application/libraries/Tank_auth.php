@@ -957,7 +957,6 @@ class Tank_auth
 	    if( $country == '') $country = $code;
 	    return $country;
     }
-
 }
 
 /* End of file Tank_auth.php */

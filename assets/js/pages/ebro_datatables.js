@@ -222,22 +222,133 @@
                 });
             }
 
-            if($('#raw_table').length) {
-                $('#raw_table').dataTable({
+            if($('#softness_table').length) {
+                $('#softness_table').dataTable({
                     "sPaginationType": "bootstrap_full",
                     "bSort": true,
                     "iDisplayLength": 25,
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": base_url + "raw/data",
+                    "sAjaxSource": base_url + "softness/data",
                     "sServerMethod": "POST",
                     "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
                     "fnInitComplete": function(oSettings, json) {
                         $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
                         
-                        $('#raw_table').delegate('.simple_edit', 'click', function() {
-                            $("#edit_raw_name").val($(this).attr('data-name'));
+                        $('#softness_table').delegate('.simple_edit', 'click', function() {
+                            $("#edit_softness_name").val($(this).attr('data-name'));
+                            $("#edit_softness_id").val($(this).attr('data-id'));
+                        });
+
+                        $('#softness_table').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
+                    }
+                });
+            }
+
+
+            if($('#issue_table').length) {
+                $('#issue_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "issue/data",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                        
+                        $('#issue_table').delegate('.simple_edit', 'click', function() {
+                            $("#edit_issue_name").val($(this).attr('data-name'));
+                            $("#edit_issue_id").val($(this).attr('data-id'));
+                        });
+
+                        $('#issue_table').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
+                    }
+                });
+            }
+
+            if($('#price_table').length) {
+                $('#price_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "price/data",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                        
+                        $('#price_table').delegate('.simple_edit', 'click', function() {
+                            $("#edit_price_id").val($(this).attr('data-id'));
+                            $("#edit_article_name").val($(this).attr('data-article'));
+                            $("#edit_construction_name").val($(this).attr('data-construction'));
+                            $("#edit_width_name").val($(this).attr('data-width'));
+                            $("#edit_softness_name").val($(this).attr('data-softness'));
+                            $("#edit_color_name").val($(this).attr('data-color'));
+                            $("#edit_source_name").val($(this).attr('data-source'));
+                            $("#edit_price_value").val($(this).attr('data-price'));
+                        });
+
+                        $('#price_table').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
+                    }
+                });
+            }
+
+            // Factory Module
+
+            if($('#raw_table').length) {
+                $('#raw_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "aaSorting": [[0, 'desc']],
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "factory/dataraw",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                        
+                        $('#raw_table').delegate('.raw_edit', 'click', function() {
                             $("#edit_raw_id").val($(this).attr('data-id'));
+                            $("#edit_article_name").val($(this).attr('data-article'));
+                            $("#edit_construction_name").val($(this).attr('data-construction'));
+                            $("#edit_width_name").val($(this).attr('data-width'));
+                            $("#edit_softness_name").val($(this).attr('data-softness'));
+                            $("#edit_color_name").val($(this).attr('data-color'));
+                            $("#edit_source_name").val($(this).attr('data-source'));
+                            $("#edit_raw_received_balance").val($(this).attr('data-received'));
+                            $("#edit_raw_lc_no").val($(this).attr('data-lc'));
+                            $("#edit_raw_pi_no").val($(this).attr('data-pi'));
                         });
 
                         $('#raw_table').delegate('.bootbox_confirm', 'click', function(e) {
@@ -253,35 +364,28 @@
                 });
             }
 
-            // Factory Module
-
-            if($('#import_table').length) {
-                $('#import_table').dataTable({
+            if($('#raw_issue_table').length) {
+                $('#raw_issue_table').dataTable({
                     "sPaginationType": "bootstrap_full",
                     "bSort": true,
-                    "aaSorting": [[0, 'desc']],
                     "iDisplayLength": 25,
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": base_url + "factory/dataimport",
+                    "sAjaxSource": base_url + "factory/datarawissue/" + $('#raw_issue_raw_id').html(),
                     "sServerMethod": "POST",
                     "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
                     "fnInitComplete": function(oSettings, json) {
                         $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
                         
-                        $('#import_table').delegate('.import_edit', 'click', function() {
-                            $("#edit_import_id").val($(this).attr('data-id'));
-                            $("#edit_raw_name").val($(this).attr('data-raw'));
-                            $("#current_raw_id").val($(this).attr('data-raw'));
-                            $("#edit_import_date").val($(this).attr('data-date'));
-                            $("#edit_import_received_balance").val($(this).attr('data-recev'));
-                            $("#edit_import_invoice_challan").val($(this).attr('data-challan'));
-                            $("#edit_import_lc_no").val($(this).attr('data-lc'));
-                            $("#edit_import_issue_to").val($(this).attr('data-issue'));
-                            $("#edit_import_inv_req_challan").val($(this).attr('data-irc'));
+                        $('#raw_issue_table').delegate('.raw_edit_issue', 'click', function() {
+                            $("#edit_issue_id").val($(this).attr('data-id'));
+                            $("#edit_issue_date").val($(this).attr('data-date'));
+                            $("#edit_issue_quantity").val($(this).attr('data-quantity'));
+                            $("#edit_issue_type").val($(this).attr('data-type'));
+                            $("#edit_total_finish_goods").val($(this).attr('data-total'));
                         });
 
-                        $('#import_table').delegate('.bootbox_confirm', 'click', function(e) {
+                        $('#raw_issue_table').delegate('.bootbox_confirm', 'click', function(e) {
                             e.preventDefault();
                             var link = $(this).attr("href");     
                             bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
@@ -290,10 +394,54 @@
                                 }
                             }); 
                         });
+                    },
+                    "fnFooterCallback": function ( nRow, aaData, iStart, iEnd, aiDisplay ) {
+                        var quantity = 0;
+                        for ( var i=0 ; i<aaData.length ; i++ )
+                        {
+                            quantity += aaData[i][3]*1;
+                        }
+
+                        var total = 0;
+                        for ( var i=iStart ; i<iEnd ; i++ )
+                        {
+                            total += aaData[ aiDisplay[i] ][4]*1;
+                        }
+
+                        var waste = 0;
+                        for ( var i=iStart ; i<iEnd ; i++ )
+                        {
+                            waste += aaData[ aiDisplay[i] ][5]*1;
+                        }
+
+                        var nCells = nRow.getElementsByTagName('th');
+                        nCells[3].innerHTML = parseInt(quantity);
+                        nCells[4].innerHTML = parseInt(total);
+                        nCells[5].innerHTML = parseInt(waste);
                     }
                 });
             }
 
+
+            // Inventory Module
+
+            if($('#stock_table').length) {
+                $('#stock_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "aaSorting": [[0, 'asc']],
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "aoColumns": [ null, null, null, null, null, null, null, { "bSearchable": false } ],
+                    "sAjaxSource": base_url + "inventory/datastock",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                    }
+                });
+            }
 
             //Admin Module
 

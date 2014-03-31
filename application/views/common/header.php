@@ -37,7 +37,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Roboto:300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 			
 	</head>
-	<body class="sidebar_narrow">
+	<body class="sidebar_narrow full_width">
 		<div id="wrapper_all">
 			<header id="top_header">
 				<div class="container">
@@ -145,9 +145,14 @@
 					<li>
 						<a href="javascript:void(0)">Factory</a>
 						<ul>
-							<li><a href="<?php echo base_url();?>factory/import">Import</a></li>
-							<li><a href="<?php echo base_url();?>factory/stock">Stock</a></li>
-							<li><a href="<?php echo base_url();?>factory/wastage">Wastage</a></li>
+							<li><a href="<?php echo base_url();?>factory/raw">Import</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:void(0)">Inventory</a>
+						<ul>
+							<li><a href="<?php echo base_url();?>inventory/stock">Stock</a></li>
+							<li><a href="<?php echo base_url();?>inventory/delivery">Delivery</a></li>
 						</ul>
 					</li>
 					<li>
@@ -157,16 +162,18 @@
 						<a href="javascript:void(0)">Settings</a>
 						<ul>
 							<li>
-								<a class="isParent" href="javascript:void(0)">Finished Goods</a>
+								<a class="isParent" href="javascript:void(0)">Goods</a>
 								<ul>
 									<li><a href="<?php echo base_url();?>article">Article</a></li>
 									<li><a href="<?php echo base_url();?>construction">Construction</a></li>
-									<li><a href="<?php echo base_url();?>color">Color</a></li>
 									<li><a href="<?php echo base_url();?>width">Width</a></li>
+									<li><a href="<?php echo base_url();?>softness">Softness</a></li>
+									<li><a href="<?php echo base_url();?>color">Color</a></li>
 									<li><a href="<?php echo base_url();?>source">Source</a></li>
 								</ul>
 							</li>
-							<li><a href="<?php echo base_url();?>raw">Raw Materials</a></li>
+							<li><a href="<?php echo base_url();?>price">Price</a></li>
+							<li><a href="<?php echo base_url();?>issue">Issue Type</a></li>
 						</ul>
 					</li>
 					<li>
