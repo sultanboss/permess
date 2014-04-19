@@ -63,14 +63,14 @@ $password = array(
 									<div class="panel_controls">
 										<h4 class="heading_a">Add New User:</h4>
 										<div class="form_sep">
-											<div class="col-sm-6 start">
+											<div class="col-sm-4 start">
 												<label for="group_name" class="req"><?php echo $this->lang->line('auth_fname'); ?></label>
 												<?php echo form_input($fname); ?>
 												<div class="error">
 													<?php echo form_error($fname['name']); ?>
 												</div>
 											</div>
-											<div class="col-sm-6 end">
+											<div class="col-sm-4 end">
 												<label for="group_name" class="req"><?php echo $this->lang->line('auth_lname'); ?></label>
 												<?php echo form_input($lname); ?>
 												<div class="error">
@@ -80,14 +80,14 @@ $password = array(
 										</div>
 
 										<div class="form_sep">
-											<div class="col-sm-6 start">
+											<div class="col-sm-4 start">
 												<label for="group_name" class="req"><?php echo $this->lang->line('auth_email'); ?></label>
 												<?php echo form_input($email); ?>
 												<div class="error">
 													<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
 												</div>
 											</div>
-											<div class="col-sm-6 end">
+											<div class="col-sm-4 end">
 												<label for="group_name" class="req"><?php echo $this->lang->line('auth_password'); ?></label>
 												<?php echo form_input($password); ?>
 												<div class="error">
@@ -96,7 +96,9 @@ $password = array(
 											</div>
 										</div>
 										<div class="form_sep text-right">
-											<button class="btn btn-success btn-sm" type="submit"><span class="icon-plus"></span> Add User</button>
+											<div class="col-sm-8 end">
+												<button class="btn btn-success btn-sm" type="submit"><span class="icon-plus"></span> Add New User</button>
+											</div>
 										</div>
 									</div>
 								</div>

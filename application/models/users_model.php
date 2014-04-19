@@ -29,22 +29,36 @@ class Users_model extends CI_Model {
 
     function delete_users($id) 
     {
+        $this->db->select('group_id');
         $this->db->where('id',$id);
-        $this->db->delete('users');
-        if($this->db->affected_rows() > 0)
-            return true;
+        $query = $this->db->get('users');
+        $res = $query->result_array(); 
+
+        if($res[0]['group_id'] != $this->config->item('admin_group', 'tank_auth'))
+        {
+            $this->db->where('id',$id);
+            $this->db->delete('users');
+            if($this->db->affected_rows() > 0)
+                return true;
+        }
         return false;
     }
 
     function get_all_groups() 
     {
+        if (!$this->tank_auth->is_admin()) {
+            $this->db->where('group_id !=', $this->config->item('admin_group', 'tank_auth')); 
+        }  
         $query = $this->db->get('user_groups');
         return $query->result_array();        
     }
 
     function get_data() 
     {
-        $this->datatables->select('id, email, fname, lname, group_id, created');   
+        $this->datatables->select('id, email, fname, lname, group_id, created'); 
+        if (!$this->tank_auth->is_admin()) {
+            $this->datatables->where('group_id !=', $this->config->item('admin_group', 'tank_auth')); 
+        }  
         $this->datatables->from('users');       
 
         $this->datatables->edit_column('created', '<a class="user_edit" data-id="$1" data-email="$2" data-fname="$3" data-lname="$4" data-group="$5" data-toggle="modal" href="#edit_users"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a class=" bootbox_confirm" href="'.base_url().'user/delete/$1"><span class="icon-trash"></span></a>', 'id, email, fname, lname, group_id');

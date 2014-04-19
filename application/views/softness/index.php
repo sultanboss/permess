@@ -35,7 +35,7 @@
 											</div>
 										</div>
 									</div>
-									<table id="softness_table" class="table table-hover">
+									<table id="softness_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
 												<th width="10%">ID</th>

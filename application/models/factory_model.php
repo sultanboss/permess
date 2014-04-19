@@ -107,6 +107,11 @@ class Factory_model extends CI_Model {
             $res->aaData[$key][13] = str_replace('$a', $res->aaData[$key][19], $res->aaData[$key][13]);
             $res->aaData[$key][13] = str_replace('$b', $res->aaData[$key][11], $res->aaData[$key][13]);
 
+            if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) 
+            {
+                 $res->aaData[$key][13] = '<a href="'.base_url().'factory/rawissuedto/'.$res->aaData[$key][0].'" title="issued to"><span class="glyphicon glyphicon-th-large color-x"></span></a>';
+            }
+
             $total_issued = $this->factory_model->count_total_issued($res->aaData[$key][0]);
             if($total_issued == 0)
                  $res->aaData[$key][13] = str_replace('color-x', 'color-red', $res->aaData[$key][13]);
@@ -191,6 +196,49 @@ class Factory_model extends CI_Model {
     {
         $query = $this->db->get('issue_type');
         return $query->result_array();        
+    }
+
+    function get_all_description() 
+    {
+        $query = $this->db->get('description');
+        return $query->result_array();        
+    }
+
+
+    function get_delivery_user($user) 
+    {
+        $query = $this->db->get_where('users', array('id' => $user), 1);
+        return $query->row()->fname.' '.$query->row()->lname;
+    }
+
+    function get_article($id) 
+    {
+        $query = $this->db->get_where('article', array('article_id' => $id), 1);
+        return $query->row()->article_name;       
+    }
+
+    function get_width($id) 
+    {
+        $query = $this->db->get_where('width', array('width_id' => $id), 1);
+        return $query->row()->width_name;        
+    }
+
+    function get_softness($id) 
+    {
+        $query = $this->db->get_where('softness', array('softness_id' => $id), 1);
+        return $query->row()->softness_name;        
+    }
+
+    function get_color($id) 
+    {
+        $query = $this->db->get_where('color', array('color_id' => $id), 1);
+        return $query->row()->color_name;        
+    }
+
+    function get_description($id) 
+    {
+        $query = $this->db->get_where('description', array('description_id' => $id), 1);
+        return $query->row()->description_name;         
     }
 
 }

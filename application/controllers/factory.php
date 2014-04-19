@@ -14,13 +14,19 @@ class Factory extends CI_Controller
 		$this->load->model('factory_model');
 	}
 
-	function raw()
+	function import()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
 			redirect('');
 		}
 
-		$data['title'] = 'Raw Materials';
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		$data['title'] = 'Import - Factory';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -43,7 +49,7 @@ class Factory extends CI_Controller
 			'js/pages/ebro_notifications.js'));
 
 		$this->breadcrumbs->push('Factory', '#');
-		$this->breadcrumbs->push('Raw Materials', '#');
+		$this->breadcrumbs->push('Import', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
 		$data['articles'] = $this->factory_model->get_all_article();
@@ -61,6 +67,12 @@ class Factory extends CI_Controller
 	function addraw()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -88,12 +100,18 @@ class Factory extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/factory/raw');
+		redirect('/factory/import');
 	}
 
 	function editraw()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -120,12 +138,18 @@ class Factory extends CI_Controller
 			$this->session->set_flashdata('msg', 'Invalid raw input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/factory/raw');
+		redirect('/factory/import');
 	}
 
 	function deleteraw($id)
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -144,12 +168,18 @@ class Factory extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/factory/raw');
+		redirect('/factory/import');
 	}
 
 	function dataraw()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -162,7 +192,21 @@ class Factory extends CI_Controller
 			redirect('');
 		}
 
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		if ( isset($id) ) {
+
+			$data['raw'] = $this->factory_model->get_raw_by_id($id);
+			if(empty($data['raw'])) {
+				$this->session->set_flashdata('msg', 'Invalid raw input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+				redirect('/factory/import');
+			}
+			
 			$data['title'] = 'Raw Issued To';
 
 			$data['css'] = $this->tank_auth->load_admin_css(array(
@@ -186,11 +230,11 @@ class Factory extends CI_Controller
 				'js/pages/ebro_notifications.js'));
 
 			$this->breadcrumbs->push('Factory', '#');
-			$this->breadcrumbs->push('Raw Materials', '../../factory/raw');
+			$this->breadcrumbs->push('Import', '../../factory/import');
 			$this->breadcrumbs->push('Issued To', '#');
 
 			$data['breadcrumbs'] = $this->breadcrumbs->show();
-			$data['raw'] = $this->factory_model->get_raw_by_id($id);
+			
 			$data['total_issued'] = $this->factory_model->count_total_issued($id);
 			$data['issue_types'] = $this->factory_model->get_all_issue_type();
 
@@ -202,13 +246,19 @@ class Factory extends CI_Controller
 		{
 			$this->session->set_flashdata('msg', 'Invalid raw input!');
 			$this->session->set_flashdata('msg_type', 'warning');
-			redirect('/factory/raw');
+			redirect('/factory/import');
 		}		
 	}
 
 	function addrawissuedto($id)
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -240,6 +290,12 @@ class Factory extends CI_Controller
 			redirect('');
 		}
 
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		if ( isset($_POST['edit_issue_date']) && isset($_POST['edit_issue_quantity']) ) {
 			$data['data'] = array(
 				'issue_date'			=> $this->input->post('edit_issue_date'),
@@ -267,6 +323,12 @@ class Factory extends CI_Controller
 			redirect('');
 		}
 
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		if ( isset($id) ) {
 			if($this->factory_model->delete_raw_issue($id)) {
 				$this->session->set_flashdata('msg', 'Issue deleted successfully!');
@@ -288,6 +350,12 @@ class Factory extends CI_Controller
 	function datarawissue($id)
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 

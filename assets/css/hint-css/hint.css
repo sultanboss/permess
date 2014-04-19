@@ -61,9 +61,10 @@
     background: #383838;
     color: white;
     padding: 8px 10px;
-    font-size: 12px;
-    line-height: 12px;
-    white-space: nowrap; }
+    font-size: 10px;
+    line-height: 10px;
+    white-space: nowrap; 
+  }
 
 /**
  * source: hint-position.scss
@@ -97,7 +98,7 @@
 .hint--top:before {
   margin-bottom: -12px; }
 .hint--top:after {
-  margin-left: -18px; }
+  margin-left: -130%; }
 .hint--top:before, .hint--top:after {
   bottom: 100%;
   left: 50%; }

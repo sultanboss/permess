@@ -10,7 +10,16 @@
 										<h4 class="heading_a">Raw Materials:</h4>
 										<div class="row">											
 											<div class="col-sm-12">
-												<button data-toggle="modal" href="#add_raw_type" class="btn btn-success btn-sm right"><span class="icon-plus"></span> Add Raw Material</button>												
+												<?php
+												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+            									{
+            									?>
+												<button data-toggle="modal" href="#add_raw_type" class="btn btn-success btn-sm right"><span class="icon-plus"></span> Add Raw Material</button>				
+												<?php
+												}
+												else
+													echo "&nbsp;";
+												?>								
 												<div class="modal fade" id="add_raw_type">
 													<div class="modal-dialog">
 														<div class="modal-content">
@@ -133,7 +142,7 @@
 											</div>
 										</div>
 									</div>
-									<table id="raw_table" class="table table-hover">
+									<table id="raw_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
 												<th width="">ID</th>

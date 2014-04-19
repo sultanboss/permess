@@ -20,11 +20,15 @@ class Groups extends CI_Controller
 			redirect('');
 		}
 
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		$data['title'] = 'Groups';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
-			'js/lib/select2/select2.css', 
-			'js/lib/select2/ebro_select2.css', 
 			'js/lib/dataTables/media/DT_bootstrap.css', 
 			'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
 			'js/lib/Sticky/sticky.css'));
@@ -33,7 +37,6 @@ class Groups extends CI_Controller
 			'js/lib/iCheck/jquery.icheck.min.js', 
 			'js/lib/parsley/parsley.min.js', 
 			'js/pages/ebro_form_validate.js', 
-			'js/lib/select2/select2.min.js', 
 			'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
 			'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
 			'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
@@ -59,6 +62,12 @@ class Groups extends CI_Controller
 			redirect('');
 		}
 
+		if(!$this->tank_auth->is_admin()) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		if (isset($_POST['group_name']) ) {
 			$data['data'] = array(
 				'group_name'			=> $this->input->post('group_name')
@@ -72,12 +81,18 @@ class Groups extends CI_Controller
 			$this->session->set_flashdata('msg', 'Invalid group input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/groups');
+		redirect('/admin/groups');
 	}
 
 	function edit()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin()) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -94,12 +109,18 @@ class Groups extends CI_Controller
 			$this->session->set_flashdata('msg', 'Invalid group input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/groups');
+		redirect('/admin/groups');
 	}
 
 	function delete($id)
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin()) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -118,12 +139,18 @@ class Groups extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/groups');
+		redirect('/admin/groups');
 	}
 
 	function data()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 

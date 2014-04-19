@@ -7,14 +7,14 @@
 							<div class="col-sm-12">
 								<div class="panel panel-default">
 									<div class="panel_controls">
-										<h4 class="heading_a">Groups:</h4>
+										<h4 class="heading_a">Users:</h4>
 										<div class="row">											
 											<div class="col-sm-12">
 												<a href="<?php echo base_url(); ?>auth/register" class="btn btn-success btn-sm right"><span class="icon-plus"></span> Add User</a>												
 											</div>
 										</div>
 									</div>
-									<table id="users_table" class="table table-hover">
+									<table id="users_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
 												<th width="10%">User ID</th>
@@ -48,6 +48,10 @@
 													<div class="form_sep">
 														<label for="edit_email" class="req">Email</label>
 														<input id="edit_email" name="email" class="form-control parsley-validated" data-required="true" type="text">
+													</div>														
+													<div class="form_sep">
+														<label for="password" class="unreq">Password <small>(Set only if you want to change password, otherwise leave it empty)</small></label>
+														<input id="password" name="password" data-minlength="8" class="form-control parsley-validated" type="password">
 													</div>
 													<div class="form_sep">
 														<label for="edit_group" class="req">Group</label>

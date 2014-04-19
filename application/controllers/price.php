@@ -21,7 +21,13 @@ class Price extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'Price';
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		$data['title'] = 'Price - Settings';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -42,16 +48,13 @@ class Price extends CI_Controller
 			'js/pages/ebro_notifications.js'));
 
 		$this->breadcrumbs->push('Settings', '#');
-		$this->breadcrumbs->push('Finished Goods', '#');
 		$this->breadcrumbs->push('Prices', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
 		$data['articles'] = $this->factory_model->get_all_article();
-		$data['constructions'] = $this->factory_model->get_all_construction();
 		$data['widths'] = $this->factory_model->get_all_width();
 		$data['softnesses'] = $this->factory_model->get_all_softness();
 		$data['colors'] = $this->factory_model->get_all_color();
-		$data['sources'] = $this->factory_model->get_all_source();
 
 		$this->load->view('common/header', $data);
 		$this->load->view('price/index', $data);
@@ -64,14 +67,18 @@ class Price extends CI_Controller
 			redirect('');
 		}
 
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		if ( isset($_POST['buy_price']) && isset($_POST['sell_price']) ) {
 			$data['data'] = array(
 				'article_id'			=> $this->input->post('article_name'),
-				'construction_id'		=> $this->input->post('construction_name'),
 				'width_id'				=> $this->input->post('width_name'),
 				'softness_id'			=> $this->input->post('softness_name'),
 				'color_id'				=> $this->input->post('color_name'),
-				'source_id'				=> $this->input->post('source_name'),
 				'buy_price'				=> $this->input->post('buy_price'),
 				'sell_price'			=> $this->input->post('sell_price'),
 				'editor_id' 			=> $this->session->userdata('user_id')
@@ -86,7 +93,7 @@ class Price extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/price');
+		redirect('/settings/price');
 	}
 
 	function edit()
@@ -95,16 +102,20 @@ class Price extends CI_Controller
 			redirect('');
 		}
 
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		if (isset($_POST['edit_price_id']) && isset($_POST['edit_buy_price']) && isset($_POST['edit_sell_price'])  ) {
 			$data['data'] = array(
 				'article_id'			=> $this->input->post('edit_article_name'),
-				'construction_id'		=> $this->input->post('edit_construction_name'),
 				'width_id'				=> $this->input->post('edit_width_name'),
 				'softness_id'			=> $this->input->post('edit_softness_name'),
 				'color_id'				=> $this->input->post('edit_color_name'),
-				'source_id'				=> $this->input->post('edit_source_name'),
-				'edit_buy_price'		=> $this->input->post('edit_buy_price'),
-				'edit_sell_price'		=> $this->input->post('edit_sell_price'),	
+				'buy_price'				=> $this->input->post('edit_buy_price'),
+				'sell_price'			=> $this->input->post('edit_sell_price'),	
 				'editor_id' 			=> $this->session->userdata('user_id')
 			);
 
@@ -116,12 +127,18 @@ class Price extends CI_Controller
 			$this->session->set_flashdata('msg', 'Invalid price input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/price');
+		redirect('/settings/price');
 	}
 
 	function delete($id)
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -140,12 +157,18 @@ class Price extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/price');
+		redirect('/settings/price');
 	}
 
 	function data()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 

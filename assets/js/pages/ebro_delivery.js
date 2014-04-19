@@ -1,0 +1,211 @@
+    
+    $(function() {
+        ebro_custom_function.delivery();  
+    })
+
+    ebro_custom_function = {
+        
+        delivery: function() {
+
+            $('#btn_product_add').on('click', function(e){
+                e.preventDefault();
+                $('#delivery_product_table > tbody').append('<tr>' + $('#eq_add_product_form tr').html() + '</tr>');
+            });
+
+            $('#delivery_product_table').on('click','tr .eq_add_product_form_remove',function(e){
+                e.preventDefault();
+                var result = confirm("Are you sure?");
+                if (result == true) {
+                    $(this).closest('tr').remove();
+                }              
+            });
+
+            $('#delivery_product_table').on('change keyup paste mouseup','tr .order_quantity',function(e){
+                e.preventDefault();
+                var qty = $(this).closest('tr').find('input.order_quantity').val();
+                var rate = $(this).closest('tr').find('input.unit_price').val();
+                $(this).closest('tr').find('input.net_price').val(parseFloat(Math.round(qty*rate * 100) / 100).toFixed(2));
+
+                var over = $(this).closest('tr').find('input.over_invoice_unit_price').val();
+                $(this).closest('tr').find('input.over_invoice_net_price').val(parseFloat(Math.round(qty*over * 100) / 100).toFixed(2));
+            });
+
+            $('#delivery_product_table').on('change keyup paste mouseup','tr .unit_price',function(e){
+                e.preventDefault();
+                var qty = $(this).closest('tr').find('input.order_quantity').val();
+                var rate = $(this).closest('tr').find('input.unit_price').val();
+                $(this).closest('tr').find('input.net_price').val(parseFloat(Math.round(qty*rate * 100) / 100).toFixed(2));
+            });
+
+            $('#delivery_product_table').on('change keyup paste mouseup','tr .over_invoice_unit_price',function(e){
+                e.preventDefault();
+                var qty = $(this).closest('tr').find('input.order_quantity').val();
+                var over = $(this).closest('tr').find('input.over_invoice_unit_price').val();
+                $(this).closest('tr').find('input.over_invoice_net_price').val(parseFloat(Math.round(qty*over * 100) / 100).toFixed(2));
+            });
+            
+
+            var lcval = $('#delivery_lc_status').find(':selected')[0].value;
+            if(lcval == '1')
+                $('#lc_date_box').show(200);
+            else
+                $('#lc_date_box').hide(200);
+
+
+            $('#delivery_lc_status').change(function(){
+                var value = $(this).find(':selected')[0].value;
+                if(value == '1')
+                    $('#lc_date_box').show(200);
+                else
+                    $('#lc_date_box').hide(200);
+            });
+
+            $('#parsley_addproduct').parsley({
+                errors: {
+                    classHandler: function ( elem, isRadioOrCheckbox ) {
+                        if(isRadioOrCheckbox) {
+                                return $(elem).closest('.form_sep');
+                        }
+                    },
+                    container: function (element, isRadioOrCheckbox) {
+                        if(isRadioOrCheckbox) {
+                            return element.closest('.form_sep');
+                        }
+                    }
+                },
+                listeners: {
+                    onFormSubmit: function ( isFormValid, event, ParsleyForm ) {
+                        if(isFormValid){
+                            $('#btn_product_submit span').removeClass('icon-plus');
+                            $('#btn_product_submit span').addClass('icon-spinner icon-spin icon-large');
+                        
+                            var ar = {};
+                            ar['delivery_date']             = $('#delivery_date').val();
+                            ar['delivery_po_no']            = $('#delivery_po_no').val();
+                            ar['delivery_by']               = $('#delivery_by').val();
+                            ar['delivery_status']           = $('#delivery_status').val();
+                            ar['delivery_doc_status']       = $('#delivery_doc_status').val();
+                            ar['delivery_lc_status']        = $('#delivery_lc_status').val();
+                            if(ar['delivery_lc_status'] == 0)
+                                ar['delivery_lc_date']          = '';
+                            else
+                                ar['delivery_lc_date']          = $('#delivery_lc_date').val();                                
+                            ar['delivery_item_no']          = $('#delivery_item_no').val();
+                            ar['delivery_type']             = $('#delivery_type').val();
+                            ar['delivery_company_name']     = $('#delivery_company_name').val();
+                            ar['delivery_company_address']  = $('#delivery_company_address').val();
+                            ar['delivery_address']          = $('#delivery_address').val();
+                            ar['delivery_contact_person']   = $('#delivery_contact_person').val();
+                            ar['delivery_buyer']            = $('#delivery_buyer').val();
+                            ar['delivery_payment']          = $('#delivery_payment').val();
+                            ar['delivery_style']            = $('#delivery_style').val();
+                            ar['editor_id']                 = $('#editor_id').val();
+
+                            var i = 0;
+                            $('#delivery_product_table > tbody > tr').each(function() {  
+                                ar['article_id_' + i]               = $(this).find('select.article_id').val();
+                                ar['description_id_' + i]           = $(this).find('select.description_id').val();
+                                ar['softness_id_' + i]              = $(this).find('select.softness_id').val();
+                                ar['width_id_' + i]                 = $(this).find('select.width_id').val();
+                                ar['color_id_' + i]                 = $(this).find('select.color_id').val();
+                                ar['order_quantity_' + i]           = $(this).find('input.order_quantity').val();
+                                ar['delivery_quantity_' + i]        = $(this).find('input.delivery_quantity').val();
+                                ar['unit_price_' + i]               = $(this).find('input.unit_price').val();
+                                ar['over_invoice_unit_price_' + i]  = $(this).find('input.over_invoice_unit_price').val();
+                                i++;
+                            });
+
+                            $.ajax({
+                                url: base_url + 'inventory/adddelivery',
+                                data : JSON.stringify(ar),
+                                contentType : 'application/json',
+                                type : 'POST',
+                                success: function (data) {                           
+                                    window.location = base_url + "factory/editdelivery/" + data;
+                                }
+                            });
+
+                            event.preventDefault();
+                        }
+                    }
+                }
+            });
+
+            $('#parsley_editproduct #delivery_date').val( $('#delivery_date_value').html() );
+            if($('#delivery_lc_date_value').html() != '0000-00-00')
+                $('#parsley_editproduct #delivery_lc_date').val( $('#delivery_lc_date_value').html() );
+
+            $('#parsley_editproduct').parsley({
+                errors: {
+                    classHandler: function ( elem, isRadioOrCheckbox ) {
+                        if(isRadioOrCheckbox) {
+                                return $(elem).closest('.form_sep');
+                        }
+                    },
+                    container: function (element, isRadioOrCheckbox) {
+                        if(isRadioOrCheckbox) {
+                            return element.closest('.form_sep');
+                        }
+                    }
+                },
+                listeners: {
+                    onFormSubmit: function ( isFormValid, event, ParsleyForm ) {
+                        if(isFormValid){
+                            $('#btn_product_submit span').removeClass('icon-plus');
+                            $('#btn_product_submit span').addClass('icon-spinner icon-spin icon-large');
+                        
+                            var ar = {};
+                            ar['delivery_id']               = $('#delivery_pi_no').val();
+                            ar['delivery_date']             = $('#delivery_date').val();
+                            ar['delivery_po_no']            = $('#delivery_po_no').val();
+                            ar['delivery_by']               = $('#delivery_by').val();
+                            ar['delivery_status']           = $('#delivery_status').val();
+                            ar['delivery_doc_status']       = $('#delivery_doc_status').val();
+                            ar['delivery_lc_status']        = $('#delivery_lc_status').val();
+                            if(ar['delivery_lc_status'] == 0)
+                                ar['delivery_lc_date']          = '';
+                            else
+                                ar['delivery_lc_date']          = $('#delivery_lc_date').val();  
+                            ar['delivery_item_no']          = $('#delivery_item_no').val();
+                            ar['delivery_type']             = $('#delivery_type').val();
+                            ar['delivery_company_name']     = $('#delivery_company_name').val();
+                            ar['delivery_company_address']  = $('#delivery_company_address').val();
+                            ar['delivery_address']          = $('#delivery_address').val();
+                            ar['delivery_contact_person']   = $('#delivery_contact_person').val();
+                            ar['delivery_buyer']            = $('#delivery_buyer').val();
+                            ar['delivery_payment']          = $('#delivery_payment').val();
+                            ar['delivery_style']            = $('#delivery_style').val();
+                            ar['editor_id']                 = $('#editor_id').val();
+
+                            var i = 0;
+                            $('#delivery_product_table > tbody > tr').each(function() {  
+                                ar['article_id_' + i]               = $(this).find('select.article_id').val();
+                                ar['description_id_' + i]           = $(this).find('select.description_id').val();
+                                ar['softness_id_' + i]              = $(this).find('select.softness_id').val();
+                                ar['width_id_' + i]                 = $(this).find('select.width_id').val();
+                                ar['color_id_' + i]                 = $(this).find('select.color_id').val();
+                                ar['order_quantity_' + i]           = $(this).find('input.order_quantity').val();
+                                ar['delivery_quantity_' + i]        = $(this).find('input.delivery_quantity').val();
+                                ar['unit_price_' + i]               = $(this).find('input.unit_price').val();
+                                ar['over_invoice_unit_price_' + i]  = $(this).find('input.over_invoice_unit_price').val();
+                                i++;
+                            });
+
+                            $.ajax({
+                                url: base_url + 'inventory/updatedelivery/' + ar['delivery_id'],
+                                data : JSON.stringify(ar),
+                                contentType : 'application/json',
+                                type : 'POST',
+                                success: function (data) {                           
+                                    window.location = base_url + "factory/editdelivery/" + ar['delivery_id'];
+                                }
+                            });
+
+                            event.preventDefault();
+                        }
+                    }
+                }
+            });
+
+        }
+    }

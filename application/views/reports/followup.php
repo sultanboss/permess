@@ -34,7 +34,7 @@
 										&nbsp;
 										</div>
 									</div>
-									<table id="followup_list_table" class="table table-hover">
+									<table id="followup_list_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
 												<th>Enquiry ID</th>

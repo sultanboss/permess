@@ -37,7 +37,7 @@
 									</ul>
 									<div class="tab-content">
 										<div id="tbb_a" class="tab-pane active report-tab">
-											<table id="report_list_table" class="table table-hover">
+											<table id="report_list_table" class="table table-hover table-striped">
 												<thead>
 													<tr>
 														<th>ID</th>
@@ -73,7 +73,7 @@
 											</table>
 										</div>
 										<div id="tbb_b" class="tab-pane report-tab">
-											<table id="report_product_table" class="table table-hover">
+											<table id="report_product_table" class="table table-hover table-striped">
 												<thead>
 													<tr>
 														<th>Enquiry ID</th>

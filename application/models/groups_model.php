@@ -29,16 +29,22 @@ class Groups_model extends CI_Model {
 
     function delete_groups($id) 
     {
-        $this->db->where('group_id',$id);
-        $this->db->delete('user_groups');
-        if($this->db->affected_rows() > 0)
-            return true;
+        if($id =! $this->config->item('admin_group', 'tank_auth')) 
+        {
+            $this->db->where('group_id',$id);
+            $this->db->delete('user_groups');
+            if($this->db->affected_rows() > 0)
+                return true;
+        }
         return false;
     }
 
     function get_data() 
     {
-        $this->datatables->select('group_id, group_name, created');   
+        $this->datatables->select('group_id, group_name, created');
+        if (!$this->tank_auth->is_admin()) {
+            $this->datatables->where('group_id !=', $this->config->item('admin_group', 'tank_auth')); 
+        }  
         $this->datatables->from('user_groups');       
 
         $this->datatables->edit_column('created', '<a class="group_edit" data-id="$1" data-name="$2" data-toggle="modal" href="#edit_groups"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a class=" bootbox_confirm" href="'.base_url().'groups/delete/$1"><span class="icon-trash"></span></a>', 'group_id, group_name');

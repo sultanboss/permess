@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Issue extends CI_Controller
+class Description extends CI_Controller
 {
 	function __construct()
 	{
@@ -11,7 +11,7 @@ class Issue extends CI_Controller
 		$this->load->library('tank_auth_groups','','tank_auth');
 		$this->load->library('breadcrumbs');
 		$this->lang->load('tank_auth');
-		$this->load->model('issue_model');
+		$this->load->model('description_model');
 	}
 
 	function index()
@@ -26,7 +26,7 @@ class Issue extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'Issue Type - Settings';
+		$data['title'] = 'Description - Settings';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -47,12 +47,13 @@ class Issue extends CI_Controller
 			'js/pages/ebro_notifications.js'));
 
 		$this->breadcrumbs->push('Settings', '#');
-		$this->breadcrumbs->push('Issue Types', '#');
+		$this->breadcrumbs->push('Products', '#');
+		$this->breadcrumbs->push('Descriptions', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
 
 		$this->load->view('common/header', $data);
-		$this->load->view('issue/index', $data);
+		$this->load->view('description/index', $data);
 		$this->load->view('common/footer', $data);
 	}
 
@@ -68,22 +69,22 @@ class Issue extends CI_Controller
 			redirect('');
 		}
 
-		if ( isset($_POST['issue_name']) ) {
+		if ( isset($_POST['description_name']) ) {
 			$data['data'] = array(
-				'issue_type_name'			=> $this->input->post('issue_name'),
-				'editor_id' 				=> $this->session->userdata('user_id')
+				'description_name'			=> $this->input->post('description_name'),
+				'editor_id' 					=> $this->session->userdata('user_id')
 			);
 
-			$this->issue_model->add_issue($data['data']);
-			$this->session->set_flashdata('msg', 'Issue <b>\''.$this->input->post('issue_name').'\'</b> added successfully!');
+			$this->description_model->add_description($data['data']);
+			$this->session->set_flashdata('msg', 'Description <b>\''.$this->input->post('description_name').'\'</b> added successfully!');
 			$this->session->set_flashdata('msg_type', 'success');
 		}
 		else {
-			$this->session->set_flashdata('msg', 'Invalid issue input!');
+			$this->session->set_flashdata('msg', 'Invalid description input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/settings/issue');
+		redirect('/settings/products/description');
 	}
 
 	function edit()
@@ -98,21 +99,21 @@ class Issue extends CI_Controller
 			redirect('');
 		}
 
-		if (isset($_POST['issue_id']) && isset($_POST['issue_name']) ) {
+		if (isset($_POST['description_id']) && isset($_POST['description_name']) ) {
 			$data['data'] = array(
-				'issue_type_name'			=> $this->input->post('issue_name'),		
-				'editor_id' 				=> $this->session->userdata('user_id')
+				'description_name'			=> $this->input->post('description_name'),		
+				'editor_id' 					=> $this->session->userdata('user_id')
 			);
 
-			$this->issue_model->edit_issue($this->input->post('issue_id'), $data['data']);
-			$this->session->set_flashdata('msg', 'Issue <b>\''.$this->input->post('issue_name').'\'</b> updated successfully!');
+			$this->description_model->edit_description($this->input->post('description_id'), $data['data']);
+			$this->session->set_flashdata('msg', 'Description <b>\''.$this->input->post('description_name').'\'</b> updated successfully!');
 			$this->session->set_flashdata('msg_type', 'success');
 		}
 		else {
-			$this->session->set_flashdata('msg', 'Invalid issue input!');
+			$this->session->set_flashdata('msg', 'Invalid description input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/settings/issue');
+		redirect('/settings/products/description');
 	}
 
 	function delete($id)
@@ -128,21 +129,21 @@ class Issue extends CI_Controller
 		}
 
 		if ( isset($id) ) {
-			if($this->issue_model->delete_issue($id)) {
-				$this->session->set_flashdata('msg', 'Issue deleted successfully!');
+			if($this->description_model->delete_description($id)) {
+				$this->session->set_flashdata('msg', 'Description deleted successfully!');
 				$this->session->set_flashdata('msg_type', 'success');
 			}
 			else {
-				$this->session->set_flashdata('msg', 'Invalid issue delete input!');
+				$this->session->set_flashdata('msg', 'Invalid description delete input!');
 				$this->session->set_flashdata('msg_type', 'warning');
 			}						
 		}
 		else {
-			$this->session->set_flashdata('msg', 'Invalid issue delete input!');
+			$this->session->set_flashdata('msg', 'Invalid description delete input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/settings/issue');
+		redirect('/settings/products/description');
 	}
 
 	function data()
@@ -157,6 +158,6 @@ class Issue extends CI_Controller
 			redirect('');
 		}
 
-		print_r($this->issue_model->get_issue_data());
+		print_r($this->description_model->get_description_data());
 	}
 }

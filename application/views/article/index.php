@@ -35,7 +35,7 @@
 											</div>
 										</div>
 									</div>
-									<table id="article_table" class="table table-hover">
+									<table id="article_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
 												<th width="10%">ID</th>

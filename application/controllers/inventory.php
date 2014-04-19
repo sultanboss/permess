@@ -21,7 +21,7 @@ class Inventory extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'Stocks';
+		$data['title'] = 'Stocks - Factory';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -43,7 +43,7 @@ class Inventory extends CI_Controller
 			'js/lib/Sticky/sticky.js', 
 			'js/pages/ebro_notifications.js'));
 
-		$this->breadcrumbs->push('Inventory', '#');
+		$this->breadcrumbs->push('Factory', '#');
 		$this->breadcrumbs->push('Stocks', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
@@ -62,13 +62,13 @@ class Inventory extends CI_Controller
 		print_r($this->inventory_model->get_stock_data());
 	}
 
-	function newdelivery()
+	function delivery()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
 			redirect('');
 		}
 
-		$data['title'] = 'New Delivery';
+		$data['title'] = 'Delivery - Factory';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -90,23 +90,398 @@ class Inventory extends CI_Controller
 			'js/lib/Sticky/sticky.js', 
 			'js/pages/ebro_notifications.js'));
 
-		$this->breadcrumbs->push('Inventory', '#');
+		$this->breadcrumbs->push('Factory', '#');
 		$this->breadcrumbs->push('Delivery', '#');
-		$this->breadcrumbs->push('New Delivery', '#');
+
+		$data['breadcrumbs'] = $this->breadcrumbs->show();
+
+		$this->load->view('common/header', $data);
+		$this->load->view('inventory/delivery', $data);
+		$this->load->view('common/footer', $data);
+	}
+
+	function datadelivery()
+	{
+		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		print_r($this->inventory_model->get_delivery_data());
+	}
+
+	function newdelivery()
+	{
+		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		$data['title'] = 'New P.I. Issue';
+
+		$data['css'] = $this->tank_auth->load_admin_css(array(
+			'js/lib/dataTables/media/DT_bootstrap.css', 
+			'js/lib/datepicker/css/datepicker.css',
+			'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+			'js/lib/Sticky/sticky.css'));
+
+		$data['js'] = $this->tank_auth->load_admin_js(array(
+			'js/lib/iCheck/jquery.icheck.min.js', 
+			'js/lib/parsley/parsley.min.js', 
+			'js/pages/ebro_form_validate.js', 
+			'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+			'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+			'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+			'js/lib/dataTables/media/DT_bootstrap.js', 
+			'js/pages/ebro_datatables.js', 
+			'js/lib/bootbox/bootbox.min.js', 
+			'js/lib/datepicker/js/bootstrap-datepicker.js', 
+			'js/lib/Sticky/sticky.js', 
+			'js/pages/ebro_notifications.js',
+			'js/pages/ebro_delivery.js'));
+
+		$this->breadcrumbs->push('New P.I. Issue', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
 		$data['articles'] = $this->factory_model->get_all_article();
-		$data['constructions'] = $this->factory_model->get_all_construction();
+		$data['descriptions'] = $this->factory_model->get_all_description();
 		$data['widths'] = $this->factory_model->get_all_width();
 		$data['softnesses'] = $this->factory_model->get_all_softness();
 		$data['colors'] = $this->factory_model->get_all_color();
-		$data['sources'] = $this->factory_model->get_all_source();
 
 		$data['normal_users'] = $this->inventory_model->get_normal_users();
 
 		$this->load->view('common/header', $data);
 		$this->load->view('inventory/newdelivery', $data);
 		$this->load->view('common/footer', $data);
+	}
+
+	function editdelivery($id)
+	{
+		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if ( isset($id) ) {
+
+			if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->inventory_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}
+			else if($this->tank_auth->is_group_member('Users')) {
+				if(!$this->inventory_model->users_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}
+
+			$data['delivery'] = $this->inventory_model->get_delivery_by_id($id);
+			if(empty($data['delivery'])) {
+				$this->session->set_flashdata('msg', 'Invalid delivery input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+				redirect('/factory/delivery');
+			}
+
+			$data['title'] = 'Edit Delivery';
+
+			$data['css'] = $this->tank_auth->load_admin_css(array(
+				'js/lib/dataTables/media/DT_bootstrap.css', 
+				'js/lib/datepicker/css/datepicker.css',
+				'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+				'css/hint-css/hint.css',
+				'js/lib/Sticky/sticky.css'));
+
+			$data['js'] = $this->tank_auth->load_admin_js(array(
+				'js/lib/iCheck/jquery.icheck.min.js', 
+				'js/lib/parsley/parsley.min.js', 
+				'js/pages/ebro_form_validate.js', 
+				'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+				'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+				'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+				'js/lib/dataTables/media/DT_bootstrap.js', 
+				'js/pages/ebro_datatables.js', 
+				'js/lib/bootbox/bootbox.min.js', 
+				'js/lib/datepicker/js/bootstrap-datepicker.js', 
+				'js/lib/Sticky/sticky.js', 
+				'js/pages/ebro_notifications.js',
+				'js/pages/ebro_delivery.js'));
+
+			$this->breadcrumbs->push('Factory', '#');
+			$this->breadcrumbs->push('Delivery', '../../factory/delivery');
+			$this->breadcrumbs->push('Edit Delivery', '#');
+
+			$data['breadcrumbs'] = $this->breadcrumbs->show();
+			$data['articles'] = $this->factory_model->get_all_article();
+			$data['descriptions'] = $this->factory_model->get_all_description();
+			$data['widths'] = $this->factory_model->get_all_width();
+			$data['softnesses'] = $this->factory_model->get_all_softness();
+			$data['colors'] = $this->factory_model->get_all_color();
+
+			$data['normal_users'] = $this->inventory_model->get_normal_users();
+
+			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
+
+			$this->load->view('common/header', $data);
+			$this->load->view('inventory/editdelivery', $data);
+			$this->load->view('common/footer', $data);
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', 'Invalid delivery input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('/factory/delivery');
+		}
+	}
+
+	function adddelivery()
+	{
+		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		$_POST = array_merge($_POST,json_decode(file_get_contents('php://input'),true));
+
+		if ( isset($_POST['delivery_date']) && isset($_POST['delivery_by']) ) {
+			$data['data'] = array(
+				'delivery_date'				=> $this->input->post('delivery_date'),
+				'delivery_po_no'			=> $this->input->post('delivery_po_no'),
+				'delivery_by'				=> $this->input->post('delivery_by'),
+				'delivery_status'			=> $this->input->post('delivery_status'),
+				'delivery_doc_status'       => $this->input->post('delivery_doc_status'),
+				'delivery_lc_status'		=> $this->input->post('delivery_lc_status'),
+				'delivery_lc_date'			=> $this->input->post('delivery_lc_date'),
+				'delivery_item_no'          => $this->input->post('delivery_item_no'),
+                'delivery_type'             => $this->input->post('delivery_type'),
+				'delivery_company_name'		=> $this->input->post('delivery_company_name'),
+				'delivery_company_address'	=> $this->input->post('delivery_company_address'),
+				'delivery_address'          => $this->input->post('delivery_address'),
+				'delivery_contact_person'	=> $this->input->post('delivery_contact_person'),
+				'delivery_buyer'			=> $this->input->post('delivery_buyer'),
+				'delivery_payment'			=> $this->input->post('delivery_payment'),
+				'delivery_style'            => $this->input->post('delivery_style'),
+				'editor_id' 				=> $this->session->userdata('user_id')
+			);
+
+			$delivery_id = $this->inventory_model->add_delivery($data['data']);
+
+			for($i=0; $i<100; $i++)
+			{
+				if( isset($_POST['article_id_'.$i]) )
+				{				
+					$data['eq_product'] = array(
+						'delivery_id'				=> $delivery_id,
+						'article_id'				=> $this->input->post('article_id_'.$i),
+						'description_id'			=> $this->input->post('description_id_'.$i),
+						'softness_id'				=> $this->input->post('softness_id_'.$i),
+						'width_id'					=> $this->input->post('width_id_'.$i),
+						'color_id'					=> $this->input->post('color_id_'.$i),
+						'order_quantity'			=> $this->input->post('order_quantity_'.$i),
+						'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
+						'unit_price'				=> $this->input->post('unit_price_'.$i),
+						'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
+						'editor_id' 				=> $this->session->userdata('user_id')
+					);
+					$this->inventory_model->add_delivery_product($data['eq_product']);
+				}
+				else
+					$i = 100;
+			}
+
+			$cost = $this->inventory_model->get_delivery_cost($delivery_id);
+
+			$data['statemetns'] = array(
+				'delivery_id'		=> $delivery_id,
+				'lc_date'			=> $this->input->post('delivery_lc_date'),
+				'value'				=> $cost,
+				'editor_id' 		=> $this->session->userdata('user_id')
+			);
+
+			$this->inventory_model->add_statements($data['statemetns']);
+
+			echo $delivery_id;
+
+			$this->session->set_flashdata('msg', 'Delivery added successfully!');
+			$this->session->set_flashdata('msg_type', 'success');
+		}
+		else {
+			$this->session->set_flashdata('msg', 'Invalid delivery input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+		}
+	}
+
+	function updatedelivery($id)
+	{
+		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if ( isset($id) ) {
+
+			$_POST = array_merge($_POST,json_decode(file_get_contents('php://input'),true));
+
+			if ( isset($_POST['delivery_date']) && isset($_POST['delivery_by']) ) {
+				$data['data'] = array(
+					'delivery_date'				=> $this->input->post('delivery_date'),
+					'delivery_po_no'			=> $this->input->post('delivery_po_no'),
+					'delivery_by'				=> $this->input->post('delivery_by'),
+					'delivery_status'			=> $this->input->post('delivery_status'),
+					'delivery_doc_status'       => $this->input->post('delivery_doc_status'),
+					'delivery_lc_status'		=> $this->input->post('delivery_lc_status'),
+					'delivery_lc_date'			=> $this->input->post('delivery_lc_date'),
+					'delivery_item_no'          => $this->input->post('delivery_item_no'),
+	                'delivery_type'             => $this->input->post('delivery_type'),
+					'delivery_company_name'		=> $this->input->post('delivery_company_name'),
+					'delivery_company_address'	=> $this->input->post('delivery_company_address'),
+					'delivery_address'          => $this->input->post('delivery_address'),
+					'delivery_contact_person'	=> $this->input->post('delivery_contact_person'),
+					'delivery_buyer'			=> $this->input->post('delivery_buyer'),
+					'delivery_payment'			=> $this->input->post('delivery_payment'),
+					'delivery_style'            => $this->input->post('delivery_style'),
+					'editor_id' 				=> $this->session->userdata('user_id')
+				);
+
+				$this->inventory_model->update_delivery($this->input->post('delivery_id'), $data['data']);
+
+				$this->inventory_model->remove_delivery_product($this->input->post('delivery_id'));
+
+				for($i=0; $i<100; $i++)
+				{
+					if( isset($_POST['article_id_'.$i]) )
+					{				
+						$data['eq_product'] = array(
+							'delivery_id'				=> $this->input->post('delivery_id'),
+							'article_id'				=> $this->input->post('article_id_'.$i),
+							'description_id'			=> $this->input->post('description_id_'.$i),
+							'softness_id'				=> $this->input->post('softness_id_'.$i),
+							'width_id'					=> $this->input->post('width_id_'.$i),
+							'color_id'					=> $this->input->post('color_id_'.$i),
+							'order_quantity'			=> $this->input->post('order_quantity_'.$i),
+							'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
+							'unit_price'				=> $this->input->post('unit_price_'.$i),
+							'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
+							'editor_id' 				=> $this->session->userdata('user_id')
+						);
+						$this->inventory_model->add_delivery_product($data['eq_product']);
+					}
+					else
+						$i = 100;
+				}
+
+				$cost = $this->inventory_model->get_delivery_cost($this->input->post('delivery_id'));
+
+				$data['statemetns'] = array(
+					'delivery_id'		=> $this->input->post('delivery_id'),
+					'lc_date'			=> $this->input->post('delivery_lc_date'),
+					'value'				=> $cost,
+					'editor_id' 		=> $this->session->userdata('user_id')
+				);
+
+				$this->inventory_model->update_statements($this->input->post('delivery_id'), $data['statemetns']);
+
+				$this->session->set_flashdata('msg', 'Delivery updated successfully!');
+				$this->session->set_flashdata('msg_type', 'success');
+			}
+			else {
+				$this->session->set_flashdata('msg', 'Invalid delivery input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', 'Invalid delivery input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('/factory/delivery');
+		}
+	}
+
+	function printdelivery($id)
+	{
+		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if ( isset($id) ) {
+
+			if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->inventory_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}
+			else if($this->tank_auth->is_group_member('Users')) {
+				if(!$this->inventory_model->users_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}
+
+			$data['delivery'] = $this->inventory_model->get_delivery_by_id($id);
+			if(empty($data['delivery'])) {
+				$this->session->set_flashdata('msg', 'Invalid delivery input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+				redirect('/factory/delivery');
+			}
+
+			$data['title'] = 'Print Delivery';
+
+			$data['css'] = $this->tank_auth->load_admin_css(array(
+				'js/lib/dataTables/media/DT_bootstrap.css', 
+				'js/lib/datepicker/css/datepicker.css',
+				'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+				'css/hint-css/hint.css',
+				'js/lib/Sticky/sticky.css'));
+
+			$data['js'] = $this->tank_auth->load_admin_js(array(
+				'js/lib/iCheck/jquery.icheck.min.js', 
+				'js/lib/parsley/parsley.min.js', 
+				'js/pages/ebro_form_validate.js', 
+				'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+				'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+				'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+				'js/lib/dataTables/media/DT_bootstrap.js', 
+				'js/pages/ebro_datatables.js', 
+				'js/lib/bootbox/bootbox.min.js', 
+				'js/lib/datepicker/js/bootstrap-datepicker.js', 
+				'js/lib/Sticky/sticky.js', 
+				'js/pages/ebro_notifications.js',
+				'js/pages/ebro_delivery.js'));
+
+			$this->breadcrumbs->push('Factory', '#');
+			$this->breadcrumbs->push('Delivery', '../../factory/delivery');
+			$this->breadcrumbs->push('Print Delivery', '#');
+
+			$data['breadcrumbs'] = $this->breadcrumbs->show();	
+			$data['delivery_user'] = $this->factory_model->get_delivery_user($data['delivery'][0]['delivery_by']);
+			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
+
+			foreach ($data['delivery_products'] as $key => $value) {
+				$data['delivery_products'][$key]['article_name'] = $this->factory_model->get_article($value['article_id']);
+				$data['delivery_products'][$key]['description_name'] = $this->factory_model->get_description($value['description_id']);
+				$data['delivery_products'][$key]['width_name'] = $this->factory_model->get_width($value['width_id']);
+				$data['delivery_products'][$key]['softness_name'] = $this->factory_model->get_softness($value['softness_id']);
+				$data['delivery_products'][$key]['color_name'] = $this->factory_model->get_color($value['color_id']);
+			}
+
+			$this->load->view('common/header', $data);
+			$this->load->view('inventory/printdelivery', $data);
+			$this->load->view('common/footer', $data);
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', 'Invalid delivery input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('/factory/delivery');
+		}
 	}
 
 

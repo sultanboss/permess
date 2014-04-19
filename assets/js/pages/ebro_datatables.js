@@ -253,6 +253,37 @@
                 });
             }
 
+            if($('#description_table').length) {
+                $('#description_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "description/data",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                        
+                        $('#description_table').delegate('.simple_edit', 'click', function() {
+                            $("#edit_description_name").val($(this).attr('data-name'));
+                            $("#edit_description_id").val($(this).attr('data-id'));
+                        });
+
+                        $('#description_table').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
+                    }
+                });
+            }
+
 
             if($('#issue_table').length) {
                 $('#issue_table').dataTable({
@@ -301,12 +332,11 @@
                         $('#price_table').delegate('.simple_edit', 'click', function() {
                             $("#edit_price_id").val($(this).attr('data-id'));
                             $("#edit_article_name").val($(this).attr('data-article'));
-                            $("#edit_construction_name").val($(this).attr('data-construction'));
                             $("#edit_width_name").val($(this).attr('data-width'));
                             $("#edit_softness_name").val($(this).attr('data-softness'));
                             $("#edit_color_name").val($(this).attr('data-color'));
-                            $("#edit_source_name").val($(this).attr('data-source'));
-                            $("#edit_price_value").val($(this).attr('data-price'));
+                            $("#edit_buy_price").val($(this).attr('data-buy-price'));
+                            $("#edit_sell_price").val($(this).attr('data-sell-price'));
                         });
 
                         $('#price_table').delegate('.bootbox_confirm', 'click', function(e) {
@@ -346,6 +376,7 @@
                             $("#edit_softness_name").val($(this).attr('data-softness'));
                             $("#edit_color_name").val($(this).attr('data-color'));
                             $("#edit_source_name").val($(this).attr('data-source'));
+                            $("#edit_raw_date").val($(this).attr('data-date'));
                             $("#edit_raw_received_balance").val($(this).attr('data-received'));
                             $("#edit_raw_lc_no").val($(this).attr('data-lc'));
                             $("#edit_raw_pi_no").val($(this).attr('data-pi'));
@@ -433,8 +464,31 @@
                     "iDisplayLength": 25,
                     "bProcessing": true,
                     "bServerSide": true,
-                    "aoColumns": [ null, null, null, null, null, null, null, { "bSearchable": false } ],
+                    "aoColumns": [ null, null, null, null, null, null, { "bSearchable": false } ],
                     "sAjaxSource": base_url + "inventory/datastock",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                    },
+                    "fnCreatedRow": function( nRow, aData, iDataIndex ) {                        
+                        if ( aData[6] <= 2000 )
+                        {
+                            $('td:eq('+6+')', nRow).css('color', '#D04533');
+                        }
+                    }
+                });
+            }
+
+            if($('#delivery_table').length) {
+                $('#delivery_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "aaSorting": [[0, 'desc']],
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "inventory/datadelivery",
                     "sServerMethod": "POST",
                     "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
                     "fnInitComplete": function(oSettings, json) {
@@ -443,7 +497,69 @@
                 });
             }
 
-            //Admin Module
+            // Marketing Module
+
+            if($('#order_table').length) {
+                $('#order_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "aaSorting": [[0, 'desc']],
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "marketing/dataorder",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                        
+                        $('#order_table').delegate('.simple_edit', 'click', function() {
+                            $("#buyer_order_reference").val($(this).attr('data-ref'));
+                            $("#delivery_request").val($(this).attr('data-req'));
+                            $("#delivery_id").val($(this).attr('data-id'));
+                            $("#delivery_id_old").val($(this).attr('data-id'));
+                        });
+                    }
+                });
+            }
+
+            if($('#lcstatements_table').length) {
+                $('#lcstatements_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "aaSorting": [[0, 'desc']],
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "marketing/datalcstatements",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                    }
+                });
+            }
+
+            // Accounts Module
+
+            if($('#cashpayment_table').length) {
+                $('#cashpayment_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "aaSorting": [[0, 'desc']],
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "accounts/datacashpayment",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                    }
+                });
+            }
+
+            // Admin Module
 
             if($('#groups_table').length) {
                 $('#groups_table').dataTable({

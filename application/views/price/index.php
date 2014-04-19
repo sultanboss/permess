@@ -33,18 +33,18 @@
 																			?>				
 										                                </select>
 									                                </div>
-									                                <div class="col-sm-6 end">
-																		<label for="construction_name" class="req">Construction</label>					
-																		<select id="construction_name" name="construction_name" class="form-control" data-required="true">
+																	<div class="col-sm-6 end">
+																		<label for="color_name" class="req">Color</label>					
+																		<select id="color_name" name="color_name" class="form-control" data-required="true">
 																			<?php
-																			foreach ($constructions as $key => $value) {							
+																			foreach ($colors as $key => $value) {							
 																			?>
-																			<option value="<?php echo $value['construction_id']; ?>"><?php echo $value['construction_name']; ?></option>
+																			<option value="<?php echo $value['color_id']; ?>"><?php echo $value['color_name']; ?></option>
 																			<?php						
 																			}																	
 																			?>				
 										                                </select>
-									                                </div>												
+									                                </div>													
 																</div>	
 																<div class="form_sep">
 																	<div class="col-sm-6 start">
@@ -73,32 +73,6 @@
 									                                </div>												
 																</div>	
 																<div class="form_sep">
-																	<div class="col-sm-6 start">
-																		<label for="color_name" class="req">Color</label>					
-																		<select id="color_name" name="color_name" class="form-control" data-required="true">
-																			<?php
-																			foreach ($colors as $key => $value) {							
-																			?>
-																			<option value="<?php echo $value['color_id']; ?>"><?php echo $value['color_name']; ?></option>
-																			<?php						
-																			}																	
-																			?>				
-										                                </select>
-									                                </div>
-									                                <div class="col-sm-6 end">
-																		<label for="source_name" class="req">Source</label>					
-																		<select id="source_name" name="source_name" class="form-control" data-required="true">
-																			<?php
-																			foreach ($sources as $key => $value) {							
-																			?>
-																			<option value="<?php echo $value['source_id']; ?>"><?php echo $value['source_name']; ?></option>
-																			<?php						
-																			}																	
-																			?>				
-										                                </select>
-									                                </div>												
-																</div>	
-																<div class="form_sep">
 																	<div class="col-sm-6 start">		
 																		<label for="buy_price" class="req">Buying Price</label>
 																		<input id="buy_price" name="buy_price" class="form-control" type="text" data-required="true">
@@ -119,16 +93,14 @@
 											</div>
 										</div>
 									</div>
-									<table id="price_table" class="table table-hover">
+									<table id="price_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
 												<th width="">ID</th>
 												<th width="">Article</th>
-												<th width="">Construction</th>
 												<th width="">Width</th>
 												<th width="">Softness</th>
 												<th width="">Color</th>
-												<th width="">Source</th>
 												<th width="">Buying Price</th>
 												<th width="">Selling Price</th>
 												<th width="">Change</th>
@@ -159,13 +131,13 @@
 																			?>				
 										                                </select>
 									                                </div>
-									                                <div class="col-sm-6 end">
-																		<label for="edit_construction_name" class="req">Construction</label>					
-																		<select id="edit_construction_name" name="edit_construction_name" class="form-control" data-required="true">
+																	<div class="col-sm-6 end">
+																		<label for="edit_color_name" class="req">Color</label>					
+																		<select id="edit_color_name" name="edit_color_name" class="form-control" data-required="true">
 																			<?php
-																			foreach ($constructions as $key => $value) {							
+																			foreach ($colors as $key => $value) {							
 																			?>
-																			<option value="<?php echo $value['construction_id']; ?>"><?php echo $value['construction_name']; ?></option>
+																			<option value="<?php echo $value['color_id']; ?>"><?php echo $value['color_name']; ?></option>
 																			<?php						
 																			}																	
 																			?>				
@@ -192,32 +164,6 @@
 																			foreach ($softnesses as $key => $value) {							
 																			?>
 																			<option value="<?php echo $value['softness_id']; ?>"><?php echo $value['softness_name']; ?></option>
-																			<?php						
-																			}																	
-																			?>				
-										                                </select>
-									                                </div>												
-																</div>	
-																<div class="form_sep">
-																	<div class="col-sm-6 start">
-																		<label for="edit_color_name" class="req">Color</label>					
-																		<select id="edit_color_name" name="edit_color_name" class="form-control" data-required="true">
-																			<?php
-																			foreach ($colors as $key => $value) {							
-																			?>
-																			<option value="<?php echo $value['color_id']; ?>"><?php echo $value['color_name']; ?></option>
-																			<?php						
-																			}																	
-																			?>				
-										                                </select>
-									                                </div>
-									                                <div class="col-sm-6 end">
-																		<label for="edit_source_name" class="req">Source</label>					
-																		<select id="edit_source_name" name="edit_source_name" class="form-control" data-required="true">
-																			<?php
-																			foreach ($sources as $key => $value) {							
-																			?>
-																			<option value="<?php echo $value['source_id']; ?>"><?php echo $value['source_name']; ?></option>
 																			<?php						
 																			}																	
 																			?>				

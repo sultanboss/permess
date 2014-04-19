@@ -7,5 +7,8 @@
 							
 						</div>
 
+						<div class="msg"><?php echo $this->session->flashdata('msg'); ?></div>
+						<div class="msg_type"><?php echo $this->session->flashdata('msg_type'); ?></div>
+
 					</div>
 				</div>

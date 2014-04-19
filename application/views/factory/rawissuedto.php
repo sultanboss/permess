@@ -68,7 +68,16 @@
 										<p class="heading_a">Issued To:</p>
 										<div class="row">				
 											<div class="col-sm-12">
+												<?php
+												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+            									{
+            									?>
 												<button data-toggle="modal" href="#add_rawissue_type" class="btn btn-success btn-sm right"><span class="icon-plus"></span> Add New Issue</button>												
+												<?php
+												}
+												else
+													echo "&nbsp;";
+												?>	
 												<div class="modal fade" id="add_rawissue_type">
 													<div class="modal-dialog">
 														<div class="modal-content">
@@ -122,7 +131,7 @@
 										</div>
 									</div>
 									<div id="raw_issue_raw_id" style="display: none;"><?php echo $raw_id; ?></div>
-									<table id="raw_issue_table" class="table table-hover">
+									<table id="raw_issue_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
 												<th width="">ID</th>
@@ -131,7 +140,14 @@
 												<th width="">Quantity</th>
 												<th width="">Total Finished Goods</th>
 												<th width="">Wastage</th>
+												<?php
+												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+            									{
+            									?>
 												<th width="">Change</th>
+												<?php
+												}
+												?>
 												<tfoot>
 									                <tr>
 									                    <th>Total:</th> 
@@ -140,7 +156,14 @@
 									                    <th></th>
 									                    <th></th>
 									                    <th></th>
+									                    <?php
+														if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+		            									{
+		            									?>
 									                    <th></th>
+									                    <?php
+														}
+														?>
 									                </tr>
 									            </tfoot>
 											</tr>

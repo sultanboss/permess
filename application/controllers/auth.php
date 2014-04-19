@@ -133,7 +133,9 @@ class Auth extends CI_Controller
 	 */
 	function register()
 	{
-		if (!$this->tank_auth->is_admin()) {									// logged in
+		if (!$this->tank_auth->is_admin() &&  !$this->tank_auth->is_group_member('Super Users')) {	
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');								// logged in
 			redirect('');
 
 		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
@@ -196,7 +198,7 @@ class Auth extends CI_Controller
 
 						//$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/auth/login/', $this->lang->line('auth_login')));
 					}
-					redirect('/user');
+					redirect('/admin/users');
 				} else {
 					$errors = $this->tank_auth->get_error_message();
 					foreach ($errors as $k => $v)	{

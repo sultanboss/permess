@@ -43,7 +43,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-6 col-sm-2">
-							<a href="<?php echo base_url(); ?>" class="logo_main" title=""><img src="<?php echo $this->config->item('admin_img_url'); ?>logo1.jpg" alt=""></a>
+							<a href="<?php echo base_url(); ?>" class="logo_main" title=""><img src="<?php echo $this->config->item('admin_img_url'); ?>logo.png" alt=""></a>
 						</div>
 						<div class="col-sm-push-4 col-sm-3 text-right hidden-xs">
 							<div class="notification_dropdown dropdown">
@@ -140,49 +140,100 @@
 				<div class="container">
 					<ul id="text_nav_h" class="clearfix j_menu top_text_nav">
 					<li>
-						<a href="<?php echo base_url();?>">Dashboard</a>
+						<a href="<?php echo base_url();?>"><span class="icon-reorder"></span> Dashboard</a>
 					</li>
+					<?php
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) {
+					?>
+					<li>
+						<a href="<?php echo base_url();?>newdelivery">+ New P.I.</a>
+					</li>
+					<?php
+					}
+					?>
 					<li>
 						<a href="javascript:void(0)">Factory</a>
 						<ul>
-							<li><a href="<?php echo base_url();?>factory/raw">Import</a></li>
+							<?php
+							if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial')) {
+							?>
+							<li><a href="<?php echo base_url();?>factory/import">Import</a></li>
+							<?php
+							}
+							?>
+							<li><a href="<?php echo base_url();?>factory/stock">Stock</a></li>
+							<li><a href="<?php echo base_url();?>factory/delivery">Delivery</a></li>		
 						</ul>
 					</li>
+					<?php
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Users')) {
+					?>
 					<li>
-						<a href="javascript:void(0)">Inventory</a>
+						<a href="javascript:void(0)">Marketing</a>
 						<ul>
-							<li><a href="<?php echo base_url();?>inventory/stock">Stock</a></li>
-							<li><a href="<?php echo base_url();?>inventory/newdelivery">New Delivery</a></li>
+							<li><a href="<?php echo base_url();?>marketing/order">Orders</a></li>							
 						</ul>
 					</li>
+					<?php
+					}
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Accounts')) {
+					?>
+					<li>
+						<a href="javascript:void(0)">Accounts</a>
+						<ul>
+							<li><a href="<?php echo base_url();?>accounts/cashpayment">Cash Payment</a></li>							
+						</ul>
+					</li>
+					<?php
+					}
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial')) {
+					?>
+					<li>
+						<a href="javascript:void(0)">Commercial</a>		
+						<ul>						
+							<li><a href="<?php echo base_url();?>commercial/lcstatements">LC Statements</a></li>
+						</ul>
+					</li>
+					<?php
+					}
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) {
+					?>
 					<li>
 						<a href="javascript:void(0)">Reports</a>
-					</li>
+					</li>					
 					<li>
 						<a href="javascript:void(0)">Settings</a>
 						<ul>
 							<li>
 								<a class="isParent" href="javascript:void(0)">Products</a>
 								<ul>
-									<li><a href="<?php echo base_url();?>article">Article</a></li>
-									<li><a href="<?php echo base_url();?>construction">Construction</a></li>
-									<li><a href="<?php echo base_url();?>width">Width</a></li>
-									<li><a href="<?php echo base_url();?>softness">Softness</a></li>
-									<li><a href="<?php echo base_url();?>color">Color</a></li>
-									<li><a href="<?php echo base_url();?>source">Source</a></li>
+									<li><a href="<?php echo base_url();?>settings/products/article">Article</a></li>
+									<li><a href="<?php echo base_url();?>settings/products/construction">Construction</a></li>
+									<li><a href="<?php echo base_url();?>settings/products/width">Width</a></li>
+									<li><a href="<?php echo base_url();?>settings/products/softness">Softness</a></li>
+									<li><a href="<?php echo base_url();?>settings/products/color">Color</a></li>
+									<li><a href="<?php echo base_url();?>settings/products/source">Source</a></li>
+									<li><a href="<?php echo base_url();?>settings/products/description">Description</a></li>
 								</ul>
 							</li>
-							<li><a href="<?php echo base_url();?>price">Price</a></li>
-							<li><a href="<?php echo base_url();?>issue">Issue Type</a></li>
+							<li><a href="<?php echo base_url();?>settings/price">Price</a></li>
+							<li><a href="<?php echo base_url();?>settings/issuetype">Issue Type</a></li>
 						</ul>
 					</li>
+					<?php
+					}
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) {
+					?>
 					<li>
 						<a href="javascript:void(0)">Admin</a>
-						<ul>
-							<li><a href="<?php echo base_url();?>user">Users</a></li>
-							<li><a href="<?php echo base_url();?>groups">Groups</a></li>
+						<ul>							
+							<li><a href="<?php echo base_url();?>admin/users">Users</a></li>
+							<li><a href="<?php echo base_url();?>admin/groups">Groups</a></li>							
 						</ul>
 					</li>
+					<?php
+					}
+					?>					
 					</ul>
 				</div>
 			</nav>

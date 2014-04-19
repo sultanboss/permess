@@ -37,8 +37,33 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-$route['default_controller'] 			= 'dashboard/index';
-$route['404_override'] 					= '';
+$route['newdelivery'] 							= 'inventory/newdelivery';
+
+$route['factory/stock'] 						= 'inventory/stock';
+$route['factory/editdelivery/(:any)'] 			= 'inventory/editdelivery/$1';
+$route['factory/printdelivery/(:any)'] 			= 'inventory/printdelivery/$1';
+$route['factory/delivery'] 						= 'inventory/delivery';
+
+$route['commercial/lcstatements'] 				= 'marketing/lcstatements';
+$route['commercial/editlcstatements/(:any)'] 	= 'marketing/editlcstatements/$1';
+$route['commercial/updatelcstatements'] 		= 'marketing/updatelcstatements';
+
+$route['settings/products/article'] 			= 'article';
+$route['settings/products/construction'] 		= 'construction';
+$route['settings/products/width'] 				= 'width';
+$route['settings/products/softness'] 			= 'softness';
+$route['settings/products/color'] 				= 'color';
+$route['settings/products/source'] 				= 'source';
+$route['settings/products/description'] 		= 'description';
+
+$route['settings/price'] 						= 'price';
+$route['settings/issuetype'] 					= 'issue';
+
+$route['admin/users'] 							= 'user';
+$route['admin/groups'] 							= 'groups';
+
+$route['default_controller'] 					= 'dashboard/index';
+$route['404_override'] 							= '';
 
 
 /* End of file routes.php */

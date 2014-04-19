@@ -20,7 +20,13 @@ class Width extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'Width';
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		$data['title'] = 'Width - Settings';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -41,7 +47,7 @@ class Width extends CI_Controller
 			'js/pages/ebro_notifications.js'));
 
 		$this->breadcrumbs->push('Settings', '#');
-		$this->breadcrumbs->push('Finished Goods', '#');
+		$this->breadcrumbs->push('Products', '#');
 		$this->breadcrumbs->push('Widths', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
@@ -54,6 +60,12 @@ class Width extends CI_Controller
 	function add()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -72,12 +84,18 @@ class Width extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/width');
+		redirect('/settings/products/width');
 	}
 
 	function edit()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -95,12 +113,18 @@ class Width extends CI_Controller
 			$this->session->set_flashdata('msg', 'Invalid width input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/width');
+		redirect('/settings/products/width');
 	}
 
 	function delete($id)
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -119,12 +143,18 @@ class Width extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/width');
+		redirect('/settings/products/width');
 	}
 
 	function data()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 

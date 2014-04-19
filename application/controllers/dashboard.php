@@ -18,7 +18,14 @@ class Dashboard extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		$data['title'] = 'Dashboard';	
+		$data['title'] = 'Dashboard';
+
+		$data['css'] = $this->tank_auth->load_admin_css(array(
+			'js/lib/Sticky/sticky.css'));
+
+		$data['js'] = $this->tank_auth->load_admin_js(array(
+			'js/lib/Sticky/sticky.js', 
+			'js/pages/ebro_notifications.js'));	
 
 		$this->breadcrumbs->push('Dashboard', '#');
 

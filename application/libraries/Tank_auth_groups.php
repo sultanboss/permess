@@ -38,7 +38,7 @@ class Tank_auth_groups extends Tank_auth {
      */
     function is_admin()
     {
-        $group_id = $this->ci->ta_groups_users->get_group_id('admin');
+        $group_id = $this->ci->config->item('admin_group', 'tank_auth');
 		return $this->ci->session->userdata('group_id') === $group_id;
     }
     

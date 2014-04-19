@@ -41,7 +41,7 @@ echo form_open($this->uri->uri_string(), $attributes); ?>
 	<div class="login_wrapper">
 		<div class="login_panel log_section">
 			<div class="login_head text-center">
-				<img src="<?php echo $this->config->item('admin_img_url'); ?>logo.jpg">
+				<img src="<?php echo $this->config->item('admin_img_url'); ?>logo.png">
 			</div>
 				<div class="form-group">
 					<label for="login_username">Email</label>

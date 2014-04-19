@@ -20,7 +20,13 @@ class Softness extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'Softness';
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		$data['title'] = 'Softness - Settings';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -41,6 +47,7 @@ class Softness extends CI_Controller
 			'js/pages/ebro_notifications.js'));
 
 		$this->breadcrumbs->push('Settings', '#');
+		$this->breadcrumbs->push('Products', '#');
 		$this->breadcrumbs->push('Softness', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
@@ -53,6 +60,12 @@ class Softness extends CI_Controller
 	function add()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -71,12 +84,18 @@ class Softness extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/softness');
+		redirect('/settings/products/softness');
 	}
 
 	function edit()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -94,12 +113,18 @@ class Softness extends CI_Controller
 			$this->session->set_flashdata('msg', 'Invalid softness input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/softness');
+		redirect('/settings/products/softness');
 	}
 
 	function delete($id)
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
@@ -118,12 +143,18 @@ class Softness extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/softness');
+		redirect('/settings/products/softness');
 	}
 
 	function data()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
