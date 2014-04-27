@@ -5,25 +5,9 @@
 						<!-- main content -->			
 						<div class="row">
 							<div class="col-sm-12">
-								<div class="col-sm-2 pull-right top-right-btn">	
-													<a href="javascript:void(0)" class="hint--top" data-hint="LC Status">
-													<?php
-													if($status[0]['delivery_lc_status'] == 0)
-													{
-														?>
-														<span class="glyphicon glyphicon-file largex color-red"></span>
-														<?php
-													}
-													else
-													{
-														?>
-														<span title="LC Status" class="glyphicon glyphicon-file largex color-green"></span>
-														<?php
-													}
-													?>
-													</a>													
-													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-print"></span></a>
-													<a href="<?php echo base_url(); ?>factory/editdelivery/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Order Details">												
+								<div class="col-sm-4 pull-right top-right-btn">	
+												<div class="btn-group">
+													<a href="<?php echo base_url(); ?>factory/editdelivery/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Delivery Details">												
 													<?php
 													if($status[0]['delivery_status'] == 0)
 													{
@@ -45,7 +29,46 @@
 													}
 													?>
 													</a>
-														
+													<a href="javascript:void(0)" class="hint--top" data-hint="LC Status">
+													<?php
+													if($status[0]['delivery_lc_status'] == 0)
+													{
+														?>
+														<span class="glyphicon glyphicon-file largex color-red toolbar-active"></span>
+														<?php
+													}
+													else
+													{
+														?>
+														<span title="LC Status" class="glyphicon glyphicon-file largex color-green toolbar-active"></span>
+														<?php
+													}
+													?>
+													</a>
+													<a href="<?php echo base_url(); ?>marketing/orderdetails/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Order Details">
+													<?php
+													if($status[0]['delivery_request'] == 0)
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-red"></span>
+														<?php
+													}
+													else if($status[0]['delivery_request'] == 2)
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-green"></span>
+														<?php
+													}
+													else
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-orange"></span>
+														<?php
+													}
+													?>
+													</a>													
+													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-print"></span></a>						
+												</div>
 								</div>
 								<div class="panel panel-default">
 									<form action="<?php echo base_url(); ?>commercial/updatelcstatements" method="post" id="parsley_editcat">

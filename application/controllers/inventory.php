@@ -13,6 +13,7 @@ class Inventory extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('inventory_model');
 		$this->load->model('factory_model');
+		$this->load->model('accounts_model');
 	}
 
 	function stock()
@@ -147,7 +148,7 @@ class Inventory extends CI_Controller
 		$this->breadcrumbs->push('New P.I. Issue', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
-		$data['articles'] = $this->factory_model->get_all_article();
+		$data['articles'] = $this->factory_model->get_all_article_with_alt();
 		$data['descriptions'] = $this->factory_model->get_all_description();
 		$data['widths'] = $this->factory_model->get_all_width();
 		$data['softnesses'] = $this->factory_model->get_all_softness();
@@ -219,13 +220,14 @@ class Inventory extends CI_Controller
 			$this->breadcrumbs->push('Edit Delivery', '#');
 
 			$data['breadcrumbs'] = $this->breadcrumbs->show();
-			$data['articles'] = $this->factory_model->get_all_article();
+			$data['articles'] = $this->factory_model->get_all_article_with_alt();
 			$data['descriptions'] = $this->factory_model->get_all_description();
 			$data['widths'] = $this->factory_model->get_all_width();
 			$data['softnesses'] = $this->factory_model->get_all_softness();
 			$data['colors'] = $this->factory_model->get_all_color();
 
 			$data['normal_users'] = $this->inventory_model->get_normal_users();
+			$data['payment'] = $this->inventory_model->get_payment_status($id);
 
 			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
 
@@ -252,6 +254,7 @@ class Inventory extends CI_Controller
 		if ( isset($_POST['delivery_date']) && isset($_POST['delivery_by']) ) {
 			$data['data'] = array(
 				'delivery_date'				=> $this->input->post('delivery_date'),
+				'delivery_pi_name'			=> $this->input->post('delivery_pi_name'),
 				'delivery_po_no'			=> $this->input->post('delivery_po_no'),
 				'delivery_by'				=> $this->input->post('delivery_by'),
 				'delivery_status'			=> $this->input->post('delivery_status'),
@@ -275,10 +278,14 @@ class Inventory extends CI_Controller
 			for($i=0; $i<100; $i++)
 			{
 				if( isset($_POST['article_id_'.$i]) )
-				{				
+				{	
+					$article_id = explode('-', $this->input->post('article_id_'.$i));
+					$article_id = $article_id[0];	
+
 					$data['eq_product'] = array(
 						'delivery_id'				=> $delivery_id,
-						'article_id'				=> $this->input->post('article_id_'.$i),
+						'article_id'				=> $article_id,
+						'article_alt'				=> $this->input->post('article_id_'.$i),
 						'description_id'			=> $this->input->post('description_id_'.$i),
 						'softness_id'				=> $this->input->post('softness_id_'.$i),
 						'width_id'					=> $this->input->post('width_id_'.$i),
@@ -295,16 +302,28 @@ class Inventory extends CI_Controller
 					$i = 100;
 			}
 
-			$cost = $this->inventory_model->get_delivery_cost($delivery_id);
+			if($this->input->post('delivery_payment') == '0')
+			{
+				$cost = $this->inventory_model->get_delivery_cost($delivery_id);
 
-			$data['statemetns'] = array(
-				'delivery_id'		=> $delivery_id,
-				'lc_date'			=> $this->input->post('delivery_lc_date'),
-				'value'				=> $cost,
-				'editor_id' 		=> $this->session->userdata('user_id')
-			);
+				$data['statemetns'] = array(
+					'delivery_id'		=> $delivery_id,
+					'lc_date'			=> $this->input->post('delivery_lc_date'),
+					'value'				=> $cost,
+					'editor_id' 		=> $this->session->userdata('user_id')
+				);
 
-			$this->inventory_model->add_statements($data['statemetns']);
+				$this->inventory_model->add_statements($data['statemetns']);
+			}
+			else
+			{
+				$data['bill'] = array(
+					'delivery_id'		=> $delivery_id,
+					'editor_id' 		=> $this->session->userdata('user_id')
+				);
+
+				$this->accounts_model->add_bill($data['bill']);
+			}
 
 			echo $delivery_id;
 
@@ -330,6 +349,7 @@ class Inventory extends CI_Controller
 			if ( isset($_POST['delivery_date']) && isset($_POST['delivery_by']) ) {
 				$data['data'] = array(
 					'delivery_date'				=> $this->input->post('delivery_date'),
+					'delivery_pi_name'			=> $this->input->post('delivery_pi_name'),
 					'delivery_po_no'			=> $this->input->post('delivery_po_no'),
 					'delivery_by'				=> $this->input->post('delivery_by'),
 					'delivery_status'			=> $this->input->post('delivery_status'),
@@ -355,10 +375,14 @@ class Inventory extends CI_Controller
 				for($i=0; $i<100; $i++)
 				{
 					if( isset($_POST['article_id_'.$i]) )
-					{				
+					{
+						$article_id = explode('-', $this->input->post('article_id_'.$i));
+						$article_id = $article_id[0];	
+										
 						$data['eq_product'] = array(
 							'delivery_id'				=> $this->input->post('delivery_id'),
-							'article_id'				=> $this->input->post('article_id_'.$i),
+							'article_id'				=> $article_id,
+							'article_alt'				=> $this->input->post('article_id_'.$i),
 							'description_id'			=> $this->input->post('description_id_'.$i),
 							'softness_id'				=> $this->input->post('softness_id_'.$i),
 							'width_id'					=> $this->input->post('width_id_'.$i),
@@ -375,16 +399,32 @@ class Inventory extends CI_Controller
 						$i = 100;
 				}
 
-				$cost = $this->inventory_model->get_delivery_cost($this->input->post('delivery_id'));
+				if($this->input->post('delivery_payment') == '0')
+				{
+					$this->accounts_model->delete_bill($this->input->post('delivery_id'));
 
-				$data['statemetns'] = array(
-					'delivery_id'		=> $this->input->post('delivery_id'),
-					'lc_date'			=> $this->input->post('delivery_lc_date'),
-					'value'				=> $cost,
-					'editor_id' 		=> $this->session->userdata('user_id')
-				);
+					$cost = $this->inventory_model->get_delivery_cost($this->input->post('delivery_id'));
 
-				$this->inventory_model->update_statements($this->input->post('delivery_id'), $data['statemetns']);
+					$data['statemetns'] = array(
+						'delivery_id'		=> $this->input->post('delivery_id'),
+						'lc_date'			=> $this->input->post('delivery_lc_date'),
+						'value'				=> $cost,
+						'editor_id' 		=> $this->session->userdata('user_id')
+					);
+
+					$this->inventory_model->update_statements($this->input->post('delivery_id'), $data['statemetns']);
+				}
+				else
+				{
+					$this->inventory_model->delete_statements($this->input->post('delivery_id'));
+
+					$data['bill'] = array(
+						'delivery_id'		=> $this->input->post('delivery_id'),
+						'editor_id' 		=> $this->session->userdata('user_id')
+					);
+
+					$this->accounts_model->update_bill($this->input->post('delivery_id'), $data['bill']);
+				}
 
 				$this->session->set_flashdata('msg', 'Delivery updated successfully!');
 				$this->session->set_flashdata('msg_type', 'success');
@@ -454,7 +494,7 @@ class Inventory extends CI_Controller
 				'js/lib/datepicker/js/bootstrap-datepicker.js', 
 				'js/lib/Sticky/sticky.js', 
 				'js/pages/ebro_notifications.js',
-				'js/pages/ebro_delivery.js'));
+				'js/pages/ebro_invoices.js'));
 
 			$this->breadcrumbs->push('Factory', '#');
 			$this->breadcrumbs->push('Delivery', '../../factory/delivery');
@@ -463,9 +503,10 @@ class Inventory extends CI_Controller
 			$data['breadcrumbs'] = $this->breadcrumbs->show();	
 			$data['delivery_user'] = $this->factory_model->get_delivery_user($data['delivery'][0]['delivery_by']);
 			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
+			$data['payment'] = $this->inventory_model->get_payment_status($id);
 
 			foreach ($data['delivery_products'] as $key => $value) {
-				$data['delivery_products'][$key]['article_name'] = $this->factory_model->get_article($value['article_id']);
+				$data['delivery_products'][$key]['article_name'] = $this->factory_model->get_article_alt_name($value['article_alt']);
 				$data['delivery_products'][$key]['description_name'] = $this->factory_model->get_description($value['description_id']);
 				$data['delivery_products'][$key]['width_name'] = $this->factory_model->get_width($value['width_id']);
 				$data['delivery_products'][$key]['softness_name'] = $this->factory_model->get_softness($value['softness_id']);

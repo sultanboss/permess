@@ -20,17 +20,17 @@ class Marketing_model extends CI_Model {
     function get_order_data() 
     {
         if($this->tank_auth->is_group_member('Users')) {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id');   
+            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id, delivery_details, delivery_payment');   
             $this->datatables->where('delivery_by', $this->session->userdata('user_id'));
             $this->datatables->from('delivery');  
         }
         else if($this->tank_auth->is_group_member('Accounts')) {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id');   
+            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id, delivery_details, delivery_payment');   
             $this->datatables->where("delivery_payment", '1'); 
             $this->datatables->from('delivery');    
         }  
         else {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id');   
+            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id, delivery_details, delivery_payment');   
             $this->datatables->from('delivery');
         }       
 
@@ -41,30 +41,38 @@ class Marketing_model extends CI_Model {
         foreach ($res->aaData as $key => $value) {
             if($res->aaData[$key][5] == '0') {
                 $res->aaData[$key][5] = 'Pending';
-                $res->aaData[$key][7] = '<a title="Edit Order" class="simple_edit" data-id="'.$res->aaData[$key][0].'" data-ref="'.$res->aaData[$key][3].'" data-req="'.$res->aaData[$key][5].'" data-toggle="modal" href="#edit_order"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-red"></span></a>';
+                $res->aaData[$key][7] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-red"></span></a>';
             }
             else if($res->aaData[$key][5] == '2') {
                 $res->aaData[$key][5] = 'Complete';
-                $res->aaData[$key][7] = '<a title="Edit Order" class="simple_edit" data-id="'.$res->aaData[$key][0].'" data-ref="'.$res->aaData[$key][3].'" data-req="'.$res->aaData[$key][5].'" data-toggle="modal" href="#edit_order"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-green"></span></a>';
+                $res->aaData[$key][7] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-green"></span></a>';
             }
             else {
                 $res->aaData[$key][5] = 'Partial';
-                $res->aaData[$key][7] = '<a title="Edit Order" class="simple_edit" data-id="'.$res->aaData[$key][0].'" data-ref="'.$res->aaData[$key][3].'" data-req="'.$res->aaData[$key][5].'" data-toggle="modal" href="#edit_order"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
+                $res->aaData[$key][7] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
             }
 
             if($res->aaData[$key][6] == '0') {
-                $res->aaData[$key][6] = 'No';
+                $res->aaData[$key][6] = 'Pending';
+            }
+            else if($res->aaData[$key][6] == '2') {
+                $res->aaData[$key][6] = 'Complete';
             }
             else {
-                $res->aaData[$key][6] = 'Yes';
+                $res->aaData[$key][6] = 'Partial';
             }
 
-            if($res->aaData[$key][4] == '0') {
-                $res->aaData[$key][4] = 'No';
+            if($res->aaData[$key][9] == 0)
+            {
+                if($res->aaData[$key][4] == '0') {
+                    $res->aaData[$key][4] = 'No';
+                }
+                else {
+                    $res->aaData[$key][4] = 'Yes';
+                }
             }
-            else {
-                $res->aaData[$key][4] = 'Yes';
-            }
+            else
+                $res->aaData[$key][4] = '-';
 
             if($res->aaData[$key][3] == '') {
                 $res->aaData[$key][3] = '-';
@@ -95,7 +103,16 @@ class Marketing_model extends CI_Model {
 
     function get_delivery_status_by_id($delivery_id)
     {
-        $this->db->select('delivery_id, delivery_status, delivery_doc_status, delivery_lc_status');
+        $this->db->select('delivery_id, delivery_status, delivery_doc_status, delivery_lc_status, delivery_request, delivery_payment');
+        $this->db->from('delivery');
+        $this->db->where('delivery_id', $delivery_id);
+        $q = $this->db->get();
+        return $q->result_array();
+    }
+
+    function get_order_details_by_id($delivery_id)
+    {
+        $this->db->select('delivery_id, delivery_request, buyer_order_reference, delivery_details');
         $this->db->from('delivery');
         $this->db->where('delivery_id', $delivery_id);
         $q = $this->db->get();
@@ -140,6 +157,12 @@ class Marketing_model extends CI_Model {
         return false;
     }
 
+    function lc_exist($delivery_id)
+    {
+        $query = $this->db->get_where('statements', array('delivery_id' => $delivery_id), 1);
+        return $query->row()->delivery_id;
+    }
+
     function get_lcstatements_data() 
     {
         if($this->tank_auth->is_group_member('Accounts')) {
@@ -154,6 +177,7 @@ class Marketing_model extends CI_Model {
         }  
         else {
             $this->datatables->select('delivery_id, delivery_date, delivery_company_name, delivery_status, delivery_lc_status, delivery_doc_status, editor_id');   
+            $this->datatables->where('delivery_payment', '0');
             $this->datatables->from('delivery'); 
         }    
 
@@ -191,6 +215,14 @@ class Marketing_model extends CI_Model {
         }
         
         return json_encode($res);
+    }
+
+    function get_payment_status($id) 
+    {
+        $query = $this->db->get_where('bill', array('delivery_id' => $id), 1);
+        if($query->num_rows() > 0)
+            return $query->row()->bill_payment_status;   
+        return null;         
     }
 
 }

@@ -7,45 +7,101 @@
 							<div class="col-sm-12">
 								<div class="col-sm-4 pull-right top-right-btn">
 												<div class="btn-group">
-													<a href="<?php echo base_url(); ?>commercial/editlcstatements/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="LC Statements">
-													<?php
-													if($delivery[0]['delivery_lc_status'] == 0)
-													{
-														?>
-														<span class="glyphicon glyphicon-file largex color-red"></span>
-														<?php
-													}						
-													else
-													{
-														?>
-														<span class="glyphicon glyphicon-file largex color-green"></span>
-														<?php
-													}
-													?>
-													</a>
-													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-print"></span></a>
-													<a href="javascript:void(0)" class="hint--top" data-hint="Order Details">												
+													<a href="javascript:void(0)" class="hint--top" data-hint="Delivery Details">							
 													<?php
 													if($delivery[0]['delivery_status'] == 0)
 													{
 														?>
-														<span class="glyphicon glyphicon-th-large largex color-red"></span>
+														<span class="glyphicon glyphicon-th-large largex color-red toolbar-active"></span>
 														<?php
 													}
 													else if($delivery[0]['delivery_status'] == 2)
 													{
 														?>
-														<span class="glyphicon glyphicon-th-large largex color-green"></span>
+														<span class="glyphicon glyphicon-th-large largex color-green toolbar-active"></span>
 														<?php
 													}
 													else
 													{
 														?>
-														<span class="glyphicon glyphicon-th-large largex color-orange"></span>
+														<span class="glyphicon glyphicon-th-large largex color-orange toolbar-active"></span>
 														<?php
 													}
 													?>
 													</a>
+													<?php 
+													if($delivery[0]['delivery_payment'] == 0)
+													{
+													?>
+														<a href="<?php echo base_url(); ?>commercial/editlcstatements/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="LC Statements">
+														<?php
+														if($delivery[0]['delivery_lc_status'] == 0)
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-red"></span>
+															<?php
+														}						
+														else
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-green"></span>
+															<?php
+														}
+														?>
+														</a>
+													<?php
+													}
+													else
+													{
+													?>
+														<a href="<?php echo base_url(); ?>accounts/paymentdetails/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Payment Details">
+														<?php
+														if($payment == 0)
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-red"></span>
+															<?php
+														}
+														else if($payment == 2)
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-green"></span>
+															<?php
+														}						
+														else
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-orange"></span>
+															<?php
+														}
+														?>
+														</a>
+													<?php
+													}
+													?>
+													<a href="<?php echo base_url(); ?>marketing/orderdetails/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Order Details">
+													<?php
+													if($delivery[0]['delivery_request'] == 0)
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-red"></span>
+														<?php
+													}
+													else if($delivery[0]['delivery_request'] == 2)
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-green"></span>
+														<?php
+													}
+													else
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-orange"></span>
+														<?php
+													}
+													?>
+													</a>
+													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-print"></span></a>
 												</div>	
 								</div>
 								<div class="panel panel-default">
@@ -83,8 +139,8 @@
 														<div class="col-sm-2">
 															<label for="delivery_po_no" class="unreq">P/O Number</label>
 															<input id="delivery_po_no" name="delivery_po_no" class="form-control" type="text" value="<?php echo $del['delivery_po_no']; ?>">
-															<label for="delivery_buyer" class="req double-input">Buyer</label>
-															<input id="delivery_buyer" name="delivery_buyer" class="form-control" type="text" data-required="true" value="<?php echo $del['delivery_buyer']; ?>">
+															<label for="delivery_buyer" class="unreq double-input">Buyer</label>
+															<input id="delivery_buyer" name="delivery_buyer" class="form-control" type="text" value="<?php echo $del['delivery_buyer']; ?>">
 														</div>																
 														<div class="col-sm-2">
 															<label for="delivery_by" class="req">By</label>
@@ -112,6 +168,10 @@
 																$this->tank_auth->load_select_options(array('LC Payment', 'Cash Payment'), $del['delivery_payment']);
 															?>
 															</select>	
+														</div>														
+														<div class="col-sm-2">
+															<label for="delivery_pi_name" class="unreq">P.I. Name</label>
+															<input id="delivery_pi_name" name="delivery_pi_name" class="form-control" type="text" value="<?php echo $del['delivery_pi_name']; ?>">	
 														</div>
 														<div class="col-sm-2 right">
 															<label for="delivery_status" class="req">Delivery Status</label>
@@ -148,19 +208,21 @@
 															<textarea id="delivery_style" name="delivery_style" class="form-control double-text" type="text" data-required="true"><?php echo $del['delivery_style']; ?></textarea>
 														</div>
 														<div class="col-sm-2 right">
-															<label for="delivery_lc_status" class="req">L.C. Status</label>
-															<select id="delivery_lc_status" name="delivery_lc_status" class="form-control" data-required="true">
-															<?php 
-																$this->tank_auth->load_select_options(array('No', 'Yes'), $del['delivery_lc_status']);
-															?>								
-															</select>
-															<div id="lc_date_box">												
-															<div id="delivery_lc_date_value" class="hide"><?php echo $del['delivery_lc_date']; ?></div>
-															<label for="delivery_lc_date"class="req double-input">L.C. Date</label>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="delivery_lc_date" name="delivery_lc_date" class="form-control" type="text" data-required="true">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>
+															<div id="lc_box">
+																<label for="delivery_lc_status" class="req">L.C. Status</label>
+																<select id="delivery_lc_status" name="delivery_lc_status" class="form-control" data-required="true">
+																<?php 
+																	$this->tank_auth->load_select_options(array('No', 'Yes'), $del['delivery_lc_status']);
+																?>								
+																</select>
+																<div id="lc_date_box">												
+																<div id="delivery_lc_date_value" class="hide"><?php echo $del['delivery_lc_date']; ?></div>
+																<label for="delivery_lc_date"class="req double-input">L.C. Date</label>
+																<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+											                        <input id="delivery_lc_date" name="delivery_lc_date" class="form-control" type="text" data-required="true">
+																	<span class="input-group-addon"><i class="icon-calendar"></i></span>
+											                    </div>
+											                    </div>
 										                    </div>
 														</div>
 													</div>
@@ -197,16 +259,16 @@
 																			<select name="article_id" class="article_id form-control" data-required="true">
 																				<?php
 																				foreach ($articles as $key => $value) {	
-																					if($value['article_id'] == $dp['article_id'])
+																					if($value['article_id'] == $dp['article_alt'])
 																					{					
 																					?>
-																					<option value="<?php echo $value['article_id']; ?>" selected><?php echo $value['article_name']; ?></option>
+																					<option class="<?php if(isset($value['class'])) {echo $value['class'];} ?>" value="<?php echo $value['article_id']; ?>" selected><?php echo $value['article_name']; ?></option>
 																					<?php
 																					}
 																					else
 																					{
 																					?>
-																					<option value="<?php echo $value['article_id']; ?>"><?php echo $value['article_name']; ?></option>
+																					<option class="<?php if(isset($value['class'])) {echo $value['class'];} ?>" value="<?php echo $value['article_id']; ?>"><?php echo $value['article_name']; ?></option>
 																					<?php	
 																					}						
 																				}																	
@@ -348,7 +410,7 @@
 																				<?php
 																				foreach ($articles as $key => $value) {							
 																				?>
-																				<option value="<?php echo $value['article_id']; ?>"><?php echo $value['article_name']; ?></option>
+																				<option class="<?php if(isset($value['class'])) {echo $value['class'];} ?>" value="<?php echo $value['article_id']; ?>"><?php echo $value['article_name']; ?></option>
 																				<?php						
 																				}																	
 																				?>				

@@ -1,32 +1,37 @@
 /* [ ---- Ebro Admin - extended form elements ---- ] */
 
 	$(function() {
-		ebro_chained.init();
-		ebro_autosize_textarea.init();
+		//* select2
+		ebro_select2.init();
 	});
 	
-	
-	//* chained selects
-	ebro_chained = {
+	//* select2
+	ebro_select2 = {
 		init: function() {
-			//* remote
-			if($('#business_city').length && $('#business_area').length) {
-				$("#business_area").remoteChained("#business_city", base_url + "admin/business/select");  
-			}
-		}
-	}	
 
-	//* autosize textarea
-	ebro_autosize_textarea = {
-		init: function() {
-			if($('.autosize_textarea').length) {
-				$('.autosize_textarea').each(function() {
-					if($(this).hasClass('animated')) {
-						$(this).autosize({append: "\n"});
-					} else {
-						$(this).autosize();
-					}
-				})
+			// Alternative Article
+			if($('#article_alt').length) {
+				$('#article_alt').select2({
+					placeholder: "Select..."
+				});
+
+				$("#article_alt").on("change", function(e) {
+					$("#article_alt_val").val($("#article_alt").select2("val"));
+				});
 			}
+
+			if($('#edit_article_alt').length) {
+				$('#edit_article_alt').select2({
+					placeholder: "Select..."
+				});
+			}
+
+			//* remove default form-controll class
+			setTimeout(function() {
+				$('.select2-container').each(function() {
+					$(this).removeClass('form-control')
+				})
+			})
 		}
 	};
+	

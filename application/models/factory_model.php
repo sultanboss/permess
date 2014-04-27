@@ -158,6 +158,7 @@ class Factory_model extends CI_Model {
 
     function get_all_article() 
     {
+        $this->db->select('article_id, article_name, article_alt');
         $query = $this->db->get('article');
         return $query->result_array();        
     }
@@ -239,6 +240,46 @@ class Factory_model extends CI_Model {
     {
         $query = $this->db->get_where('description', array('description_id' => $id), 1);
         return $query->row()->description_name;         
+    }
+
+    function get_article_alt_name($alt)
+    {
+        $str = explode('-', $alt);
+        if(count($str) == 2)
+        {
+            return $this->get_article($str[1]);
+        }
+        else
+        {
+            return $this->get_article($str[0]);
+        }
+    }
+
+
+    function get_all_article_with_alt() 
+    {
+        $res = $this->get_all_article(); 
+        $i = 0;  
+        foreach($res as $key => $value) {
+            $res[$i]['class'] = 'parent';
+            $i++;
+            if($value['article_alt'] != '')
+            {
+                $alt = explode(',', $value['article_alt']);
+                foreach ($alt as $k => $v) {  
+                    $str = array();                  
+                    $str['article_id'] = $value['article_id'].'-'.$v;
+                    $str['article_name'] = '&nbsp;&nbsp;- '.$this->get_article($v);
+                    $str['article_alt'] = '';
+                    $str['class'] = 'child';
+
+                    array_splice($res, $i, 0, array($str));
+                    $i++;
+                }
+            }
+        } 
+        
+        return $res;  
     }
 
 }

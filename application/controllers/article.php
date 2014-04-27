@@ -29,14 +29,18 @@ class Article extends CI_Controller
 		$data['title'] = 'Article - Settings';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
+			'js/lib/select2/select2.css',
+			'js/lib/select2/ebro_select2.css', 
 			'js/lib/dataTables/media/DT_bootstrap.css', 
 			'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
 			'js/lib/Sticky/sticky.css'));
 
 		$data['js'] = $this->tank_auth->load_admin_js(array(
+			'js/lib/select2/select2.min.js',
 			'js/lib/iCheck/jquery.icheck.min.js', 
 			'js/lib/parsley/parsley.min.js', 
-			'js/pages/ebro_form_validate.js', 
+			'js/pages/ebro_form_validate.js',
+			'js/pages/ebro_form_extended.js', 
 			'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
 			'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
 			'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
@@ -51,6 +55,7 @@ class Article extends CI_Controller
 		$this->breadcrumbs->push('Articles', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
+		$data['articles'] = $this->article_model->get_all_article();
 
 		$this->load->view('common/header', $data);
 		$this->load->view('article/index', $data);
@@ -72,7 +77,8 @@ class Article extends CI_Controller
 		if ( isset($_POST['article_name']) ) {
 			$data['data'] = array(
 				'article_name'			=> $this->input->post('article_name'),
-				'editor_id' 					=> $this->session->userdata('user_id')
+				'article_alt'			=> $this->input->post('article_alt_val'),
+				'editor_id' 			=> $this->session->userdata('user_id')
 			);
 
 			$this->article_model->add_article($data['data']);
@@ -101,8 +107,9 @@ class Article extends CI_Controller
 
 		if (isset($_POST['article_id']) && isset($_POST['article_name']) ) {
 			$data['data'] = array(
-				'article_name'			=> $this->input->post('article_name'),		
-				'editor_id' 					=> $this->session->userdata('user_id')
+				'article_name'			=> $this->input->post('article_name'),
+				'article_alt'			=> $this->input->post('edit_article_alt_val'),		
+				'editor_id' 			=> $this->session->userdata('user_id')
 			);
 
 			$this->article_model->edit_article($this->input->post('article_id'), $data['data']);

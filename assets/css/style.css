@@ -649,25 +649,28 @@
 	.invoice_table .grand_total .col_total {background:#f4f4f4}
 	.invoice_info {background:#f8f8f8;padding:10px 20px;border:1px solid #e3e3e3}
 	
-	.printable {background:#fff !important;overflow:hidden !important}
-	.printable * {visibility:hidden;overflow:hidden}
-	.printable #sidebar {display:none}
-	.printable #main_content {margin:0;top:0;left:0;position:relative;width:680px;overflow:visible !important}
-	.printable #main_content * {visibility:visible}
-	.printable header,.printable #breadcrumbs,.printable nav,.printable footer,.printable #footer_space,.printable #style_switcher,.printable #top_navigation,.printable #invoice_print {display:none !important}
-	.printable .col-sm-1,.printable .col-sm-2,.printable .col-sm-3,.printable .col-sm-4,.printable .col-sm-5,.printable .col-sm-6,.printable .col-sm-7,.printable .col-sm-8,.printable .col-sm-9,.printable .col-sm-10,.printable .col-sm-11 { float: left }
-	.printable .col-sm-1 { width: 8.333333333333332% }
-	.printable .col-sm-2 { width: 16.666666666666664% }
-	.printable .col-sm-3 { width: 25% }
-	.printable .col-sm-4 { width: 33.33333333333333% }
-	.printable .col-sm-5 { width: 41.66666666666667% }
-	.printable .col-sm-6 { width: 50% }
-	.printable .col-sm-7 { width: 58.333333333333336% }
-	.printable .col-sm-8 { width: 66.66666666666666% }
-	.printable .col-sm-9 { width: 75% }
-	.printable .col-sm-10 { width: 83.33333333333334% }
-	.printable .col-sm-11 { width: 91.66666666666666% }
-	.printable .col-sm-12 { width: 100% }
+	@media print {
+		.printable {background:#fff !important;overflow:hidden !important}
+		.printable * {visibility:hidden;overflow:hidden}
+		.printable #sidebar {display:none}
+		.printable #main_content {margin:0;top:0;left:0;position:relative;width:680px;overflow:visible !important}
+		.printable #main_content * {visibility:visible}
+		.printable header,.printable #breadcrumbs,.printable nav,.printable footer,.printable #footer_space,.printable #style_switcher,.printable #top_navigation,.printable #invoice_print, .printable .top-right-btn, .printable .noprint {display:none !important}
+		.printable .col-sm-1,.printable .col-sm-2,.printable .col-sm-3,.printable .col-sm-4,.printable .col-sm-5,.printable .col-sm-6,.printable .col-sm-7,.printable .col-sm-8,.printable .col-sm-9,.printable .col-sm-10,.printable .col-sm-11 { float: left }
+		.printable .col-sm-1 { width: 8.333333333333332% }
+		.printable .col-sm-2 { width: 16.666666666666664% }
+		.printable .col-sm-3 { width: 25% }
+		.printable .col-sm-4 { width: 33.33333333333333% }
+		.printable .col-sm-5 { width: 41.66666666666667% }
+		.printable .col-sm-6 { width: 50% }
+		.printable .col-sm-7 { width: 58.333333333333336% }
+		.printable .col-sm-8 { width: 66.66666666666666% }
+		.printable .col-sm-9 { width: 75% }
+		.printable .col-sm-10 { width: 83.33333333333334% }
+		.printable .col-sm-11 { width: 91.66666666666666% }
+		.printable .col-sm-12 { width: 100% }
+		.printable .panel-default { border: none !important;}
+	}
 
 	/* mailbox */
 	.mailbox_nav {padding:10px 0 0}
@@ -1178,7 +1181,7 @@
 	}
 
 	.top-right-btn span {
-		border-color: #D3D3D3 !important;
+		border-color: #D3D3D3;
 		border-radius: 0px !important;
 		border-width: 1px !important;
 	}
@@ -1190,6 +1193,11 @@
 		margin-top: -12px;
 	}
 
+	.toolbar-active {
+		background: #FAFAFA;
+		border-bottom: 1px solid #FAFAFA !important;
+	}
+
 	#tr-red {
 		background: #F9F0F0 !important;
 	}
@@ -1199,8 +1207,30 @@
 		border-bottom: none;
 	}
 
+	.upper {
+		text-transform: uppercase;
+	}
+
 	.print {
 		margin: 0 20px;
+	}
+
+	table.table-print table
+	{
+		border-collapse:collapse;
+	}
+	table.table-print , table.table-print td, table.table-print th
+	{
+		border:1px solid #333 !important;
+	}
+
+	.clear {
+		clear: both;
+	}
+
+	option.parent {
+		font-weight: bold;
+		background: #FAFAFA;
 	}
 
 

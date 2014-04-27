@@ -34,8 +34,8 @@
 														<div class="col-sm-2">
 															<label for="delivery_po_no" class="unreq">P/O Number</label>
 															<input id="delivery_po_no" name="delivery_po_no" class="form-control" type="text">
-															<label for="delivery_buyer" class="req double-input">Buyer</label>
-															<input id="delivery_buyer" name="delivery_buyer" class="form-control" type="text" data-required="true">
+															<label for="delivery_buyer" class="unreq double-input">Buyer</label>
+															<input id="delivery_buyer" name="delivery_buyer" class="form-control" type="text">
 														</div>																
 														<div class="col-sm-2">
 															<label for="delivery_by" class="req">By</label>
@@ -54,6 +54,10 @@
 																$this->tank_auth->load_select_options(array('LC Payment', 'Cash Payment'), 0);
 															?>
 															</select>	
+														</div>
+														<div class="col-sm-2">
+															<label for="delivery_pi_name" class="unreq">P.I. Name</label>
+															<input id="delivery_pi_name" name="delivery_pi_name" class="form-control" type="text">	
 														</div>
 														<div class="col-sm-2 right">
 															<label for="delivery_status" class="req">Delivery Status</label>
@@ -90,18 +94,20 @@
 															<textarea id="delivery_style" name="delivery_style" class="form-control double-text" type="text"></textarea>
 														</div>
 														<div class="col-sm-2 right">
-															<label for="delivery_lc_status" class="req">L.C. Status</label>
-															<select id="delivery_lc_status" name="delivery_lc_status" class="form-control" data-required="true">
-															<?php 
-																$this->tank_auth->load_select_options(array('No', 'Yes'), '');
-															?>								
-															</select>
-															<div id="lc_date_box">													
-															<label for="delivery_lc_date"class="req double-input">L.C. Date</label>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="delivery_lc_date" name="delivery_lc_date" class="form-control" type="text" data-required="true">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>
+															<div id="lc_box">
+																<label for="delivery_lc_status" class="req">L.C. Status</label>
+																<select id="delivery_lc_status" name="delivery_lc_status" class="form-control" data-required="true">
+																<?php 
+																	$this->tank_auth->load_select_options(array('No', 'Yes'), '');
+																?>								
+																</select>
+																<div id="lc_date_box">													
+																<label for="delivery_lc_date"class="req double-input">L.C. Date</label>
+																<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+											                        <input id="delivery_lc_date" name="delivery_lc_date" class="form-control" type="text" data-required="true">
+																	<span class="input-group-addon"><i class="icon-calendar"></i></span>
+											                    </div>
+											                    </div>
 										                    </div>
 														</div>
 													</div>
@@ -142,7 +148,7 @@
 																				<?php
 																				foreach ($articles as $key => $value) {							
 																				?>
-																				<option value="<?php echo $value['article_id']; ?>"><?php echo $value['article_name']; ?></option>
+																				<option class="<?php if(isset($value['class'])) {echo $value['class'];} ?>" value="<?php echo $value['article_id']; ?>"><?php echo $value['article_name']; ?></option>
 																				<?php						
 																				}																	
 																				?>				

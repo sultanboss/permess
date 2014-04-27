@@ -18,16 +18,17 @@
             setdate('purchase_date');
             setdate('due_date');
             setdate('due_rdate');  
-
         }
     }
 
     function setdate(val)
     {
-        if($('#' + val + '_value').html() == '0000-00-00') {
-            $('#' + val).val('');
-        }
-        else {
-            $('#' + val).val($('#' + val + '_value').html());
+        if($('#' + val).length) {
+            if($('#' + val + '_value').html() == '0000-00-00') {
+                $('#' + val).val('');
+            }
+            else {
+                $('#' + val).val($('#' + val + '_value').html());
+            }
         }
     }

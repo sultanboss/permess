@@ -39,18 +39,18 @@ class Inventory_model extends CI_Model {
     function get_delivery_data() 
     {
         if($this->tank_auth->is_group_member('Users')) {
-            $this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname");  
+            $this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname, delivery_payment");  
             $this->datatables->from("delivery"); 
             $this->datatables->join('users', 'users.id = delivery.delivery_by AND ak_users.id = '.$this->session->userdata('user_id'));
         }
         else if($this->tank_auth->is_group_member('Accounts')) {
-            $this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname"); 
+            $this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname, delivery_payment"); 
             $this->datatables->where("delivery_payment", '1');  
             $this->datatables->from("delivery"); 
             $this->datatables->join('users', 'users.id = delivery.delivery_by'); 
         } 
         else {
-            $this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname");  
+            $this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname, delivery_payment");  
             $this->datatables->from("delivery"); 
             $this->datatables->join('users', 'users.id = delivery.delivery_by'); 
         }  
@@ -74,12 +74,18 @@ class Inventory_model extends CI_Model {
                 $res->aaData[$key][6] = '<a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="Edit Delivery"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
             }
 
-            if($res->aaData[$key][5] == '0') {
-                $res->aaData[$key][5] = 'No';
+
+            if($res->aaData[$key][8] == 0)
+            {
+                if($res->aaData[$key][5] == '0') {
+                    $res->aaData[$key][5] = 'No';
+                }
+                else {
+                    $res->aaData[$key][5] = 'Yes';
+                }
             }
-            else {
-                $res->aaData[$key][5] = 'Yes';
-            }
+            else
+                $res->aaData[$key][5] = '-';
         }
         
         return json_encode($res);
@@ -199,6 +205,15 @@ class Inventory_model extends CI_Model {
         return false;
     }
 
+    function delete_statements($delivery_id) 
+    {
+        $this->db->where('delivery_id', $delivery_id);
+        $this->db->delete('statements');
+        if($this->db->affected_rows() > 0)
+            return true;
+        return false;
+    }
+
 
     // extra function
     
@@ -208,6 +223,14 @@ class Inventory_model extends CI_Model {
         $this->db->where('group_id', '501');
         $query = $this->db->get('users');
         return $query->result_array();
+    }
+
+    function get_payment_status($id) 
+    {
+        $query = $this->db->get_where('bill', array('delivery_id' => $id), 1);
+        if($query->num_rows() > 0)
+            return $query->row()->bill_payment_status;   
+        return null;      
     }
 
 }

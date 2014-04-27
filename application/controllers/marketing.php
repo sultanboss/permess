@@ -56,6 +56,80 @@ class Marketing extends CI_Controller
 		$this->load->view('common/footer', $data);
 	}
 
+	function orderdetails($id)
+	{
+		if (!$this->tank_auth->is_logged_in()) {
+			redirect('');
+		}
+
+		if ( isset($id) ) {
+
+			$data['status'] = $this->marketing_model->get_delivery_status_by_id($id);
+			if(empty($data['status'])) {
+				$this->session->set_flashdata('msg', 'Invalid delivery input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+				redirect('/commercial/lcstatements');
+			}
+
+			if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->marketing_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}
+			else if($this->tank_auth->is_group_member('Users')) {
+				if(!$this->marketing_model->users_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}
+
+			$data['title'] = 'Update Order';
+
+			$data['css'] = $this->tank_auth->load_admin_css(array(
+				'js/lib/dataTables/media/DT_bootstrap.css', 
+				'js/lib/datepicker/css/datepicker.css',
+				'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+				'css/hint-css/hint.css',
+				'js/lib/Sticky/sticky.css'));
+
+			$data['js'] = $this->tank_auth->load_admin_js(array(
+				'js/lib/iCheck/jquery.icheck.min.js', 
+				'js/lib/parsley/parsley.min.js', 
+				'js/pages/ebro_form_validate.js', 
+				'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+				'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+				'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+				'js/lib/dataTables/media/DT_bootstrap.js', 
+				'js/pages/ebro_datatables.js', 
+				'js/lib/bootbox/bootbox.min.js', 
+				'js/lib/datepicker/js/bootstrap-datepicker.js', 
+				'js/lib/Sticky/sticky.js', 
+				'js/pages/ebro_notifications.js',
+				'js/pages/ebro_marketing.js'));
+
+			$this->breadcrumbs->push('Marketing', '#');
+			$this->breadcrumbs->push('Update Order', '#');
+
+			$data['breadcrumbs'] = $this->breadcrumbs->show();
+
+			$data['order'] = $this->marketing_model->get_order_details_by_id($id);
+			$data['payment'] = $this->marketing_model->get_payment_status($id);
+
+			$this->load->view('common/header', $data);
+			$this->load->view('marketing/orderdetails', $data);
+			$this->load->view('common/footer', $data);
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', 'Invalid delivery input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('/commercial/lcstatements');
+		}
+	}
+
 	function editorder()
 	{
 		if (!$this->tank_auth->is_logged_in()) {
@@ -71,27 +145,31 @@ class Marketing extends CI_Controller
 
 		if (isset($_POST['delivery_id'])) {
 
-			if(!$this->marketing_model->users_delivery_check($this->input->post('delivery_id'))) {
-				$this->session->set_flashdata('msg', 'Invalid Access!');
-				$this->session->set_flashdata('msg_type', 'warning');
-				redirect('');
+			if($this->tank_auth->is_group_member('Users') )	{
+				if(!$this->marketing_model->users_delivery_check($this->input->post('delivery_id'))) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
 			}
 			
 			$data['data'] = array(
 				'buyer_order_reference'			=> $this->input->post('buyer_order_reference'),		
-				'delivery_request' 				=> $this->input->post('delivery_request')
+				'delivery_request' 				=> $this->input->post('delivery_request'),	
+				'delivery_details' 				=> $this->input->post('delivery_details')
 			);
 
 			$this->marketing_model->update_order($this->input->post('delivery_id'), $data['data']);
 			$this->session->set_flashdata('msg', 'Order <b>\''.$this->input->post('delivery_id').'\'</b> updated successfully!');
 			$this->session->set_flashdata('msg_type', 'success');
+
+			redirect('/marketing/orderdetails/'.$this->input->post('delivery_id'));
 		}
 		else {
 			$this->session->set_flashdata('msg', 'Invalid order input!');
 			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('/marketing/order');
 		}
-
-		redirect('/marketing/order');
 	}
 
 	function dataorder()
@@ -159,8 +237,9 @@ class Marketing extends CI_Controller
 
 		if ( isset($id) ) {
 
-			$data['status'] = $this->marketing_model->get_delivery_status_by_id($id);
-			if(empty($data['status'])) {
+			$data['check'] = $this->marketing_model->lc_exist($id);
+
+			if(empty($data['check'])) {
 				$this->session->set_flashdata('msg', 'Invalid delivery input!');
 				$this->session->set_flashdata('msg_type', 'warning');
 				redirect('/commercial/lcstatements');
@@ -205,11 +284,11 @@ class Marketing extends CI_Controller
 				'js/pages/ebro_notifications.js',
 				'js/pages/ebro_marketing.js'));
 
-			$this->breadcrumbs->push('Marketing', '#');
 			$this->breadcrumbs->push('Commercial', '#');
 			$this->breadcrumbs->push('Edit LC Statements', '#');
 
 			$data['breadcrumbs'] = $this->breadcrumbs->show();
+			$data['status'] = $this->marketing_model->get_delivery_status_by_id($id);
 
 			$data['statements'] = $this->marketing_model->get_delivery_statemetns_by_id($id);			
 			$data['commission'] = $this->marketing_model->get_delivery_comission_by_id($id);

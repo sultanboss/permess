@@ -82,7 +82,15 @@
                         
                         $('#article_table').delegate('.simple_edit', 'click', function() {
                             $("#edit_article_name").val($(this).attr('data-name'));
+                            $("#edit_article_alt_val").val($(this).attr('data-alt'));
                             $("#edit_article_id").val($(this).attr('data-id'));
+
+                            var arr = $(this).attr('data-alt').split(',');
+                            $('#edit_article_alt').select2("val", arr);
+
+                            $("#edit_article_alt").on("change", function(e) {
+                                $("#edit_article_alt_val").val($("#edit_article_alt").select2("val"));
+                            });
                         });
 
                         $('#article_table').delegate('.bootbox_confirm', 'click', function(e) {
@@ -512,13 +520,6 @@
                     "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
                     "fnInitComplete": function(oSettings, json) {
                         $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
-                        
-                        $('#order_table').delegate('.simple_edit', 'click', function() {
-                            $("#buyer_order_reference").val($(this).attr('data-ref'));
-                            $("#delivery_request").val($(this).attr('data-req'));
-                            $("#delivery_id").val($(this).attr('data-id'));
-                            $("#delivery_id_old").val($(this).attr('data-id'));
-                        });
                     }
                 });
             }

@@ -52,6 +52,21 @@
                 $('#lc_date_box').hide(200);
 
 
+            $('#delivery_payment').change(function(){
+                var value = $(this).find(':selected')[0].value;
+                if(value == '0')
+                    $('#lc_box').show(200);
+                else
+                    $('#lc_box').hide(200);
+            });
+
+            var paymenttype = $('#delivery_payment').find(':selected')[0].value;
+            if(paymenttype == '0')
+                $('#lc_box').show(200);
+            else
+                $('#lc_box').hide(200);
+
+
             $('#delivery_lc_status').change(function(){
                 var value = $(this).find(':selected')[0].value;
                 if(value == '1')
@@ -81,6 +96,7 @@
                         
                             var ar = {};
                             ar['delivery_date']             = $('#delivery_date').val();
+                            ar['delivery_pi_name']          = $('#delivery_pi_name').val();
                             ar['delivery_po_no']            = $('#delivery_po_no').val();
                             ar['delivery_by']               = $('#delivery_by').val();
                             ar['delivery_status']           = $('#delivery_status').val();
@@ -156,6 +172,7 @@
                         
                             var ar = {};
                             ar['delivery_id']               = $('#delivery_pi_no').val();
+                            ar['delivery_pi_name']          = $('#delivery_pi_name').val();
                             ar['delivery_date']             = $('#delivery_date').val();
                             ar['delivery_po_no']            = $('#delivery_po_no').val();
                             ar['delivery_by']               = $('#delivery_by').val();

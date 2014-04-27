@@ -38,14 +38,48 @@ class Article_model extends CI_Model {
 
     function get_article_data() 
     {
-        $this->datatables->select('article_id, article_name, editor_id');   
+        $this->datatables->select('article_id, article_name, article_alt, editor_id');   
         $this->datatables->from('article');       
 
-        $this->datatables->edit_column('editor_id', '<a class="simple_edit" data-name="$1" data-id="$2" data-toggle="modal" href="#edit_article"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a class=" bootbox_confirm" href="'.base_url().'article/delete/$2"><span class="icon-trash"></span></a>', 'article_name, article_id');
+        $this->datatables->edit_column('editor_id', '<a class="simple_edit" data-name="$1" data-id="$2" data-alt="$3" data-toggle="modal" href="#edit_article"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a class=" bootbox_confirm" href="'.base_url().'article/delete/$2"><span class="icon-trash"></span></a>', 'article_name, article_id, article_alt');
 
         $res = $this->datatables->generate();
+
+        $res = json_decode($res);
+
+        foreach ($res->aaData as $key => $value) { 
+            $res->aaData[$key][2] = $this->get_article_name($res->aaData[$key][2]);    
+        }
         
-        return $res;
+        return json_encode($res);
+    }
+
+    function get_all_article() 
+    {
+        $query = $this->db->get('article');
+        return $query->result_array();        
+    }
+
+    function get_article_name($string)
+    {
+        $val = '-';
+        if($string != '')
+        {
+            $alt = explode(',', $string);
+            $i = 1;                
+            foreach($alt as $key => $value) {
+                if($i == 1) {
+                    $query = $this->db->get_where('article', array('article_id' => $value), 1);
+                    $val = $query->row()->article_name;
+                }
+                else {
+                    $query = $this->db->get_where('article', array('article_id' => $value), 1);
+                    $val.= ' &nbsp;&nbsp;|&nbsp;&nbsp; '.$query->row()->article_name;
+                }
+                $i++;
+            } 
+        }
+        return $val;
     }
 
 }

@@ -7,24 +7,7 @@
 							<div class="col-sm-12">
 								<div class="col-sm-4 pull-right top-right-btn">
 												<div class="btn-group">
-													<a href="<?php echo base_url(); ?>commercial/editlcstatements/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="LC Statements">
-													<?php
-													if($delivery[0]['delivery_lc_status'] == 0)
-													{
-														?>
-														<span class="glyphicon glyphicon-file largex color-red"></span>
-														<?php
-													}						
-													else
-													{
-														?>
-														<span class="glyphicon glyphicon-file largex color-green"></span>
-														<?php
-													}
-													?>
-													</a>
-													<a href="javascript:void(0)" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-blue"></span></a>
-													<a href="<?php echo base_url(); ?>factory/editdelivery/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Order Details">												
+													<a href="<?php echo base_url(); ?>factory/editdelivery/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Delivery Details">												
 													<?php
 													if($delivery[0]['delivery_status'] == 0)
 													{
@@ -46,6 +29,79 @@
 													}
 													?>
 													</a>
+													<?php 
+													if($delivery[0]['delivery_payment'] == 0)
+													{
+													?>
+														<a href="<?php echo base_url(); ?>commercial/editlcstatements/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="LC Statements">
+														<?php
+														if($delivery[0]['delivery_lc_status'] == 0)
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-red"></span>
+															<?php
+														}						
+														else
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-green"></span>
+															<?php
+														}
+														?>
+														</a>
+													<?php
+													}
+													else
+													{
+													?>
+														<a href="<?php echo base_url(); ?>accounts/paymentdetails/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Payment Details">
+														<?php
+														if($payment == 0)
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-red"></span>
+															<?php
+														}
+														else if($payment == 2)
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-green"></span>
+															<?php
+														}						
+														else
+														{
+															?>
+															<span class="glyphicon glyphicon-file largex color-orange"></span>
+															<?php
+														}
+														?>
+														</a>
+													<?php
+													}
+													?>
+													<a href="<?php echo base_url(); ?>marketing/orderdetails/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Order Details">
+													<?php
+													if($delivery[0]['delivery_request'] == 0)
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-red"></span>
+														<?php
+													}
+													else if($delivery[0]['delivery_request'] == 2)
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-green"></span>
+														<?php
+													}
+													else
+													{
+														?>
+														<span class="glyphicon glyphicon-list-alt largex color-orange"></span>
+														<?php
+													}
+													?>
+													</a>
+													<a id="invoice_print" href="javascript:void(0)" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-blue toolbar-active"></span></a>
 												</div>	
 								</div>
 								<div class="panel panel-default">
@@ -55,32 +111,38 @@
 											<div class="row">											
 												<div class="col-sm-4">
 													<p>To</p>
-													<p><strong><?php echo $delivery[0]['delivery_company_name'];?></strong></p>
+													<p style="font-size: 13px;"><b><?php echo $delivery[0]['delivery_company_name'];?></b></p>
 													<p><?php echo $delivery[0]['delivery_company_address'];?></p>
+													<?php
+													if($delivery[0]['delivery_address'] != '') {
+													?>
+													<br>
+													<p><b>Delivery Address:</b></p>
+													<p><?php echo $delivery[0]['delivery_address'];?></p>
+													<?php } ?>
 												</div>
 												<div class="col-sm-4">&nbsp;</div>
 												<div class="col-sm-4">
-													<p><b>P/I #</b> PSEAL/WINNERS/<?php echo $delivery[0]['delivery_id'];?>/<?php echo date('Y');?></p>
+													<p><b>P/I #</b> PSEAL/<?php	if($delivery[0]['delivery_pi_name'] != '') { echo $delivery[0]['delivery_pi_name'].'/'; } ?><?php echo $delivery[0]['delivery_id'];?>/<?php echo date('Y');?></p>
 													<p><b>Date:</b> <?php echo $delivery[0]['delivery_date'];?></p>
 													<p><b>Contact Person:</b> <?php echo $delivery[0]['delivery_contact_person'];?></p>
 													<p><b>Buyer</b> - <?php echo $delivery[0]['delivery_buyer'];?></p>
 													<p><b>By:</b> <?php echo $delivery_user;?></p>
-													<p><b>Payment</b> - 90 Days 
+													<p><b>Payment</b> - 
 													<?php 
 													if($delivery[0]['delivery_payment']=='0')
-														echo "LC Payment";
+														echo "90 Days LC Payment";
 													else
-														echo "Cash Payment";
+														echo "Cash/Cheque/TT Payment";
 													?>
 												</div>
-												<div class="col-sm-12">
-													&nbsp;
-												</div>												
+												<div class="clear"></div>											
 												<div class="col-sm-12 text-center">
+													<br>
 													<p>Style:- <?php echo $delivery[0]['delivery_style'];?></p>
 												</div>
 												<div class="col-sm-12">
-													<table class="table table-bordered">
+													<table class="table table-bordered table-print">
 														<thead>
 															<tr>
 																<th>No.</th>
@@ -101,8 +163,7 @@
 															<tr>
 																<td><?php echo $x; ?>.</td>
 																<td class="text-center">
-																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?><br>
-																<?php echo $value['description_name']; ?>, Width: <?php echo $value['width_name']; ?>
+																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>, <?php echo $value['description_name']; ?>, Width: <?php echo $value['width_name']; ?>
 																<?php
 																if($x == $y)
 																	echo "<br><br><br><br>";
@@ -129,7 +190,10 @@
 													</table>													
 												</div>
 												<div class="col-sm-12">
-													<p><i><b>Amount in Words:</b></i> US DOLLAR ONE THOUSAND SIX HUNDRED THIRTY ONLY.</p>
+													<p><i><b>Amount in Words:</b></i> <span class="upper">us dollar
+													<?php
+														echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', ''));
+													?> only.</span></p>
 												</div>
 												<div class="col-sm-12">
 													<br><br>

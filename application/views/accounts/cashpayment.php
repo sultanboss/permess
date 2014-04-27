@@ -7,7 +7,7 @@
 							<div class="col-sm-12">
 								<div class="panel panel-default">
 									<div class="panel_controls">
-										<h4 class="heading_a">Cash Payment Orders:</h4>
+										<h4 class="heading_a">Cash / Cheque / TT Payments:</h4>
 										<div class="row">											
 											<div class="col-sm-12">
 												&nbsp;
@@ -20,9 +20,8 @@
 												<th width="10%">P.I. Issue</th>
 												<th width="15%">Date</th>
 												<th width="20%">Company</th>
-												<th width="13%">L/C Status</th>
-												<th width="13%">Delivery Status</th>
-												<th width="12%">Delivery Request</th>												
+												<th width="13%">Delivery Status</th>												
+												<th width="13%">Delivery Request</th>												
 												<th width="10%">Change</th>
 											</tr>
 										</thead>
