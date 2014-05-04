@@ -16,5 +16,21 @@
                     $('#dpStart').datepicker('setEndDate', e.date)
                 });
             }
+
+            if( ($('#type').length) ) {
+                var lcval = $('#type').find(':selected')[0].value;
+                if(lcval == '1')
+                    $('#single').show(200);
+                else
+                    $('#single').hide(200);
+
+                $('#type').change(function(){
+                    var value = $(this).find(':selected')[0].value;
+                    if(value == '1')
+                        $('#single').show(200);
+                    else
+                        $('#single').hide(200);
+                });
+            }
         }
     }

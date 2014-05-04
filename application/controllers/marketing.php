@@ -16,9 +16,7 @@ class Marketing extends CI_Controller
 
 	function order()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -58,9 +56,7 @@ class Marketing extends CI_Controller
 
 	function orderdetails($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if ( isset($id) ) {
 
@@ -132,9 +128,7 @@ class Marketing extends CI_Controller
 
 	function editorder()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -174,9 +168,7 @@ class Marketing extends CI_Controller
 
 	function dataorder()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -189,9 +181,7 @@ class Marketing extends CI_Controller
 
 	function lcstatements()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -231,9 +221,7 @@ class Marketing extends CI_Controller
 
 	function editlcstatements($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if ( isset($id) ) {
 
@@ -307,9 +295,7 @@ class Marketing extends CI_Controller
 
 	function updatelcstatements()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -367,10 +353,272 @@ class Marketing extends CI_Controller
 
 	function datalcstatements()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
+		$this->tank_auth->check_login();
+
+		print_r($this->marketing_model->get_lcstatements_data());
+	}
+
+	function expissues()
+	{
+		$this->tank_auth->check_login();
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
 		}
 
-		print_r($this->marketing_model->get_lcstatements_data());
+		$data['title'] = 'Export Issues - Commercial';
+
+		$data['css'] = $this->tank_auth->load_admin_css(array(
+			'js/lib/dataTables/media/DT_bootstrap.css', 
+			'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+			'js/lib/Sticky/sticky.css'));
+
+		$data['js'] = $this->tank_auth->load_admin_js(array(
+			'js/lib/iCheck/jquery.icheck.min.js', 
+			'js/lib/parsley/parsley.min.js', 
+			'js/pages/ebro_form_validate.js', 
+			'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+			'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+			'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+			'js/lib/dataTables/media/DT_bootstrap.js', 
+			'js/pages/ebro_datatables.js', 
+			'js/lib/bootbox/bootbox.min.js', 
+			'js/lib/Sticky/sticky.js', 
+			'js/pages/ebro_notifications.js'));
+
+		$this->breadcrumbs->push('Commercial', '#');
+		$this->breadcrumbs->push('Export Issues', '#');
+
+		$data['breadcrumbs'] = $this->breadcrumbs->show();
+
+		$this->load->view('common/header', $data);
+		$this->load->view('marketing/expissues', $data);
+		$this->load->view('common/footer', $data);
+	}
+
+	function addexpissues()
+	{
+		$this->tank_auth->check_login();
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		$data['title'] = 'Add Export Issue - Commercial';
+
+		$data['css'] = $this->tank_auth->load_admin_css(array(
+			'js/lib/dataTables/media/DT_bootstrap.css', 
+			'js/lib/datepicker/css/datepicker.css',
+			'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+			'css/hint-css/hint.css',
+			'js/lib/Sticky/sticky.css'));
+
+		$data['js'] = $this->tank_auth->load_admin_js(array(
+			'js/lib/iCheck/jquery.icheck.min.js', 
+			'js/lib/parsley/parsley.min.js', 
+			'js/pages/ebro_form_validate.js', 
+			'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+			'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+			'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+			'js/lib/dataTables/media/DT_bootstrap.js', 
+			'js/pages/ebro_datatables.js', 
+			'js/lib/bootbox/bootbox.min.js', 
+			'js/lib/datepicker/js/bootstrap-datepicker.js', 
+			'js/lib/Sticky/sticky.js', 
+			'js/pages/ebro_notifications.js',
+			'js/pages/ebro_marketing.js'));
+
+		$this->breadcrumbs->push('Commercial', '#');
+		$this->breadcrumbs->push('Export Issues', base_url().'commercial/expissues');
+		$this->breadcrumbs->push('Add Export Issue', '#');
+
+		$data['breadcrumbs'] = $this->breadcrumbs->show();
+
+		$this->load->view('common/header', $data);
+		$this->load->view('marketing/addexpissues', $data);
+		$this->load->view('common/footer', $data);
+	}
+
+	function addexp()
+	{
+		$this->tank_auth->check_login();
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		if ( isset($_POST['issue_date']) ) {
+			$data['data'] = array(
+				'issue_date'					=> $this->input->post('issue_date'),
+				'send_date'						=> $this->input->post('send_date'),
+				'receive_date'					=> $this->input->post('receive_date'),
+				'ip_date'						=> $this->input->post('ip_date'),
+				'up_date'						=> $this->input->post('up_date'),
+				'party_name'					=> $this->input->post('party_name'),
+				'value'							=> $this->input->post('value'),
+				'status'						=> $this->input->post('status'),
+				'bank_submit_date'				=> $this->input->post('exp_bank_submit_date'),
+				'due_date'						=> $this->input->post('exp_due_date'),
+				'payment_collection_date'		=> $this->input->post('payment_collection_date'),
+				'charge'						=> $this->input->post('charte'),
+				'remarks'						=> $this->input->post('remarks'),
+				'editor_id' 					=> $this->session->userdata('user_id')
+			);
+
+			$id = $this->marketing_model->add_exp($data['data']);
+			$this->session->set_flashdata('msg', 'Export Issue added successfully!');
+			$this->session->set_flashdata('msg_type', 'success');
+			redirect('/commercial/editexpissues/'.$id);
+		}
+		else {
+			$this->session->set_flashdata('msg', 'Invalid Export Issue input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+		}
+
+		redirect('/commercial/expissues');
+	}
+
+	function editexpissues($id)
+	{
+		$this->tank_auth->check_login();
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		if ( isset($id) ) {		
+
+			$data['export'] = $this->marketing_model->get_export_by_id($id);
+
+			if(empty($data['export'])) {
+				$this->session->set_flashdata('msg', 'Invalid Export Issue Input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+				redirect('/commercial/expissues');
+			}
+
+			$data['title'] = 'Update Export Issue';
+
+			$data['css'] = $this->tank_auth->load_admin_css(array(
+				'js/lib/dataTables/media/DT_bootstrap.css', 
+				'js/lib/datepicker/css/datepicker.css',
+				'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+				'css/hint-css/hint.css',
+				'js/lib/Sticky/sticky.css'));
+
+			$data['js'] = $this->tank_auth->load_admin_js(array(
+				'js/lib/iCheck/jquery.icheck.min.js', 
+				'js/lib/parsley/parsley.min.js', 
+				'js/pages/ebro_form_validate.js', 
+				'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+				'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+				'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+				'js/lib/dataTables/media/DT_bootstrap.js', 
+				'js/pages/ebro_datatables.js', 
+				'js/lib/bootbox/bootbox.min.js', 
+				'js/lib/datepicker/js/bootstrap-datepicker.js', 
+				'js/lib/Sticky/sticky.js', 
+				'js/pages/ebro_notifications.js',
+				'js/pages/ebro_marketing.js'));
+
+			$this->breadcrumbs->push('Commercial', '#');
+			$this->breadcrumbs->push('Export Issues', base_url().'commercial/expissues');
+			$this->breadcrumbs->push('Update Export Issue', '#');
+
+			$data['breadcrumbs'] = $this->breadcrumbs->show();
+
+			$this->load->view('common/header', $data);
+			$this->load->view('marketing/editexpissues', $data);
+			$this->load->view('common/footer', $data);
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', 'Invalid delivery input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('/commercial/expissues');
+		}
+	}
+
+	function updateexpissues()
+	{
+		$this->tank_auth->check_login();
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		if ( isset($_POST['export_id']) ) {
+			$data['data'] = array(
+				'issue_date'					=> $this->input->post('issue_date'),
+				'send_date'						=> $this->input->post('send_date'),
+				'receive_date'					=> $this->input->post('receive_date'),
+				'ip_date'						=> $this->input->post('ip_date'),
+				'up_date'						=> $this->input->post('up_date'),
+				'party_name'					=> $this->input->post('party_name'),
+				'value'							=> $this->input->post('value'),
+				'status'						=> $this->input->post('status'),
+				'bank_submit_date'				=> $this->input->post('exp_bank_submit_date'),
+				'due_date'						=> $this->input->post('exp_due_date'),
+				'payment_collection_date'		=> $this->input->post('payment_collection_date'),
+				'charge'						=> $this->input->post('charte'),
+				'remarks'						=> $this->input->post('remarks'),
+				'editor_id' 					=> $this->session->userdata('user_id')
+			);
+
+			$this->marketing_model->edit_exp($this->input->post('export_id'), $data['data']);
+			$this->session->set_flashdata('msg', 'Export Issue updated successfully!');
+			$this->session->set_flashdata('msg_type', 'success');
+			redirect('/commercial/editexpissues/'.$this->input->post('export_id'));
+		}
+		else {
+			$this->session->set_flashdata('msg', 'Invalid Export Issue input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+		}
+
+		redirect('/commercial/expissues');
+	}
+
+	function deleteexpissues($id)
+	{
+		$this->tank_auth->check_login();
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		if ( isset($id) ) {
+			if($this->marketing_model->delete_exp($id)) {
+				$this->session->set_flashdata('msg', 'Export Issue deleted successfully!');
+				$this->session->set_flashdata('msg_type', 'success');
+			}
+			else {
+				$this->session->set_flashdata('msg', 'Invalid Export Issue delete input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+			}						
+		}
+		else {
+			$this->session->set_flashdata('msg', 'Invalid Export Issue delete input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+		}
+
+		redirect('/commercial/expissues');
+	}
+
+	function dataexpissues()
+	{
+		$this->tank_auth->check_login();
+
+		print_r($this->marketing_model->get_expissues_data());
 	}
 }

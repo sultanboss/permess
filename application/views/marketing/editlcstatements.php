@@ -219,23 +219,24 @@
 														<div class="col-sm-2 right">
 														</div>	
 													</div>
+													<div class="form_sep">
+														<div class="col-sm-12 text-right">	
+															<?php
+															if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial')) 
+			            									{
+			            									?>		
+															<a class="btn btn-warning btn-sm" href="<?php echo base_url();?>commercial/lcstatements"><span class="icon-double-angle-left"></span> Back</a>&nbsp;&nbsp;&nbsp;<button class="btn btn-success btn-sm" id="btn_product_submit" type="submit"><span class="icon-refresh"></span> Update LC Statements</button>
+															<?php
+															}
+															?>
+															<br><br><br>
+														</div>
+													</div>
 												</div>	
 											</div>
 											<?php
 											}
 											?>
-											<div class="row">	
-												<div class="col-sm-12">	
-													<?php
-													if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial')) 
-	            									{
-	            									?>		
-													<button class="btn btn-success btn-sm right" id="btn_product_submit" style="margin-top: 10px; margin-right: 10px;" type="submit"><span class="icon-refresh"></span> Update LC Statements</button>
-													<?php
-													}
-													?>
-												</div>
-											</div>
 										</div>
 									</form>
 								</div>

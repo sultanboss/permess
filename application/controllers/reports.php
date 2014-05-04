@@ -14,13 +14,11 @@ class Reports extends CI_Controller
 		$this->load->model('reports_model');
 	}
 
-	function enquiry()
+	function import()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
-		$data['title'] = 'Reports';
+		$data['title'] = 'Import - Reports';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/datepicker/css/datepicker.css',
@@ -48,69 +46,44 @@ class Reports extends CI_Controller
 			'js/pages/ebro_notifications.js',
 			'js/pages/ebro_reports.js'));
 
-		$this->breadcrumbs->push('Admin', '#');
 		$this->breadcrumbs->push('Reports', '#');
+		$this->breadcrumbs->push('Import', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
+		$data['articles'] = $this->reports_model->get_all_article();
+		$data['constructions'] = $this->reports_model->get_all_construction();
+		$data['widths'] = $this->reports_model->get_all_width();
+		$data['softnesses'] = $this->reports_model->get_all_softness();
+		$data['colors'] = $this->reports_model->get_all_color();
+		$data['sources'] = $this->reports_model->get_all_source();
 
-		$data['enquiry'] = array();
-		$data['enquiry_product'] = array();
+		$data['start_date'] 		= '';
+		$data['end_date'] 			= '';
+		$data['type'] 				= '';
+		$data['article_name'] 		= '';
+		$data['construction_name'] 	= '';
+		$data['width_name'] 		= '';
+		$data['softness_name'] 		= '';
+		$data['color_name'] 		= '';
+		$data['source_name'] 		= '';
+
+		$data['import'] = array();
 		if ( isset($_POST['start_date']) && isset($_POST['end_date']) && ($_POST['start_date'] != '') && ($_POST['end_date'] != '')) {
-			$data['enquiry'] = $this->reports_model->get_enquiry($_POST['start_date'], $_POST['end_date']);
-			$data['enquiry_product'] = $this->reports_model->get_enquiry_product($_POST['start_date'], $_POST['end_date']);
-		}		
+			$data['import'] = $this->reports_model->get_import($_POST['start_date'], $_POST['end_date'], $_POST['type'], $_POST['article_name'], $_POST['construction_name'], $_POST['width_name'], $_POST['softness_name'], $_POST['color_name'], $_POST['source_name']);
 
-		$this->load->view('common/header', $data);
-		$this->load->view('reports/enquiry', $data);
-		$this->load->view('common/footer', $data);
-	}
-
-	function followup()
-	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
-
-		$data['title'] = 'Reports';
-
-		$data['css'] = $this->tank_auth->load_admin_css(array(
-			'js/lib/datepicker/css/datepicker.css',
-			'js/lib/select2/select2.css', 
-			'js/lib/select2/ebro_select2.css', 
-			'js/lib/dataTables/media/DT_bootstrap.css', 
-			'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
-			'js/lib/Sticky/sticky.css'));
-
-		$data['js'] = $this->tank_auth->load_admin_js(array(
-			'js/lib/iCheck/jquery.icheck.min.js', 
-			'js/lib/parsley/parsley.min.js', 
-			'js/pages/ebro_form_validate.js', 
-			'js/lib/select2/select2.min.js', 
-			'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
-			'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
-			'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
-			'js/lib/dataTables/extras/TableTools/media/js/TableTools.min.js',
-			'js/lib/dataTables/extras/TableTools/media/js/ZeroClipboard.js',
-			'js/lib/dataTables/media/DT_bootstrap.js', 
-			'js/pages/ebro_datatables.js', 
-			'js/lib/bootbox/bootbox.min.js', 
-			'js/lib/datepicker/js/bootstrap-datepicker.js', 
-			'js/lib/Sticky/sticky.js', 
-			'js/pages/ebro_notifications.js',
-			'js/pages/ebro_reports.js'));
-
-		$this->breadcrumbs->push('Admin', '#');
-		$this->breadcrumbs->push('Reports', '#');
-
-		$data['breadcrumbs'] = $this->breadcrumbs->show();
-
-		$data['followup'] = array();
-		if ( isset($_POST['start_date']) && isset($_POST['end_date']) && ($_POST['start_date'] != '') && ($_POST['end_date'] != '')) {
-			$data['followup'] = $this->reports_model->get_followup($_POST['start_date'], $_POST['end_date']);
+			$data['start_date'] 		= $_POST['start_date'];
+			$data['end_date'] 			= $_POST['end_date'];
+			$data['type'] 				= $_POST['type'];
+			$data['article_name'] 		= $_POST['article_name'];
+			$data['construction_name'] 	= $_POST['construction_name'];
+			$data['width_name'] 		= $_POST['width_name'];
+			$data['softness_name'] 		= $_POST['softness_name'];
+			$data['color_name'] 		= $_POST['color_name'];
+			$data['source_name'] 		= $_POST['source_name'];
 		}	
 
 		$this->load->view('common/header', $data);
-		$this->load->view('reports/followup', $data);
+		$this->load->view('reports/import', $data);
 		$this->load->view('common/footer', $data);
 	}
 }

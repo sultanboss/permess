@@ -394,8 +394,8 @@
 													if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
 	            									{
 	            									?>
-													<button class="btn btn-success btn-sm" id="btn_product_add"><span class="icon-plus"></span> Add Products</button>
-													<button class="btn btn-info btn-sm right" id="btn_product_submit" style="margin-top: 10px; margin-right: 10px;" type="submit"><span class="icon-refresh"></span> Update Delivery</button>
+													<button class="btn btn-info btn-sm" id="btn_product_add"><span class="icon-plus"></span></button>
+													<button class="btn btn-success btn-sm right" id="btn_product_submit" style="margin-top: 10px; margin-right: 9px;" type="submit"><span class="icon-refresh"></span> Update Delivery</button><a class="btn btn-warning btn-sm right" style="margin-top: 10px; margin-right: 10px;" href="<?php echo base_url();?>factory/delivery"><span class="icon-double-angle-left"></span></a>
 													<?php
 													}
 													?>

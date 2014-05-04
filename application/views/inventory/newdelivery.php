@@ -135,8 +135,8 @@
 													<tbody>	
 													</tbody>																		
 													</table>
-													<button class="btn btn-success btn-sm" id="btn_product_add"><span class="icon-plus"></span> Add Products</button>
-													<button class="btn btn-info btn-sm right" id="btn_product_submit" style="margin-top: 10px; margin-right: 10px;" type="submit"><span class="icon-plus"></span> Submit Delivery</button>
+													<button class="btn btn-info btn-sm" id="btn_product_add"><span class="icon-plus"></span></button>
+													<button class="btn btn-success btn-sm right" id="btn_product_submit" style="margin-top: 10px; margin-right: 10px;" type="submit"><span class="icon-plus"></span> Submit Delivery</button>
 												</div>	
 											</div>
 										</div>

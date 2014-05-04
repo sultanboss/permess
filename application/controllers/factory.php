@@ -16,9 +16,7 @@ class Factory extends CI_Controller
 
 	function import()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -66,9 +64,7 @@ class Factory extends CI_Controller
 
 	function addraw()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -105,9 +101,7 @@ class Factory extends CI_Controller
 
 	function editraw()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -143,9 +137,7 @@ class Factory extends CI_Controller
 
 	function deleteraw($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -173,9 +165,7 @@ class Factory extends CI_Controller
 
 	function dataraw()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -188,9 +178,7 @@ class Factory extends CI_Controller
 
 	function rawissuedto($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -213,6 +201,7 @@ class Factory extends CI_Controller
 				'js/lib/dataTables/media/DT_bootstrap.css', 
 				'js/lib/datepicker/css/datepicker.css',
 				'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+				'css/hint-css/hint.css',
 				'js/lib/Sticky/sticky.css'));
 
 			$data['js'] = $this->tank_auth->load_admin_js(array(
@@ -252,9 +241,7 @@ class Factory extends CI_Controller
 
 	function addrawissuedto($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -286,9 +273,7 @@ class Factory extends CI_Controller
 
 	function editrawissuedto($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -319,9 +304,7 @@ class Factory extends CI_Controller
 
 	function deleterawissuedto($id, $raw_id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -349,9 +332,7 @@ class Factory extends CI_Controller
 
 	function datarawissue($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');

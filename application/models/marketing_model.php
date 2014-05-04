@@ -217,6 +217,53 @@ class Marketing_model extends CI_Model {
         return json_encode($res);
     }
 
+    function add_exp($data)
+    {
+        $data['created'] = date('Y-m-d H:i:s');
+
+        if ($this->db->insert('export', $data)) {
+            return $this->db->insert_id();
+        }
+        return NULL;
+    }
+
+    function edit_exp($id, $data)
+    {
+        $this->db->where('export_id', $id);
+        if ($this->db->update('export', $data)) {
+            return true;
+        }
+        return NULL;
+    }
+
+    function delete_exp($id) 
+    {
+        $this->db->where('export_id',$id);
+        $this->db->delete('export');
+        if($this->db->affected_rows() > 0)
+            return true;
+        return false;
+    }
+
+    function get_export_by_id($exp_id)
+    {
+        $this->db->from('export');
+        $this->db->where('export_id', $exp_id);
+        $q = $this->db->get();
+        return $q->result_array();
+    }
+
+    function get_expissues_data() 
+    {
+        $this->datatables->select('export_id, issue_date, party_name, editor_id');   
+        $this->datatables->from('export');   
+
+        $this->datatables->edit_column('editor_id', '<a title="edit" href="'.base_url().'commercial/editexpissues/$1"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class="bootbox_confirm" href="'.base_url().'commercial/deleteexpissues/$1"><span class="icon-trash"></span></a>', 'export_id');
+
+        $res = $this->datatables->generate();        
+        return $res;
+    }
+
     function get_payment_status($id) 
     {
         $query = $this->db->get_where('bill', array('delivery_id' => $id), 1);

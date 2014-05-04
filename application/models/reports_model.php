@@ -8,39 +8,71 @@ class Reports_model extends CI_Model {
         $this->load->library('datatables');
     }
 
-    function get_followup($start, $end) 
+    function get_import($start, $end, $type, $article, $construction, $width, $softness, $color, $source) 
     {
-        $this->db->select('followup.*, parameter.parameter_name, enquiry.*');
-        $this->db->where('followup_date >=', $start);
-        $this->db->where('followup_date <=', $end);
-        $this->db->from('followup');
-        $this->db->join('parameter', 'followup.followup_type = parameter.parameter_id');
-        $this->db->join('enquiry', 'enquiry.enquiry_id = followup.enquiry_id');
+        $this->db->select('raw.raw_id, raw_date, raw_pi_no, raw_lc_no, article_name, construction_name, width_name, softness_name, color_name, source_name, (SELECT sum( r.raw_received_balance ) FROM ak_raw r WHERE r.raw_id < ak_raw.raw_id and ak_raw.article_id = r.article_id and ak_raw.construction_id = r.construction_id and ak_raw.width_id = r.width_id and ak_raw.softness_id = r.softness_id and ak_raw.color_id = r.color_id and ak_raw.source_id = r.source_id) AS prev_balance, raw_received_balance, raw.raw_id as total, (SELECT sum(issue_quantity) FROM ak_issue i WHERE i.raw_id = ak_raw.raw_id and i.issue_type_id = 1) as production, (SELECT sum(total_finish_goods) FROM ak_issue i WHERE i.raw_id = ak_raw.raw_id and i.issue_type_id = 1) as pfinish, (SELECT sum(issue_quantity) FROM ak_issue i WHERE i.raw_id = ak_raw.raw_id and i.issue_type_id = 2) as finished, (SELECT sum(total_finish_goods) FROM ak_issue i WHERE i.raw_id = ak_raw.raw_id and i.issue_type_id = 2) as ffinish');   
+
+        $this->db->where('raw_date >=', $start);
+        $this->db->where('raw_date <=', $end);
+
+        if($type == 1) {
+           $this->db->where('raw.article_id =', $article); 
+           $this->db->where('raw.construction_id =', $construction); 
+           $this->db->where('raw.width_id =', $width); 
+           $this->db->where('raw.softness_id =', $softness); 
+           $this->db->where('raw.color_id =', $color); 
+           $this->db->where('raw.source_id =', $source); 
+        }
+
+        $this->db->from('raw'); 
+        $this->db->join('article', 'article.article_id = raw.article_id');  
+        $this->db->join('construction', 'construction.construction_id = raw.construction_id');  
+        $this->db->join('width', 'width.width_id = raw.width_id');  
+        $this->db->join('softness', 'softness.softness_id = raw.softness_id');  
+        $this->db->join('color', 'color.color_id = raw.color_id');  
+        $this->db->join('source', 'source.source_id = raw.source_id'); 
+
         return $this->db->get()->result_array();
     }
 
-    function get_enquiry($start, $end) 
+
+    // Extra Function
+
+    function get_all_article() 
     {
-        $this->db->select('enquiry.*, parameter.parameter_name, sum(ak_enquiry_product.product_amount) as amount');
-        $this->db->where('enquiry_date >=', $start);
-        $this->db->where('enquiry_date <=', $end);
-        $this->db->from('enquiry');
-        $this->db->join('parameter', 'enquiry.enquiry_source = parameter.parameter_id');
-        $this->db->join('enquiry_product', 'enquiry.enquiry_id = enquiry_product.enquiry_id');
-        return $this->db->get()->result_array();
+        $this->db->select('article_id, article_name, article_alt');
+        $query = $this->db->get('article');
+        return $query->result_array();        
     }
 
-    function get_enquiry_product($start, $end) 
+    function get_all_construction() 
     {
-        $this->db->select('enquiry.enquiry_id, enquiry.enquiry_date, enquiry.enquiry_name, product.product_code, product_category.product_category_name, parameter.parameter_name, enquiry_product.product_rate, enquiry_product.product_quantity, enquiry_product.product_amount');
-        $this->db->where('enquiry_date >=', $start);
-        $this->db->where('enquiry_date <=', $end);
-        $this->db->from('enquiry');
-        $this->db->join('parameter', 'enquiry.enquiry_source = parameter.parameter_id');
-        $this->db->join('enquiry_product', 'enquiry.enquiry_id = enquiry_product.enquiry_id');
-        $this->db->join('product', 'product.product_id = enquiry_product.enquiry_product_id');
-        $this->db->join('product_category', 'product_category.product_category_id = product.product_category');
-        return $this->db->get()->result_array();
+        $query = $this->db->get('construction');
+        return $query->result_array();        
+    }
+
+    function get_all_width() 
+    {
+        $query = $this->db->get('width');
+        return $query->result_array();        
+    }
+
+    function get_all_softness() 
+    {
+        $query = $this->db->get('softness');
+        return $query->result_array();        
+    }
+
+    function get_all_color() 
+    {
+        $query = $this->db->get('color');
+        return $query->result_array();        
+    }
+
+    function get_all_source() 
+    {
+        $query = $this->db->get('source');
+        return $query->result_array();        
     }
 
 }

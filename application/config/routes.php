@@ -48,6 +48,15 @@ $route['commercial/lcstatements'] 				= 'marketing/lcstatements';
 $route['commercial/editlcstatements/(:any)'] 	= 'marketing/editlcstatements/$1';
 $route['commercial/updatelcstatements'] 		= 'marketing/updatelcstatements';
 
+$route['commercial/expissues'] 					= 'marketing/expissues';
+$route['commercial/dataexpissues'] 				= 'marketing/dataexpissues';
+$route['commercial/addexp'] 					= 'marketing/addexp';
+$route['commercial/addexpissues'] 				= 'marketing/addexpissues';
+$route['commercial/editexpissues/(:any)'] 		= 'marketing/editexpissues/$1';
+$route['commercial/updateexpissues'] 			= 'marketing/updateexpissues';
+$route['commercial/deleteexpissues/(:any)'] 	= 'marketing/deleteexpissues/$1';
+
+
 $route['settings/products/article'] 			= 'article';
 $route['settings/products/construction'] 		= 'construction';
 $route['settings/products/width'] 				= 'width';

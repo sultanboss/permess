@@ -18,9 +18,7 @@ class Inventory extends CI_Controller
 
 	function stock()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		$data['title'] = 'Stocks - Factory';
 
@@ -56,18 +54,14 @@ class Inventory extends CI_Controller
 
 	function datastock()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		print_r($this->inventory_model->get_stock_data());
 	}
 
 	function delivery()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		$data['title'] = 'Delivery - Factory';
 
@@ -103,18 +97,14 @@ class Inventory extends CI_Controller
 
 	function datadelivery()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		print_r($this->inventory_model->get_delivery_data());
 	}
 
 	function newdelivery()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -163,9 +153,7 @@ class Inventory extends CI_Controller
 
 	function editdelivery($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if ( isset($id) ) {
 
@@ -245,9 +233,7 @@ class Inventory extends CI_Controller
 
 	function adddelivery()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		$_POST = array_merge($_POST,json_decode(file_get_contents('php://input'),true));
 
@@ -338,9 +324,7 @@ class Inventory extends CI_Controller
 
 	function updatedelivery($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if ( isset($id) ) {
 
@@ -444,9 +428,7 @@ class Inventory extends CI_Controller
 
 	function printdelivery($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if ( isset($id) ) {
 

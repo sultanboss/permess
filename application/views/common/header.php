@@ -192,6 +192,7 @@
 						<a href="javascript:void(0)">Commercial</a>		
 						<ul>						
 							<li><a href="<?php echo base_url();?>commercial/lcstatements">LC Statements</a></li>
+							<li><a href="<?php echo base_url();?>commercial/expissues">Export Issues</a></li>
 						</ul>
 					</li>
 					<?php
@@ -200,6 +201,10 @@
 					?>
 					<li>
 						<a href="javascript:void(0)">Reports</a>
+						<ul>						
+							<li><a href="<?php echo base_url();?>reports/import">Imports</a></li>
+							<li><a href="<?php echo base_url();?>reports/stock">Stock</a></li>
+						</ul>
 					</li>					
 					<li>
 						<a href="javascript:void(0)">Settings</a>

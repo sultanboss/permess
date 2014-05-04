@@ -17,9 +17,7 @@ class Price extends CI_Controller
 
 	function index()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -27,7 +25,7 @@ class Price extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'Price - Settings';
+		$data['title'] = 'Price - Settings - Permess';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -63,9 +61,7 @@ class Price extends CI_Controller
 
 	function add()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -98,9 +94,7 @@ class Price extends CI_Controller
 
 	function edit()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -132,9 +126,7 @@ class Price extends CI_Controller
 
 	function delete($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -162,9 +154,7 @@ class Price extends CI_Controller
 
 	function data()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');

@@ -90,7 +90,7 @@ class Factory_model extends CI_Model {
         $this->datatables->join('color', 'color.color_id = raw.color_id');  
         $this->datatables->join('source', 'source.source_id = raw.source_id');  
 
-        $this->datatables->edit_column('date', '<a title="edit" class="raw_edit" data-id="$1" data-date="$2" data-pi="$3" data-lc="$4" data-article="$5" data-construction="$6" data-width="$7" data-softness="$8" data-color="$9" data-source="$a" data-received="$b" data-toggle="modal" href="#edit_raw"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleteraw/$1"><span class="icon-trash"></span></a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="'.base_url().'factory/rawissuedto/$1" title="issued to"><span class="glyphicon glyphicon-th-large color-x"></span></a>', 'raw_id, raw_date, raw_pi_no, raw_lc_no, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, raw_received_balance');
+        $this->datatables->edit_column('date', '<a title="edit" class="raw_edit" data-id="$1" data-date="$2" data-pi="$3" data-lc="$4" data-article="$5" data-construction="$6" data-width="$7" data-softness="$8" data-color="$9" data-source="$a" data-received="$b" data-toggle="modal" href="#edit_raw"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleteraw/$1"><span class="icon-trash"></span></a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="'.base_url().'factory/rawissuedto/$1" title="issued to"><span class="glyphicon glyphicon-stop color-x"></span></a>', 'raw_id, raw_date, raw_pi_no, raw_lc_no, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, raw_received_balance');
 
         $res = $this->datatables->generate();
 
@@ -109,7 +109,7 @@ class Factory_model extends CI_Model {
 
             if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) 
             {
-                 $res->aaData[$key][13] = '<a href="'.base_url().'factory/rawissuedto/'.$res->aaData[$key][0].'" title="issued to"><span class="glyphicon glyphicon-th-large color-x"></span></a>';
+                 $res->aaData[$key][13] = '<a href="'.base_url().'factory/rawissuedto/'.$res->aaData[$key][0].'" title="issued to"><span class="glyphicon glyphicon-bookmark color-x"></span></a>';
             }
 
             $total_issued = $this->factory_model->count_total_issued($res->aaData[$key][0]);

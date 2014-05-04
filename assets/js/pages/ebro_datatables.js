@@ -23,29 +23,8 @@
 
             // Report Module
 
-            if($('#report_list_table').length) {
-                $('#report_list_table').dataTable({
-                    "sPaginationType": "bootstrap_full",
-                    "bSort": true,
-                    "iDisplayLength": 25,
-                    "sDom": "R<'dt-top-row'ClfT>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
-                    "oTableTools": {
-                        "aButtons": [
-                            "copy",
-                            "print",
-                            {
-                                "sExtends":    "collection",
-                                "sButtonText": 'Save <span class="caret" />',
-                                "aButtons":    [ "csv", "xls", "pdf" ]
-                            }
-                        ],
-                        "sSwfPath": base_url + "assets/js/lib/dataTables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
-                    }
-                });
-            }
-
-            if($('#report_product_table').length) {
-                $('#report_product_table').dataTable({
+            if($('#report_table').length) {
+                $('#report_table').dataTable({
                     "sPaginationType": "bootstrap_full",
                     "bSort": true,
                     "iDisplayLength": 25,
@@ -501,6 +480,16 @@
                     "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
                     "fnInitComplete": function(oSettings, json) {
                         $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+
+                        $('#delivery_table').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
                     }
                 });
             }
@@ -537,6 +526,32 @@
                     "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
                     "fnInitComplete": function(oSettings, json) {
                         $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                    }
+                });
+            }
+
+            if($('#expissues_table').length) {
+                $('#expissues_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "commercial/dataexpissues",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+
+                        $('#expissues_table').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
                     }
                 });
             }

@@ -57,7 +57,8 @@
 		<script>var base_url = '<?php echo base_url(); ?>';</script>
 	
 	<!-- jQuery -->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+		<script src="<?php echo $this->config->item('admin_js_url'); ?>js/jquery.min.js"></script>
 	<!-- bootstrap framework -->
 		<script src="<?php echo $this->config->item('admin_js_url'); ?>bootstrap/js/bootstrap.min.js"></script>
 	<!-- jQuery resize event -->

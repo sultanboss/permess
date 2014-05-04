@@ -19,9 +19,7 @@ class Accounts extends CI_Controller
 
 	function cashpayment()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Accounts')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -61,9 +59,7 @@ class Accounts extends CI_Controller
 
 	function paymentdetails($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if ( isset($id) ) {
 
@@ -148,9 +144,7 @@ class Accounts extends CI_Controller
 
 	function editpayment()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Accounts')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -195,9 +189,7 @@ class Accounts extends CI_Controller
 
 	function datacashpayment()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Accounts')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');

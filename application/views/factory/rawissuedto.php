@@ -7,7 +7,13 @@
 							<div class="col-sm-12">
 								<div class="panel panel-default">
 									<div class="panel_controls">
-										<h4 class="heading_a">Raw Materials:</h4>
+										<h4 class="heading_a">Raw Materials: 
+										<div class="top-right-header right">
+											<a href="<?php echo base_url();?>factory/import" class="btn btn-warning btn-sm hint--top" data-hint="Back to Import"><span class="icon-double-angle-left"></span></a>
+											<a href="<?php echo base_url();?>factory/deleteraw/<?php echo $raw[0]['raw_id'];?>" class="btn btn-danger btn-sm hint--top bootbox_confirm" data-hint="Remove"><span class="icon-trash"></span></a>
+										</div>
+										</h4>
+										<div class="clear"></div>
 										<div class="row">
 											<div class="col-sm-12 pad5">	
 												<?php

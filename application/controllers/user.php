@@ -16,9 +16,7 @@ class User extends CI_Controller
 
 	function index()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -59,9 +57,7 @@ class User extends CI_Controller
 
 	function edit()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -101,9 +97,7 @@ class User extends CI_Controller
 
 	function delete($id)
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
@@ -131,9 +125,7 @@ class User extends CI_Controller
 
 	function data()
 	{
-		if (!$this->tank_auth->is_logged_in()) {
-			redirect('');
-		}
+		$this->tank_auth->check_login();
 
 		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
