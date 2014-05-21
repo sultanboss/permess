@@ -378,3 +378,6 @@ $config['admin_img_url'] = $config['base_url'].'assets/img/';
 
 $config['upload_url'] = $config['base_url'].'assets/uploads/';
 
+$config['stock_reorder'] = 2000;
+
+

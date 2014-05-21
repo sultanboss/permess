@@ -10,7 +10,13 @@
 										<h4 class="heading_a">Raw Materials: 
 										<div class="top-right-header right">
 											<a href="<?php echo base_url();?>factory/import" class="btn btn-warning btn-sm hint--top" data-hint="Back to Import"><span class="icon-double-angle-left"></span></a>
+											<?php
+											if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) {
+											?>
 											<a href="<?php echo base_url();?>factory/deleteraw/<?php echo $raw[0]['raw_id'];?>" class="btn btn-danger btn-sm hint--top bootbox_confirm" data-hint="Remove"><span class="icon-trash"></span></a>
+											<?php
+											}
+											?>
 										</div>
 										</h4>
 										<div class="clear"></div>

@@ -447,7 +447,7 @@
                 $('#stock_table').dataTable({
                     "sPaginationType": "bootstrap_full",
                     "bSort": true,
-                    "aaSorting": [[0, 'asc']],
+                    "aaSorting": [[1, 'asc']],
                     "iDisplayLength": 25,
                     "bProcessing": true,
                     "bServerSide": true,
@@ -458,7 +458,7 @@
                     "fnInitComplete": function(oSettings, json) {
                         $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
                     },
-                    "fnCreatedRow": function( nRow, aData, iDataIndex ) {                        
+                    "fnCreatedRow": function( nRow, aData, iDataIndex ) {             
                         if ( aData[6] <= 2000 )
                         {
                             $('td:eq('+6+')', nRow).css('color', '#D04533');

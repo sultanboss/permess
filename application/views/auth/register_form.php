@@ -71,19 +71,19 @@ $password = array(
 												</div>
 											</div>
 											<div class="col-sm-3">
-												<label for="group_name" class="req"><?php echo $this->lang->line('auth_email'); ?></label>
-												<?php echo form_input($email); ?>
-												<div class="error">
-													<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
-												</div>
-											</div>
-											<div class="col-sm-3">
 												<label for="group_name" class="req"><?php echo $this->lang->line('auth_lname'); ?></label>
 												<?php echo form_input($lname); ?>
 												<div class="error">
 													<?php echo form_error($lname['name']); ?>
 												</div>	
-											</div>											
+											</div>	
+											<div class="col-sm-3">
+												<label for="group_name" class="req"><?php echo $this->lang->line('auth_email'); ?></label>
+												<?php echo form_input($email); ?>
+												<div class="error">
+													<?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?>
+												</div>
+											</div>										
 											<div class="col-sm-3">
 												<label for="group_name" class="req"><?php echo $this->lang->line('auth_password'); ?></label>
 												<?php echo form_input($password); ?>

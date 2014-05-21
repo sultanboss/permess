@@ -48,14 +48,16 @@
 						<div class="col-sm-push-4 col-sm-3 text-right hidden-xs">
 							<div class="notification_dropdown dropdown">
 								<a href="#" class="notification_icon dropdown-toggle" data-toggle="dropdown">
-									<span class="label label-danger">8</span>
+									<span class="label label-success">0</span>
 									<i class="icon-comment-alt icon-2x"></i>
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<div class="dropdown_heading">Comments</div>
+										<div class="dropdown_heading">Notification</div>
 										<div class="dropdown_content">
 											<ul class="dropdown_items">
+												<li><h3>No Activity...</h3></li>
+												<!--
 												<li>
 													<h3><span class="small_info">12:43</span><a href="#">Lorem ipsum dolor&hellip;</a></h3>
 													<p>Lorem ipsum dolor sit amet&hellip;</p>
@@ -68,6 +70,7 @@
 													<h3><span class="small_info">14 Aug</span><a href="#">Lorem ipsum dolor&hellip;</a></h3>
 													<p>Lorem ipsum dolor sit amet&hellip;</p>
 												</li>
+												-->
 											</ul>
 										</div>
 										<div class="dropdown_footer"><a href="#" class="btn btn-sm btn-default">Show all</a></div>

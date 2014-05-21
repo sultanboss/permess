@@ -178,6 +178,11 @@
 										</thead>
 										<tbody>
 											<?php 
+											$recev = 0;
+											$finis = 0;
+											$waste = 0;
+											$unfin = 0;
+
 											foreach ($import as $key => $value) {
 												echo "<tr>";
 												echo "<td>".$value['article_name']."</td>";
@@ -219,9 +224,26 @@
 												echo "<td>".(($value['production'] - $value['pfinish']) + ($value['finished'] - $value['ffinish']))."</td>";	
 												echo "<td>".($value['raw_received_balance'] - ($value['production'] + $value['finished']))."</td>";
 												echo "</tr>";
+
+												$recev = $recev + $value['raw_received_balance'];
+												$finis = $finis + $value['pfinish'] + $value['ffinish'];
+												$waste = $waste + ($value['production'] - $value['pfinish']) + ($value['finished'] - $value['ffinish']);
+												$unfin = $unfin + $value['raw_received_balance'] - ($value['production'] + $value['finished']);
 											} 
 											?>
-										</tbody>				
+										</tbody>
+										<tfoot>
+											<tr>
+												<th colspan="6" class="text-right">Total Imports :</th>
+												<th><?php echo count($import); ?></th>
+												<th colspan="4"></th>
+												<th><?php echo $recev;?></th>
+												<th colspan="3"></th>
+												<th><?php echo $finis;?></th>
+												<th><?php echo $waste;?></th>
+												<th><?php echo $unfin;?></th>
+											</tr>											
+										</tfoot>				
 									</table>									
 								</div>
 							</div>

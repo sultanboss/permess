@@ -29,8 +29,9 @@ class Groups_model extends CI_Model {
 
     function delete_groups($id) 
     {
-        if($id =! $this->config->item('admin_group', 'tank_auth')) 
+        if($id != $this->config->item('admin_group', 'tank_auth')) 
         {
+            echo "string";
             $this->db->where('group_id',$id);
             $this->db->delete('user_groups');
             if($this->db->affected_rows() > 0)

@@ -124,7 +124,7 @@ class Groups extends CI_Controller
 			else {
 				$this->session->set_flashdata('msg', 'Invalid groups delete input!');
 				$this->session->set_flashdata('msg_type', 'warning');
-			}						
+			}				
 		}
 		else {
 			$this->session->set_flashdata('msg', 'Invalid groups delete input!');

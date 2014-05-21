@@ -50,12 +50,16 @@
 										                        <input id="receive_date" name="receive_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>
-															<label for="value" class="double-input-unreq">Value</label>
-															<select id="value" name="value" class="form-control" data-required="true">
+															<label for="region" class="double-input-unreq">Region</label>
+															<select id="region" name="region" class="form-control" data-required="true">
 															<?php 
 																$this->tank_auth->load_division_select_options('');
 															?>								
 															</select>
+														</div>
+														<div class="col-sm-2">
+															<label for="value" class="unreq">Value</label>
+															<input id="value" name="value" class="form-control" type="text">
 														</div>
 														<div class="col-sm-2 right">
 															<label for="remarks" class="unreq">Remarks</label>
