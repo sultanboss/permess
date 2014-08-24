@@ -79,7 +79,7 @@ class Issue extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/settings/issue');
+		redirect('/settings/issuetype');
 	}
 
 	function edit()
@@ -106,7 +106,7 @@ class Issue extends CI_Controller
 			$this->session->set_flashdata('msg', 'Invalid issue input!');
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
-		redirect('/settings/issue');
+		redirect('/settings/issuetype');
 	}
 
 	function delete($id)
@@ -134,7 +134,7 @@ class Issue extends CI_Controller
 			$this->session->set_flashdata('msg_type', 'warning');
 		}
 
-		redirect('/settings/issue');
+		redirect('/settings/issuetype');
 	}
 
 	function data()

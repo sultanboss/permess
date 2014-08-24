@@ -128,14 +128,21 @@ class Article extends CI_Controller
 		}
 
 		if ( isset($id) ) {
-			if($this->article_model->delete_article($id)) {
-				$this->session->set_flashdata('msg', 'Article deleted successfully!');
-				$this->session->set_flashdata('msg_type', 'success');
-			}
+			if(!$this->article_model->check_alt_article($id)) 
+			{
+				if($this->article_model->delete_article($id)) {
+					$this->session->set_flashdata('msg', 'Article deleted successfully!');
+					$this->session->set_flashdata('msg_type', 'success');
+				}
+				else {
+					$this->session->set_flashdata('msg', 'Invalid article delete input!');
+					$this->session->set_flashdata('msg_type', 'warning');
+				}	
+			}	
 			else {
-				$this->session->set_flashdata('msg', 'Invalid article delete input!');
+				$this->session->set_flashdata('msg', 'This article assigned as alternative name!');
 				$this->session->set_flashdata('msg_type', 'warning');
-			}						
+			}				
 		}
 		else {
 			$this->session->set_flashdata('msg', 'Invalid article delete input!');

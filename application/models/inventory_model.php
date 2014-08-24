@@ -10,7 +10,7 @@ class Inventory_model extends CI_Model {
 
     function get_stock_data() 
     {
-        $this->datatables->select('ak_raw.raw_id, article_name, width_name, softness_name, color_name, construction_name, SUM(total_finish_goods) as total, (SELECT SUM(delivery_quantity) FROM ak_delivery_product WHERE ak_delivery_product.article_id = ak_raw.article_id AND ak_delivery_product.width_id = ak_raw.width_id AND ak_delivery_product.softness_id = ak_raw.softness_id AND ak_delivery_product.color_id = ak_raw.color_id) as sold');   
+        $this->datatables->select('ak_raw.raw_id, article_name, article_alt, width_name, softness_name, color_name, construction_name, SUM(total_finish_goods) as total, (SELECT SUM(delivery_quantity) FROM ak_delivery_product WHERE ak_delivery_product.article_id = ak_raw.article_id AND ak_delivery_product.width_id = ak_raw.width_id AND ak_delivery_product.softness_id = ak_raw.softness_id AND ak_delivery_product.color_id = ak_raw.color_id) as sold');   
         $this->datatables->from('raw'); 
         $this->datatables->join('article', 'article.article_id = raw.article_id');   
         $this->datatables->join('width', 'width.width_id = raw.width_id');  
@@ -27,13 +27,38 @@ class Inventory_model extends CI_Model {
         $i = 1;
         foreach ($res->aaData as $key => $value) {
             $res->aaData[$key][0] = $i;
-            if($res->aaData[$key][7] == null)
-                $res->aaData[$key][7] = 0;
-            $res->aaData[$key][6] = $res->aaData[$key][6] - $res->aaData[$key][7];
+
+            $res->aaData[$key][2] = $this->get_article_name($res->aaData[$key][2]);
+
+            if($res->aaData[$key][8] == null)
+                $res->aaData[$key][8] = 0;
+            $res->aaData[$key][7] = $res->aaData[$key][7] - $res->aaData[$key][8];
             $i++;
         }
         
         return json_encode($res);
+    }
+
+    function get_article_name($string)
+    {
+        $val = '-';
+        if($string != '')
+        {
+            $alt = explode(',', $string);
+            $i = 1;                
+            foreach($alt as $key => $value) {
+                if($i == 1) {
+                    $query = $this->db->get_where('article', array('article_id' => $value), 1);
+                    $val = $query->row()->article_name;
+                }
+                else {
+                    $query = $this->db->get_where('article', array('article_id' => $value), 1);
+                    $val.= ' &nbsp;&nbsp;|&nbsp;&nbsp; '.$query->row()->article_name;
+                }
+                $i++;
+            } 
+        }
+        return $val;
     }
 
     function get_delivery_data() 

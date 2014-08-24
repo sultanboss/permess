@@ -82,4 +82,21 @@ class Article_model extends CI_Model {
         return $val;
     }
 
+    function check_alt_article($id)
+    {
+        $this->db->select('article_alt');
+        $query = $this->db->get('article');
+        $res = $query->result_array();
+        foreach ($res as $key => $value) {
+            $alt = explode(',', $value['article_alt']);
+            var_dump($alt);
+            foreach ($alt as $k => $v) {
+                if($v == $id) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

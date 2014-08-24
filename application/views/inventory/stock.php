@@ -18,7 +18,8 @@
 										<thead>
 											<tr>
 												<th width="">No.</th>												
-												<th width="">Article</th>
+												<th width="">Article</th>											
+												<th width="">Alt. Name</th>
 												<th width="">Width</th>
 												<th width="">Softness</th>
 												<th width="">Color</th>

@@ -451,7 +451,7 @@
                     "iDisplayLength": 25,
                     "bProcessing": true,
                     "bServerSide": true,
-                    "aoColumns": [ null, null, null, null, null, null, { "bSearchable": false } ],
+                    "aoColumns": [ null, null, null, null, null, null, null, { "bSearchable": false } ],
                     "sAjaxSource": base_url + "inventory/datastock",
                     "sServerMethod": "POST",
                     "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
@@ -459,9 +459,9 @@
                         $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
                     },
                     "fnCreatedRow": function( nRow, aData, iDataIndex ) {             
-                        if ( aData[6] <= 2000 )
+                        if ( aData[7] <= 2000 )
                         {
-                            $('td:eq('+6+')', nRow).css('color', '#D04533');
+                            $('td:eq('+7+')', nRow).css('color', '#D04533');
                         }
                     }
                 });
