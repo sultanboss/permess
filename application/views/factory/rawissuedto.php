@@ -11,7 +11,7 @@
 										<div class="top-right-header right">
 											<a href="<?php echo base_url();?>factory/import" class="btn btn-warning btn-sm hint--top" data-hint="Back to Import"><span class="icon-double-angle-left"></span></a>
 											<?php
-											if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) {
+											if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Factory')) {
 											?>
 											<a href="<?php echo base_url();?>factory/deleteraw/<?php echo $raw[0]['raw_id'];?>" class="btn btn-danger btn-sm hint--top bootbox_confirm" data-hint="Remove"><span class="icon-trash"></span></a>
 											<?php
@@ -81,7 +81,7 @@
 										<div class="row">				
 											<div class="col-sm-12">
 												<?php
-												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Factory')) 
             									{
             									?>
 												<button data-toggle="modal" href="#add_rawissue_type" class="btn btn-success btn-sm right"><span class="icon-plus"></span> Add New Issue</button>												
@@ -124,13 +124,19 @@
 																<div class="form_sep">																	
 																	<div class="col-sm-6 start">
 																		<label for="issue_quantity" class="req">Quantity</label>
-																		<input id="issue_quantity" name="issue_quantity" class="form-control" type="text" data-required="true">
+																		<input id="issue_quantity" id="issue_quantity" name="issue_quantity" class="form-control" type="text" data-required="true">
 																	</div>
 																	<div class="col-sm-6 end">
 																		<label for="total_finish_goods" class="req">Total Finished Goods</label>
 																		<input id="total_finish_goods" name="total_finish_goods" class="form-control" type="text" data-required="true">
 																	</div>
-																</div>																				
+																</div>	
+																<div class="form_sep">	
+																	<div class="col-sm-12 start">
+																		<label for="wastage_detail" class="unreq">Wastage Detail <small id="add_waste">(Enter reason if wastage > 0.1%)</small></label>
+																		<textarea id="wastage_detail" name="wastage_detail" class="form-control"></textarea>
+																	</div>
+																</div>																			
 																<div class="form_sep text-right">
 																	<button class="btn btn-success btn-sm" type="submit"><span class="icon-plus"></span> Add Issue</button>
 																</div>						
@@ -153,7 +159,7 @@
 												<th width="">Total Finished Goods</th>
 												<th width="">Wastage</th>
 												<?php
-												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Factory')) 
             									{
             									?>
 												<th width="">Change</th>
@@ -169,7 +175,7 @@
 									                    <th></th>
 									                    <th></th>
 									                    <?php
-														if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+														if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Factory')) 
 		            									{
 		            									?>
 									                    <th></th>
@@ -182,7 +188,7 @@
 										</thead>
 										<tbody></tbody>				
 									</table>
-									<div class="modal fade" id="edit_raw_issue">
+									<div class="modal fade" id="edit_rawissue_type">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -213,7 +219,7 @@
 										                                </select>
 									                                </div>												
 																</div>																	
-																<div class="form_sep">																	
+																<div class="form_sep">																
 																	<div class="col-sm-6 start">
 																		<label for="edit_issue_quantity" class="req">Quantity</label>
 																		<input id="edit_issue_quantity" name="edit_issue_quantity" class="form-control" type="text" data-required="true">
@@ -222,7 +228,13 @@
 																		<label for="edit_total_finish_goods" class="req">Total Finished Goods</label>
 																		<input id="edit_total_finish_goods" name="edit_total_finish_goods" class="form-control" type="text" data-required="true">
 																	</div>
-																</div>																				
+																</div>	
+																<div class="form_sep">	
+																	<div class="col-sm-12 start">
+																		<label for="edit_wastage_detail" class="unreq">Wastage Detail <small id="edit_waste">(Enter reason if wastage > 0.1%)</small></label>
+																		<textarea id="edit_wastage_detail" name="edit_wastage_detail" class="form-control"></textarea>
+																	</div>
+																</div>																		
 																<div class="form_sep text-right">
 																	<button class="btn btn-success btn-sm" type="submit"><span class="icon-refresh"></span> Update</button>
 																</div>						

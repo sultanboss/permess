@@ -211,9 +211,7 @@
 													<p><b>d)</b> All charges outside of beneficiary's bank are on opener's account.</p>
 													<p><b>e)</b> Please insert VAT Registration Certificate Number in the Letter of Credit.</p>
 													<p><b>f)</b> UD MUST BE REQUIRED FOR DOCUMENTATION.</p>
-													<p><b>g)</b> H.S.Code No: 5903.90.10 <br>
-													TIN NO: 150-200-5020/Circle-50, Dhaka. <br>
-													Swift # UCBLBDDHPRB</p>												
+													<p><b>g)</b> H.S.Code No: 5903.90.10, TIN NO: 150-200-5020/Circle-50, Dhaka. Swift # UCBLBDDHPRB</p>												
 												</div>
 												<div class="col-sm-4">
 													<br><br>

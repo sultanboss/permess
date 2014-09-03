@@ -401,6 +401,7 @@
                             $("#edit_issue_quantity").val($(this).attr('data-quantity'));
                             $("#edit_issue_type").val($(this).attr('data-type'));
                             $("#edit_total_finish_goods").val($(this).attr('data-total'));
+                            $("#edit_wastage_detail").val($(this).attr('data-detail'));
                         });
 
                         $('#raw_issue_table').delegate('.bootbox_confirm', 'click', function(e) {
@@ -433,9 +434,9 @@
                         }
 
                         var nCells = nRow.getElementsByTagName('th');
-                        nCells[3].innerHTML = parseInt(quantity);
-                        nCells[4].innerHTML = parseInt(total);
-                        nCells[5].innerHTML = parseInt(waste);
+                        nCells[3].innerHTML = parseFloat(quantity);
+                        nCells[4].innerHTML = parseFloat(total);
+                        nCells[5].innerHTML = parseFloat(Math.round(waste * 100) / 100).toFixed(2);
                     }
                 });
             }

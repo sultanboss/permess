@@ -30,6 +30,9 @@
 		if($('.ebro_datepicker').length) {
             $('.ebro_datepicker').datepicker("setDate", new Date());
         }
+
+        //* ebro style switcher
+        ebro_issuedto.init();
 		
     });
 
@@ -292,6 +295,49 @@
 		init: function() {
 			$('[data-toggle=tooltip]').tooltip();
 			$('[data-toggle=popover]').popover();
+		}
+	}
+
+	//* tooltips, popovers
+	ebro_issuedto = {
+		init: function() {
+			$('#add_rawissue_type').on('change keyup paste mouseup','#issue_quantity',function(e){
+                e.preventDefault();
+                var qty = parseFloat($("#issue_quantity").val());
+                $("#total_finish_goods").val((qty*99.9)/100);
+            });
+
+            $('#edit_rawissue_type').on('change keyup paste mouseup','#edit_issue_quantity',function(e){
+                e.preventDefault();
+                var qty = parseFloat($("#edit_issue_quantity").val());
+                $("#edit_total_finish_goods").val((qty*99.9)/100);
+            });
+
+            $('#add_rawissue_type').on('change keyup paste mouseup','#total_finish_goods',function(e){
+                e.preventDefault();
+                var qty = parseFloat($("#issue_quantity").val());
+                var finish = parseFloat($("#total_finish_goods").val());
+                qty = ((qty*99.9)/100);
+                if(finish < qty) {
+                	$("#add_waste").css({"color": "red"});
+                }
+                else {                	
+                	$("#add_waste").css({"color": "#222"});
+                }
+            });
+
+            $('#edit_rawissue_type').on('change keyup paste mouseup','#edit_total_finish_goods',function(e){
+                e.preventDefault();
+                var qty = parseFloat($("#edit_issue_quantity").val());
+                var finish = parseFloat($("#edit_total_finish_goods").val());
+                qty = ((qty*99.9)/100);
+                if(finish < qty) {
+                	$("#edit_waste").css({"color": "red"});
+                }
+                else {                	
+                	$("#edit_waste").css({"color": "#222"});
+                }
+            });
 		}
 	}
 	

@@ -107,7 +107,7 @@ class Factory_model extends CI_Model {
             $res->aaData[$key][13] = str_replace('$a', $res->aaData[$key][19], $res->aaData[$key][13]);
             $res->aaData[$key][13] = str_replace('$b', $res->aaData[$key][11], $res->aaData[$key][13]);
 
-            if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) 
+            if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) 
             {
                  $res->aaData[$key][13] = '<a href="'.base_url().'factory/rawissuedto/'.$res->aaData[$key][0].'" title="issued to"><span class="glyphicon glyphicon-bookmark color-x"></span></a>';
             }
@@ -126,19 +126,19 @@ class Factory_model extends CI_Model {
 
     function get_raw_issue_data_by_id($raw_id) 
     {
-        $this->datatables->select('issue_id, issue_date, issue_type_name, issue_quantity, total_finish_goods, ak_issue.created, ak_issue.editor_id, raw_id, ak_issue.issue_type_id');   
+        $this->datatables->select('issue_id, issue_date, issue_type_name, issue_quantity, total_finish_goods, ak_issue.created, ak_issue.editor_id, raw_id, ak_issue.issue_type_id, wastage_detail');   
         $this->datatables->from('issue'); 
         $this->datatables->where('raw_id', $raw_id); 
         $this->datatables->join('issue_type', 'issue_type.issue_type_id = issue.issue_type_id'); 
 
-        $this->datatables->edit_column('ak_issue.editor_id', '<a title="edit" class="raw_edit_issue" data-id="$1" data-date="$2" data-type="$3" data-quantity="$4" data-total="$5" data-raw="$6" data-toggle="modal" href="#edit_raw_issue"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleterawissuedto/$1/$6"><span class="icon-trash"></span></a>', 'issue_id, issue_date,  issue.issue_type_id, issue_quantity, total_finish_goods, raw_id');
+        $this->datatables->edit_column('ak_issue.editor_id', '<a title="edit" class="raw_edit_issue" data-id="$1" data-date="$2" data-type="$3" data-quantity="$4" data-total="$5" data-raw="$6" data-detail="$7" data-toggle="modal" href="#edit_rawissue_type"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleterawissuedto/$1/$6"><span class="icon-trash"></span></a>', 'issue_id, issue_date,  issue.issue_type_id, issue_quantity, total_finish_goods, raw_id,  wastage_detail');
 
         $res = $this->datatables->generate();
 
         $res = json_decode($res);
 
         foreach ($res->aaData as $key => $value) {
-            $res->aaData[$key][5] = $res->aaData[$key][3] - $res->aaData[$key][4];
+            $res->aaData[$key][5] = number_format((float)($res->aaData[$key][3] - $res->aaData[$key][4]), 2, '.', '');
         }
         
         return json_encode($res);

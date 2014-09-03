@@ -11,7 +11,7 @@
 										<div class="row">											
 											<div class="col-sm-12">
 												<?php
-												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
+												if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Factory')) 
             									{
             									?>
 												<button data-toggle="modal" href="#add_raw_type" class="btn btn-success btn-sm right"><span class="icon-plus"></span> Add Raw Material</button>				

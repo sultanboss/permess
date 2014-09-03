@@ -18,7 +18,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -66,7 +66,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -103,7 +103,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -139,7 +139,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -167,7 +167,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -180,7 +180,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -243,7 +243,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -256,6 +256,7 @@ class Factory extends CI_Controller
 				'issue_type_id'			=> $this->input->post('issue_type'),
 				'issue_quantity'		=> $this->input->post('issue_quantity'),
 				'total_finish_goods'	=> $this->input->post('total_finish_goods'),
+				'wastage_detail'		=> $this->input->post('wastage_detail'),
 				'editor_id' 			=> $this->session->userdata('user_id')
 			);
 
@@ -275,7 +276,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -286,7 +287,8 @@ class Factory extends CI_Controller
 				'issue_date'			=> $this->input->post('edit_issue_date'),
 				'issue_type_id'			=> $this->input->post('edit_issue_type'),
 				'issue_quantity'		=> $this->input->post('edit_issue_quantity'),
-				'total_finish_goods'	=> $this->input->post('edit_total_finish_goods'),
+				'total_finish_goods'	=> $this->input->post('edit_total_finish_goods'),				
+				'wastage_detail'	=> $this->input->post('edit_wastage_detail'),
 				'editor_id' 			=> $this->session->userdata('user_id')
 			);
 
@@ -306,7 +308,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');
@@ -334,7 +336,7 @@ class Factory extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
-		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial') && !$this->tank_auth->is_group_member('Factory')) {
 			$this->session->set_flashdata('msg', 'Invalid Access!');
 			$this->session->set_flashdata('msg_type', 'warning');
 			redirect('');

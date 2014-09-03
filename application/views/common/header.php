@@ -158,7 +158,7 @@
 						<a href="javascript:void(0)">Factory</a>
 						<ul>
 							<?php
-							if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial')) {
+							if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial') || $this->tank_auth->is_group_member('Factory')) {
 							?>
 							<li><a href="<?php echo base_url();?>factory/import">Import</a></li>
 							<?php
