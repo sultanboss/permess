@@ -158,7 +158,11 @@
 															$y = count($delivery_products);
 															$qty = 0;
 															$total = 0;
+															$ucbl_bank = true;
 															foreach ($delivery_products as $key => $value) {
+															if($value['description_name'] == '100% Cotton Fusible Interlining' || $value['description_name'] == '100% Cotton Non Fusible Interlining') {
+																$ucbl_bank = false;
+															}
 															?>
 															<tr>
 																<td><?php echo $x; ?>.</td>
@@ -202,7 +206,20 @@
 													<p>* Delivery will be started after 20 days of receiving of the irrevocable of letter of credit.</p>
 													<p>* Letter of credit will be opened as per address: Permess South East Asia Ltd. Gorai Industrail Area, Mirzapur, Tangail.</p>
 													<br>
-													<strong>Advisin Bank: UCBL Principal Branch Motijheel</strong>
+													<strong>
+														<?php 
+														if($ucbl_bank == true) {
+														?>
+														Advisin Bank: UCBL Principal Branch Motijheel.
+														<?php
+														}
+														else {
+														?>
+														Advisin Bank: Islamic Bank, Motijheel Branch.
+														<?php 
+														} 
+														?>
+													</strong>
 													<br><br>
 													<p class="underline">** L/C Shipment date s/b 15 days plus from the last delivery date.</p>
 													<p><b>a)</b> Matutity date to be counted from the date of receipt of goods.</p>
