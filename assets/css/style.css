@@ -1263,7 +1263,7 @@
 		line-height: 7px !important;
 	}
 
-	.print p.double {
+	.print p.double, .print td.double {
 		line-height: 15px !important;
 	}
 

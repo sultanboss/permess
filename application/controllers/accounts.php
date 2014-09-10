@@ -170,7 +170,11 @@ class Accounts extends CI_Controller
 				'bill_usd_rate' 				=> $this->input->post('bill_usd_rate'),
 				'bill_challan' 					=> $this->input->post('bill_challan'),
 				'bill_payment_status' 			=> $this->input->post('bill_payment_status'),
-				'bill_payment_method' 			=> $this->input->post('bill_payment_method'),		
+				'bill_payment_method' 			=> $this->input->post('bill_payment_method'),	
+				'bill_mr_no' 					=> $this->input->post('bill_mr_no'),	
+				'bill_mr_date' 					=> $this->input->post('bill_mr_date'),		
+				'bill_cheque_no'				=> $this->input->post('bill_cheque_no'),		
+				'bill_cheque_date' 				=> $this->input->post('bill_cheque_date'),			
 				'editor_id' 					=> $this->session->userdata('user_id')
 			);
 

@@ -8,6 +8,8 @@
         accounts: function() {   
 
             setdate('bill_date');  
+            setdate('bill_mr_date');
+            setdate('bill_cheque_date');
         }
     }
 

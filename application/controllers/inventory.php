@@ -332,84 +332,126 @@ class Inventory extends CI_Controller
 			$_POST = array_merge($_POST,json_decode(file_get_contents('php://input'),true));
 
 			if ( isset($_POST['delivery_date']) && isset($_POST['delivery_by']) ) {
-				$data['data'] = array(
-					'delivery_date'				=> $this->input->post('delivery_date'),
-					'delivery_pi_name'			=> $this->input->post('delivery_pi_name'),
-					'delivery_po_no'			=> $this->input->post('delivery_po_no'),
-					'delivery_by'				=> $this->input->post('delivery_by'),
-					'delivery_status'			=> $this->input->post('delivery_status'),
-					'delivery_doc_status'       => $this->input->post('delivery_doc_status'),
-					'delivery_lc_status'		=> $this->input->post('delivery_lc_status'),
-					'delivery_lc_date'			=> $this->input->post('delivery_lc_date'),
-					'delivery_item_no'          => $this->input->post('delivery_item_no'),
-	                'delivery_type'             => $this->input->post('delivery_type'),
-					'delivery_company_name'		=> $this->input->post('delivery_company_name'),
-					'delivery_company_address'	=> $this->input->post('delivery_company_address'),
-					'delivery_address'          => $this->input->post('delivery_address'),
-					'delivery_contact_person'	=> $this->input->post('delivery_contact_person'),
-					'delivery_buyer'			=> $this->input->post('delivery_buyer'),
-					'delivery_bank'				=> $this->input->post('delivery_bank'),
-					'delivery_payment'			=> $this->input->post('delivery_payment'),
-					'delivery_style'            => $this->input->post('delivery_style'),
-					'editor_id' 				=> $this->session->userdata('user_id')
-				);
+
+				if($this->tank_auth->is_group_member('Factory')) {
+					$data['data'] = array(
+						'delivery_status'			=> $this->input->post('delivery_status'),
+						'editor_id' 				=> $this->session->userdata('user_id')
+					);
+				}
+				else if($this->tank_auth->is_group_member('Commercial')) {
+					$data['data'] = array(
+						'delivery_doc_status'		=> $this->input->post('delivery_doc_status'),
+						'delivery_lc_status'		=> $this->input->post('delivery_lc_status'),
+						'editor_id' 				=> $this->session->userdata('user_id')
+					);
+				}
+				else if($this->tank_auth->is_group_member('Accounts') || $this->tank_auth->is_group_member('Users')) {
+					$data['data'] = array();
+				}
+				else {
+					$data['data'] = array(
+						'delivery_date'				=> $this->input->post('delivery_date'),
+						'delivery_pi_name'			=> $this->input->post('delivery_pi_name'),
+						'delivery_po_no'			=> $this->input->post('delivery_po_no'),
+						'delivery_by'				=> $this->input->post('delivery_by'),
+						'delivery_status'			=> $this->input->post('delivery_status'),
+						'delivery_doc_status'       => $this->input->post('delivery_doc_status'),
+						'delivery_lc_status'		=> $this->input->post('delivery_lc_status'),
+						'delivery_lc_date'			=> $this->input->post('delivery_lc_date'),
+						'delivery_item_no'          => $this->input->post('delivery_item_no'),
+		                'delivery_type'             => $this->input->post('delivery_type'),
+						'delivery_company_name'		=> $this->input->post('delivery_company_name'),
+						'delivery_company_address'	=> $this->input->post('delivery_company_address'),
+						'delivery_address'          => $this->input->post('delivery_address'),
+						'delivery_contact_person'	=> $this->input->post('delivery_contact_person'),
+						'delivery_buyer'			=> $this->input->post('delivery_buyer'),
+						'delivery_bank'				=> $this->input->post('delivery_bank'),
+						'delivery_payment'			=> $this->input->post('delivery_payment'),
+						'delivery_style'            => $this->input->post('delivery_style'),
+						'editor_id' 				=> $this->session->userdata('user_id')
+					);
+				}
 
 				$this->inventory_model->update_delivery($this->input->post('delivery_id'), $data['data']);
 
-				$this->inventory_model->remove_delivery_product($this->input->post('delivery_id'));
-
-				for($i=0; $i<100; $i++)
-				{
-					if( isset($_POST['article_id_'.$i]) )
+				if($this->tank_auth->is_group_member('Commercial') || $this->tank_auth->is_group_member('Accounts') || $this->tank_auth->is_group_member('Users')) {
+					
+				}
+				else if($this->tank_auth->is_group_member('Factory')) {
+					for($i=0; $i<100; $i++)
 					{
-						$article_id = explode('-', $this->input->post('article_id_'.$i));
-						$article_id = $article_id[0];	
-										
-						$data['eq_product'] = array(
-							'delivery_id'				=> $this->input->post('delivery_id'),
-							'article_id'				=> $article_id,
-							'article_alt'				=> $this->input->post('article_id_'.$i),
-							'description_id'			=> $this->input->post('description_id_'.$i),
-							'softness_id'				=> $this->input->post('softness_id_'.$i),
-							'width_id'					=> $this->input->post('width_id_'.$i),
-							'color_id'					=> $this->input->post('color_id_'.$i),
-							'order_quantity'			=> $this->input->post('order_quantity_'.$i),
-							'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
-							'unit_price'				=> $this->input->post('unit_price_'.$i),
-							'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
-							'editor_id' 				=> $this->session->userdata('user_id')
+						if( isset($_POST['article_id_'.$i]) )
+						{
+							$delivery_product_id = explode('-', $this->input->post('delivery_product_id_'.$i));
+							$delivery_product_id = $delivery_product_id[0];	
+											
+							$data['eq_product'] = array(
+								'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
+								'editor_id' 				=> $this->session->userdata('user_id')
+							);
+							$this->inventory_model->update_delivery_product($delivery_product_id, $data['eq_product']);
+						}
+						else
+							$i = 100;
+					}
+				}
+				else {
+					$this->inventory_model->remove_delivery_product($this->input->post('delivery_id'));
+
+					for($i=0; $i<100; $i++)
+					{
+						if( isset($_POST['article_id_'.$i]) )
+						{
+							$article_id = explode('-', $this->input->post('article_id_'.$i));
+							$article_id = $article_id[0];	
+											
+							$data['eq_product'] = array(
+								'delivery_id'				=> $this->input->post('delivery_id'),
+								'article_id'				=> $article_id,
+								'article_alt'				=> $this->input->post('article_id_'.$i),
+								'description_id'			=> $this->input->post('description_id_'.$i),
+								'softness_id'				=> $this->input->post('softness_id_'.$i),
+								'width_id'					=> $this->input->post('width_id_'.$i),
+								'color_id'					=> $this->input->post('color_id_'.$i),
+								'order_quantity'			=> $this->input->post('order_quantity_'.$i),
+								'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
+								'unit_price'				=> $this->input->post('unit_price_'.$i),
+								'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
+								'editor_id' 				=> $this->session->userdata('user_id')
+							);
+							$this->inventory_model->add_delivery_product($data['eq_product']);
+						}
+						else
+							$i = 100;
+					}
+
+					if($this->input->post('delivery_payment') == '0')
+					{
+						$this->accounts_model->delete_bill($this->input->post('delivery_id'));
+
+						$cost = $this->inventory_model->get_delivery_cost($this->input->post('delivery_id'));
+
+						$data['statemetns'] = array(
+							'delivery_id'		=> $this->input->post('delivery_id'),
+							'lc_date'			=> $this->input->post('delivery_lc_date'),
+							'value'				=> $cost,
+							'editor_id' 		=> $this->session->userdata('user_id')
 						);
-						$this->inventory_model->add_delivery_product($data['eq_product']);
+
+						$this->inventory_model->update_statements($this->input->post('delivery_id'), $data['statemetns']);
 					}
 					else
-						$i = 100;
-				}
+					{
+						$this->inventory_model->delete_statements($this->input->post('delivery_id'));
 
-				if($this->input->post('delivery_payment') == '0')
-				{
-					$this->accounts_model->delete_bill($this->input->post('delivery_id'));
+						$data['bill'] = array(
+							'delivery_id'		=> $this->input->post('delivery_id'),
+							'editor_id' 		=> $this->session->userdata('user_id')
+						);
 
-					$cost = $this->inventory_model->get_delivery_cost($this->input->post('delivery_id'));
-
-					$data['statemetns'] = array(
-						'delivery_id'		=> $this->input->post('delivery_id'),
-						'lc_date'			=> $this->input->post('delivery_lc_date'),
-						'value'				=> $cost,
-						'editor_id' 		=> $this->session->userdata('user_id')
-					);
-
-					$this->inventory_model->update_statements($this->input->post('delivery_id'), $data['statemetns']);
-				}
-				else
-				{
-					$this->inventory_model->delete_statements($this->input->post('delivery_id'));
-
-					$data['bill'] = array(
-						'delivery_id'		=> $this->input->post('delivery_id'),
-						'editor_id' 		=> $this->session->userdata('user_id')
-					);
-
-					$this->accounts_model->update_bill($this->input->post('delivery_id'), $data['bill']);
+						$this->accounts_model->update_bill($this->input->post('delivery_id'), $data['bill']);
+					}
 				}
 
 				$this->session->set_flashdata('msg', 'Delivery updated successfully!');

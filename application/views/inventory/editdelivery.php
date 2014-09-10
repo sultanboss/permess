@@ -262,6 +262,7 @@
 													?>
 													<tr>
 														<td>
+																			<input type="hidden" name="delivery_product_id" id="delivery_product_id" value="<?php echo $dp['delivery_product_id']; ?>">
 																			<select name="article_id" class="article_id form-control" data-required="true">
 																				<?php
 																				foreach ($articles as $key => $value) {	
@@ -403,7 +404,7 @@
 													<button class="btn btn-info btn-sm" id="btn_product_add"><span class="icon-plus"></span></button>
 													<?php
 	            									}
-													if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Factory')) 
+													if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Factory') || $this->tank_auth->is_group_member('Commercial')) 
 	            									{
 	            									?>
 													<button class="btn btn-success btn-sm right" id="btn_product_submit" style="margin-top: 10px; margin-right: 9px;" type="submit"><span class="icon-refresh"></span> Update Delivery</button><a class="btn btn-warning btn-sm right" style="margin-top: 10px; margin-right: 10px;" href="<?php echo base_url();?>factory/delivery"><span class="icon-double-angle-left"></span></a>

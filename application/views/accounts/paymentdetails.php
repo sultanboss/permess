@@ -116,7 +116,7 @@
 															<label for="bill_usd_rate" class="unreq double-input-unreq">USD $1 = ? (BDT)</label>
 															<input id="bill_usd_rate" name="bill_usd_rate" class="form-control" type="text" value="<?php echo $value['bill_usd_rate']; ?>">
 														</div>																
-														<div class="col-sm-3">
+														<div class="col-sm-2">
 															<label for="bill_challan" class="unreq">Challan Info <small>(With Date)</small></label>
 															<textarea id="bill_challan" name="bill_challan" class="form-control double-text" type="text" data-required="true"><?php echo $value['bill_challan']; ?></textarea>
 														</div>
@@ -135,6 +135,32 @@
 															</select>
 														</div>	
 													</div>	
+													<div class="form_sep">
+														<div class="col-sm-2">
+															<label for="bill_mr_no">MR No.</label>
+															<input id="bill_mr_no" name="bill_mr_no" class="form-control" type="text" value="<?php echo $value['bill_mr_no']; ?>">
+														</div>
+														<div class="col-sm-2">
+															<div id="bill_mr_date_value" class="hide"><?php echo $value['bill_mr_date']; ?></div>
+															<label for="bill_mr_date">MR Date</label>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="bill_mr_date" name="bill_mr_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>
+										                </div>
+														<div class="col-sm-2">
+															<label for="bill_cheque_no">Cheque No.</label>
+															<input id="bill_cheque_no" name="bill_cheque_no" class="form-control" type="text" value="<?php echo $value['bill_cheque_no']; ?>">
+														</div>
+														<div class="col-sm-2">
+															<div id="bill_cheque_date_value" class="hide"><?php echo $value['bill_cheque_date']; ?></div>
+															<label for="bill_cheque_date">Cheque Date</label>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="bill_cheque_date" name="bill_cheque_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>
+										                </div>
+													</div>
 												<?php
 												}
 												?>
@@ -302,10 +328,10 @@
 																if($x == 2)
 																{
 																?>
-																<td style="vertical-align: middle;" class="text-center" rowspan="<?php echo $total_row; ?>"><b>
+																<td style="vertical-align: middle;" class="text-center double" rowspan="<?php echo $total_row; ?>"><b>
 																<?php 
 																	if($payment[0]['bill_challan'] != '') {
-																		echo $payment[0]['bill_challan'];
+																		echo nl2br($payment[0]['bill_challan']);
 																	}
 																	else
 																		echo "-";
