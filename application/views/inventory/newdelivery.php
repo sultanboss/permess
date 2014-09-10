@@ -58,6 +58,12 @@
 														<div class="col-sm-2">
 															<label for="delivery_pi_name" class="unreq">P.I. Name</label>
 															<input id="delivery_pi_name" name="delivery_pi_name" class="form-control" type="text">	
+															<label for="delivery_bank" class="req double-input">Bank Name</label>
+															<select id="delivery_bank" name="delivery_bank" class="form-control" data-required="true">
+															<?php 
+																$this->tank_auth->load_select_options(array('UCBL Bank', 'Islami Bank'), 0);
+															?>
+															</select>
 														</div>
 														<div class="col-sm-2 right">
 															<label for="delivery_status" class="req">Delivery Status</label>

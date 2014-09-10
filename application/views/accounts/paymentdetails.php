@@ -199,8 +199,8 @@
 													<p><?php echo $delivery[0]['delivery_address'];?></p>
 													<?php } ?>
 												</div>
-												<div class="col-sm-4">&nbsp;</div>
-												<div class="col-sm-4">
+												<div class="col-sm-3">&nbsp;</div>
+												<div class="col-sm-5">
 													<p><b>Bill Date:</b>
 													<?php 
 														if($payment[0]['bill_date'] != '0000-00-00') {
@@ -243,7 +243,6 @@
 													<table class="table table-bordered table-print">
 														<thead>
 															<tr>
-																<th width="5%">No.</th>
 																<th class="text-center" width="40%">Description</th>
 																<th class="text-center" width="20%">Challan No. <small>(With Date)</small></th>
 																<th class="text-right" width="10%">Quantity In Yards</th>
@@ -253,26 +252,57 @@
 														</thead>
 														<tbody>
 															<?php
+															$total_row = count($delivery_products)-1;															
+															$des = '';
+															$wid = '';
+															foreach ($delivery_products as $key => $value) {
+																if($des != $value['description_name'] || $wid != $value['width_name']) {
+																	$des = $value['description_name'];
+																	$wid = $value['width_name'];
+																	$total_row++;
+																}
+															}
+
 															$x = 1;
 															$y = count($delivery_products);
 															$qty = 0;
 															$total = 0;
+															$des = '';
+															$wid = '';
+															$ttl = 0;
 															foreach ($delivery_products as $key => $value) {
+															if($des != $value['description_name'] || $wid != $value['width_name']) {
+																$des = $value['description_name'];
+																$wid = $value['width_name'];
+																$ttl = 1;
+																$x++;
+																$y++;
+															}
+															else{
+																$ttl = 0;
+															}
+
+															if($ttl == 1)
+															{
 															?>
 															<tr>
-																<td><?php echo $x; ?>.</td>
+																<td class="text-center"><b><?php echo $des.', Width: '.$wid?></b></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+															<?php
+															}
+															?>
+															<tr>
 																<td class="text-center">
-																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>, <?php echo $value['description_name']; ?>, Width: <?php echo $value['width_name']; ?>
-																<?php
-																if($x == $y)
-																	echo "<br><br><br><br>";
-																?>
+																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
 																</td>
 																<?php
-																if($x == 1)
+																if($x == 2)
 																{
 																?>
-																<td class="text-center" rowspan="<?php echo count($delivery_products); ?>">
+																<td style="vertical-align: middle;" class="text-center" rowspan="<?php echo $total_row; ?>"><b>
 																<?php 
 																	if($payment[0]['bill_challan'] != '') {
 																		echo $payment[0]['bill_challan'];
@@ -280,7 +310,7 @@
 																	else
 																		echo "-";
 																?>	
-																</td>
+																</b></td>
 																<?php
 																}
 																?>
@@ -293,24 +323,25 @@
 																$total = $total + ($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price']));
 																$x++;
 															}
-															?>
-															<tr>
-																<td class="text-right" colspan="3"><b>Total:</b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
-																<td></td>
-																<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
-															</tr>
+															?>															
 														</tbody>
+														<tfoot>
+															<td class="text-right"><b>Total:</b></td>
+															<td></td>
+															<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
+															<td></td>
+															<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
+														</tfoot>
 													</table>													
 												</div>
 												<div class="col-sm-12">
-													<p><i><b>Amount in Words:</b></i> <span class="upper">us dollar
+													<p><p><i><b>Amount in Words:</b></i> <span class="upper">us dollar
 													<?php
 														echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', ''));
-													?> only.</span></p>
+													?> only.</span></p></p>
 												</div>
 												<div class="col-sm-12">
-													<br><br>
+													<br>
 													<p><b>Payment will be made by local currency - BDT: 
 													<?php 
 														if($payment[0]['bill_usd_rate'] != '0.00') {
@@ -342,7 +373,7 @@
 													 Taka</b></p>											
 												</div>
 												<div class="col-sm-4">
-													<br><br>
+													<br>
 													<i>For on behalf of</i><br>
 													Permess South East Asia Ltd.
 													<br><br><br>

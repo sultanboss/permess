@@ -113,6 +113,7 @@
                             ar['delivery_address']          = $('#delivery_address').val();
                             ar['delivery_contact_person']   = $('#delivery_contact_person').val();
                             ar['delivery_buyer']            = $('#delivery_buyer').val();
+                            ar['delivery_bank']             = $('#delivery_bank').val();
                             ar['delivery_payment']          = $('#delivery_payment').val();
                             ar['delivery_style']            = $('#delivery_style').val();
                             ar['editor_id']                 = $('#editor_id').val();
@@ -190,6 +191,7 @@
                             ar['delivery_address']          = $('#delivery_address').val();
                             ar['delivery_contact_person']   = $('#delivery_contact_person').val();
                             ar['delivery_buyer']            = $('#delivery_buyer').val();
+                            ar['delivery_bank']             = $('#delivery_bank').val();
                             ar['delivery_payment']          = $('#delivery_payment').val();
                             ar['delivery_style']            = $('#delivery_style').val();
                             ar['editor_id']                 = $('#editor_id').val();

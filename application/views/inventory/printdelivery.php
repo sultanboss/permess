@@ -121,8 +121,8 @@
 													<p><?php echo $delivery[0]['delivery_address'];?></p>
 													<?php } ?>
 												</div>
-												<div class="col-sm-4">&nbsp;</div>
-												<div class="col-sm-4">
+												<div class="col-sm-3">&nbsp;</div>
+												<div class="col-sm-5">
 													<p><b>P/I #</b> PSEAL/<?php	if($delivery[0]['delivery_pi_name'] != '') { echo $delivery[0]['delivery_pi_name'].'/'; } ?><?php echo $delivery[0]['delivery_id'];?>/<?php echo date('Y');?></p>
 													<p><b>Date:</b> <?php echo $delivery[0]['delivery_date'];?></p>
 													<p><b>Contact Person:</b> <?php echo $delivery[0]['delivery_contact_person'];?></p>
@@ -138,16 +138,14 @@
 												</div>
 												<div class="clear"></div>											
 												<div class="col-sm-12 text-center">
-													<br>
 													<p>Style:- <?php echo $delivery[0]['delivery_style'];?></p>
 												</div>
 												<div class="col-sm-12">
 													<table class="table table-bordered table-print">
 														<thead>
 															<tr>
-																<th>No.</th>
 																<th class="text-center">Description</th>
-																<th class="text-right">Quantity In Yards</th>
+																<th class="text-right">Quantity In (Yards)</th>
 																<th class="text-right">Unit Price USD</th>
 																<th class="text-right">Total Amount</th>
 															</tr>
@@ -158,20 +156,34 @@
 															$y = count($delivery_products);
 															$qty = 0;
 															$total = 0;
-															$ucbl_bank = true;
-															foreach ($delivery_products as $key => $value) {
-															if($value['description_name'] == '100% Cotton Fusible Interlining' || $value['description_name'] == '100% Cotton Non Fusible Interlining') {
-																$ucbl_bank = false;
+															$des = '';
+															$wid = '';
+															$ttl = 0;
+															foreach ($delivery_products as $key => $value) {															
+															if($des != $value['description_name'] || $wid != $value['width_name']) {
+																$des = $value['description_name'];
+																$wid = $value['width_name'];
+																$ttl = 1;
+															}
+															else{
+																$ttl = 0;
+															}
+
+															if($ttl == 1)
+															{
+															?>
+															<tr>
+																<td class="text-center"><b><?php echo $des.', Width: '.$wid?></b></td>
+																<td></td>
+																<td></td>
+																<td></td>
+															</tr>
+															<?php
 															}
 															?>
 															<tr>
-																<td><?php echo $x; ?>.</td>
 																<td class="text-center">
-																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>, <?php echo $value['description_name']; ?>, Width: <?php echo $value['width_name']; ?>
-																<?php
-																if($x == $y)
-																	echo "<br><br><br><br>";
-																?>
+																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
 																</td>
 																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?></td>
 																<td class="text-right">$ <?php echo number_format((float)($value['unit_price']+$value['over_invoice_unit_price']), 2, '.', ''); ?></td>
@@ -182,53 +194,45 @@
 																$total = $total + ($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price']));
 																$x++;
 															}
-															?>
+															?>															
+														</tbody>
+														<tfoot>
 															<tr>
-																<td></td>
 																<td class="text-right"><b>Total:</b></td>
 																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
 																<td></td>
 																<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
 															</tr>
-														</tbody>
+														</tfoot>
 													</table>													
 												</div>
 												<div class="col-sm-12">
-													<p><i><b>Amount in Words:</b></i> <span class="upper">us dollar
+													<p><p><i><b>Amount in words:</b></i> <span class="upper">us dollar
 													<?php
 														echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', ''));
-													?> only.</span></p>
+													?> only.</span></p></p>
 												</div>
 												<div class="col-sm-12">
-													<br><br>
-													<strong class="underline">Terms & Conditions:</strong>
-													<br><br>
+													<br>
+													<p><strong class="underline">Terms & Conditions:</strong></p>
 													<p>* Delivery will be started after 20 days of receiving of the irrevocable of letter of credit.</p>
 													<p>* Letter of credit will be opened as per address: Permess South East Asia Ltd. Gorai Industrail Area, Mirzapur, Tangail.</p>
 													<br>
-													<strong>
-														<?php 
-														if($ucbl_bank == true) {
-														?>
-														Advisin Bank: UCBL Principal Branch Motijheel.
-														<?php
-														}
-														else {
-														?>
-														Advisin Bank: Islamic Bank, Motijheel Branch.
-														<?php 
-														} 
-														?>
-													</strong>
-													<br><br>
+													<?php 
+													$bank = array('UCBL Principal Branch Motijheel', 'Islami Bank Local Office Branch Motijheel');
+													$bank_account = array('000111100092334', '20501020101105016');
+													echo '<p><b>Advisin Bank: '.$bank[$delivery[0]['delivery_bank']].'</b></p><p><b>A/C # '.$bank_account[$delivery[0]['delivery_bank']].'</b></p>';
+													?>													
 													<p class="underline">** L/C Shipment date s/b 15 days plus from the last delivery date.</p>
 													<p><b>a)</b> Matutity date to be counted from the date of receipt of goods.</p>
-													<p><b>b)</b> The invoice value must be paid at 90 days sight in US($) by confirmed irrevocable letter of credit on UCBL Principal Branch, Motijheel, Dhaka. Through FDD drawn on Bangladesh Bank in favour of Permess South East Asia LTd.</p>
+													<p class="double"><b>b) The invoice value must be paid at 90 days sight in US($) by confirmed irrevocable letter of credit on UCBL Principal Branch, Motijheel, Dhaka. Through FDD drawn on Bangladesh Bank in favour of Permess South East Asia LTd.</b></p>
 													<p><b>c)</b> Partial delivery / payment allowed.</p>
 													<p><b>d)</b> All charges outside of beneficiary's bank are on opener's account.</p>
 													<p><b>e)</b> Please insert VAT Registration Certificate Number in the Letter of Credit.</p>
-													<p><b>f)</b> UD MUST BE REQUIRED FOR DOCUMENTATION.</p>
-													<p><b>g)</b> H.S.Code No: 5903.90.10, TIN NO: 150-200-5020/Circle-50, Dhaka. Swift # UCBLBDDHPRB</p>												
+													<p><b>f) UD MUST BE REQUIRED FOR DOCUMENTATION.</b></p>
+													<p><b>g) H.S.Code No: 5903.90.10</b></p> 
+													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;TIN NO: 150-200-5020/Circle-50, Dhaka.</b></p>
+													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;Swift # UCBLBDDHPRB</b></p>												
 												</div>
 												<div class="col-sm-4">
 													<br><br>

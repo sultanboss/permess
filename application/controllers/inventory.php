@@ -254,6 +254,7 @@ class Inventory extends CI_Controller
 				'delivery_address'          => $this->input->post('delivery_address'),
 				'delivery_contact_person'	=> $this->input->post('delivery_contact_person'),
 				'delivery_buyer'			=> $this->input->post('delivery_buyer'),
+				'delivery_bank'				=> $this->input->post('delivery_bank'),
 				'delivery_payment'			=> $this->input->post('delivery_payment'),
 				'delivery_style'            => $this->input->post('delivery_style'),
 				'editor_id' 				=> $this->session->userdata('user_id')
@@ -347,6 +348,7 @@ class Inventory extends CI_Controller
 					'delivery_address'          => $this->input->post('delivery_address'),
 					'delivery_contact_person'	=> $this->input->post('delivery_contact_person'),
 					'delivery_buyer'			=> $this->input->post('delivery_buyer'),
+					'delivery_bank'				=> $this->input->post('delivery_bank'),
 					'delivery_payment'			=> $this->input->post('delivery_payment'),
 					'delivery_style'            => $this->input->post('delivery_style'),
 					'editor_id' 				=> $this->session->userdata('user_id')

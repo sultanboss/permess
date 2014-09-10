@@ -1249,5 +1249,32 @@
 	.stock-reorder {
 		color: #D04533;
 	}
+	
+
+	.dt-wrapper {
+	    overflow: auto;
+	}
+
+	.print h4 {
+		margin-bottom: -14px !important;
+	}
+
+	.print p {
+		line-height: 7px !important;
+	}
+
+	.print p.double {
+		line-height: 15px !important;
+	}
+
+	table.table-print tbody td {
+		border: none !important;
+		border-right: 1px solid #000 !important;
+		line-height: 4px !important;
+	}
+
+	table.table-print thead th, table.table-print tfoot td {
+		line-height: 4px !important;
+	}
 
 

@@ -196,6 +196,7 @@ class Inventory_model extends CI_Model {
     {
         $this->db->from('delivery_product');
         $this->db->where('delivery_id', $delivery_id);
+        $this->db->order_by('description_id, width_id');
         $q = $this->db->get();
         return $q->result_array();
     }
