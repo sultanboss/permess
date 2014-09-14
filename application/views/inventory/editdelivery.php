@@ -211,7 +211,7 @@
 														</div>													
 														<div class="col-sm-2">
 															<label for="delivery_style" class="unreq">Style</label>
-															<textarea id="delivery_style" name="delivery_style" class="form-control double-text" type="text" data-required="true"><?php echo $del['delivery_style']; ?></textarea>
+															<textarea id="delivery_style" name="delivery_style" class="form-control double-text" type="text"><?php echo $del['delivery_style']; ?></textarea>
 														</div>
 														<div class="col-sm-2 right">
 															<div id="lc_box">

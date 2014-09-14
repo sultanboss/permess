@@ -447,7 +447,7 @@
 	.control-group.warning .fileupload .uneditable-input {color: #a47e3c;border-color: #a47e3c;}
 	.control-group.warning .fileupload .fileupload-preview {color: #a47e3c;}
 	.control-group.warning .fileupload .img-thumbnail {border-color: #a47e3c;}
-	.control-group.error .fileupload .uneditable-input {color: #b94a48;border-color: #b94a48;}
+	.error, .control-group.error .fileupload .uneditable-input {color: #b94a48;border-color: #b94a48;}
 	.control-group.error .fileupload .fileupload-preview {color: #b94a48;}
 	.control-group.error .fileupload .img-thumbnail {border-color: #b94a48;}
 	.control-group.success .fileupload .uneditable-input {color: #468847;border-color: #468847;}

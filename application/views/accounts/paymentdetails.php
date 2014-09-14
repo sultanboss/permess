@@ -118,7 +118,7 @@
 														</div>																
 														<div class="col-sm-2">
 															<label for="bill_challan" class="unreq">Challan Info <small>(With Date)</small></label>
-															<textarea id="bill_challan" name="bill_challan" class="form-control double-text" type="text" data-required="true"><?php echo $value['bill_challan']; ?></textarea>
+															<textarea id="bill_challan" name="bill_challan" class="form-control double-text" type="text"><?php echo $value['bill_challan']; ?></textarea>
 														</div>
 														<div class="col-sm-2 right">
 															<label for="bill_payment_status" class="req">Payment Status</label>

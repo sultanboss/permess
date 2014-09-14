@@ -196,7 +196,7 @@ class Tank_auth
 				'fname'		=> $fname,
 				'lname'		=> $lname,
 				'zip'		=> $zip,
-				'birthday'		=> $birthday,
+				'birthday'	=> $birthday,
 				'last_ip'	=> $this->ci->input->ip_address(),
 			);
 
