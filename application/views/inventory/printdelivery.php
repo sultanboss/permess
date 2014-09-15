@@ -105,7 +105,7 @@
 												</div>	
 								</div>
 								<div class="panel panel-default">
-									<div class="panel_controls">
+									<div class="panel_controls" style="border-bottom: none;">
 										<div class="print">
 											<h4 class="heading_a text-center underline">Performance Invoice</h4>
 											<div class="row">											
@@ -136,10 +136,7 @@
 														echo "Cash/Cheque/TT Payment";
 													?>
 												</div>
-												<div class="clear"></div>											
-												<div class="col-sm-12 text-center">
-													<p>Style:- <?php echo $delivery[0]['delivery_style'];?></p>
-												</div>
+												<div class="clear text-center"><p>Style:- <?php echo $delivery[0]['delivery_style'];?></p></div>
 												<div class="col-sm-12">
 													<table class="table table-bordered table-print">
 														<thead>
@@ -204,16 +201,10 @@
 																<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
-													</table>													
-												</div>
-												<div class="col-sm-12">
-													<p><p><i><b>Amount in words:</b></i> <span class="upper">us dollar
-													<?php
-														echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', ''));
-													?> only.</span></p></p>
-												</div>
-												<div class="col-sm-12">
-													<br>
+													</table>
+													<p><i><b>Amount in words:</b></i> <span class="upper">us dollar <?php echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', '')); ?> only.</span></p>												
+												</div>										
+												<div class="col-sm-12">													
 													<p><strong class="underline">Terms & Conditions:</strong></p>
 													<p>* Delivery will be started after 20 days of receiving of the irrevocable of letter of credit.</p>
 													<p>* Letter of credit will be opened as per address: Permess South East Asia Ltd. Gorai Industrail Area, Mirzapur, Tangail.</p>
@@ -234,18 +225,15 @@
 													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;TIN NO: 150-200-5020/Circle-50, Dhaka.</b></p>
 													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;Swift # UCBLBDDHPRB</b></p>												
 												</div>
-												<div class="col-sm-4">
-													<br><br>
+												<div class="col-sm-6">
 													<i>For Permess South East Asia Ltd.</i>
-													<br><br><br>
+													<br><br>
 													___________________________
 													<p>Authorised Signature</p>
 													</div>
-													<div class="col-sm-4">&nbsp;</div>
-													<div class="col-sm-4 text-right">
-													<br><br>
+													<div class="col-sm-6 text-right">
 													<i>Accepted by Buyer.</i>
-													<br><br><br>
+													<br><br>
 													___________________________
 													<p>Authorised Signature</p>
 												</div>

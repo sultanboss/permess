@@ -1260,21 +1260,21 @@
 	}
 
 	.print p {
-		line-height: 7px !important;
+		line-height: normal;
+		margin: 0px;
 	}
 
 	.print p.double, .print td.double {
-		line-height: 15px !important;
+		line-height: normal;
 	}
 
 	table.table-print tbody td {
 		border: none !important;
 		border-right: 1px solid #000 !important;
-		line-height: 4px !important;
 	}
 
-	table.table-print thead th, table.table-print tfoot td {
-		line-height: 4px !important;
-	}
+	table.table-print tbody td, table.table-print thead th, table.table-print tfoot td {
+		padding: 0px;
+	}	
 
 

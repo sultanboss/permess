@@ -120,6 +120,16 @@
 															<label for="bill_challan" class="unreq">Challan Info <small>(With Date)</small></label>
 															<textarea id="bill_challan" name="bill_challan" class="form-control double-text" type="text"><?php echo $value['bill_challan']; ?></textarea>
 														</div>
+														<div class="col-sm-2">
+															<label for="bill_comission_status" class="unreq">Commission Status</label>
+															<select id="bill_comission_status" name="bill_comission_status" class="form-control">
+															<?php 
+																$this->tank_auth->load_select_options(array('Pending', 'Partial', 'Complete'), $value['bill_comission_status']);
+															?>								
+															</select>
+															<label for="bill_comission" class="unreq double-input-unreq">Commission Amount ($)</label>
+															<input id="bill_comission" name="bill_comission" class="form-control" type="text" value="<?php echo $value['bill_comission']; ?>">
+														</div>	
 														<div class="col-sm-2 right">
 															<label for="bill_payment_status" class="req">Payment Status</label>
 															<select id="bill_payment_status" name="bill_payment_status" class="form-control" data-required="true">
@@ -190,7 +200,7 @@
 									</div>
 								</div>
 								<div class="panel panel-default">
-									<div class="panel_controls">
+									<div class="panel_controls" style="border-bottom: 0px;">
 										<div class="print">
 											<h4 class="heading_a text-center underline">Cash Bill</h4>
 											<div class="row">											
@@ -255,15 +265,10 @@
 													</p>
 													
 													<p><b>By:</b> <?php echo $delivery_user;?></p>												
-												</div>
-												<div class="clear"></div>											
-												<div class="col-sm-12">
+												</div>										
+												<div class="clear col-sm-12">
 													<br>
-													<p><b>Payment Method: By 
-													<?php 
-														$this->tank_auth->load_option_name(array('Cash', 'Cheque', 'TT'), $payment[0]['bill_payment_method']);
-													?>
-													</b></p>
+													<p><b>Payment Method: By <?php $this->tank_auth->load_option_name(array('Cash', 'Cheque', 'TT'), $payment[0]['bill_payment_method']);?></b></p>
 												</div>
 												<div class="col-sm-12">
 													<table class="table table-bordered table-print">
@@ -358,13 +363,9 @@
 															<td></td>
 															<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
 														</tfoot>
-													</table>													
-												</div>
-												<div class="col-sm-12">
-													<p><p><i><b>Amount in Words:</b></i> <span class="upper">us dollar
-													<?php
-														echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', ''));
-													?> only.</span></p></p>
+													</table>
+													<p><i><b>Amount in Words:</b></i> <span class="upper">us dollar <?php echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', '')); ?> only.</span></p>
+													<br>												
 												</div>
 												<div class="col-sm-12">
 													<br>
@@ -407,14 +408,14 @@
 													<p>Authorised Signature</p>
 												</div>
 												<div class="col-sm-4 text-center">
-													<br><br>
+													<br>
 													<i>Issued by.</i>
 													<br><br><br><br>
 													___________________________
 													<p>Authorised Signature</p>
 												</div>
 												<div class="col-sm-4 text-right">
-													<br><br>
+													<br>
 													<i>Accepted by.</i>
 													<br><br><br><br>
 													___________________________
