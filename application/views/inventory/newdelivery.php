@@ -94,11 +94,21 @@
 														<div class="col-sm-2">
 															<label for="delivery_address" class="unreq">Delivery Address</label>
 															<textarea id="delivery_address" name="delivery_address" class="form-control double-text" type="text"></textarea>
-														</div>													
+														</div>																										
 														<div class="col-sm-2">
 															<label for="delivery_style" class="unreq">Style</label>
 															<textarea id="delivery_style" name="delivery_style" class="form-control double-text" type="text"></textarea>
 														</div>
+														<div class="col-sm-2">
+															<label for="delivery_commission_status" class="unreq">Commission Status</label>
+															<select id="delivery_commission_status" name="delivery_commission_status" class="form-control">
+															<?php 
+																$this->tank_auth->load_select_options(array('Pending', 'Partial', 'Complete'), 0);
+															?>								
+															</select>
+															<label for="delivery_commission" class="unreq double-input-unreq">Commission Amount ($)</label>
+															<input id="delivery_commission" name="delivery_commission" class="form-control" type="text" value="">
+														</div>	
 														<div class="col-sm-2 right">
 															<div id="lc_box">
 																<label for="delivery_lc_status" class="req">L.C. Status</label>

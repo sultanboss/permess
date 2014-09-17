@@ -248,7 +248,7 @@ class Inventory extends CI_Controller
 				'delivery_lc_status'		=> $this->input->post('delivery_lc_status'),
 				'delivery_lc_date'			=> $this->input->post('delivery_lc_date'),
 				'delivery_item_no'          => $this->input->post('delivery_item_no'),
-                'delivery_type'             => $this->input->post('delivery_type'),
+				'delivery_type'             => $this->input->post('delivery_type'),
 				'delivery_company_name'		=> $this->input->post('delivery_company_name'),
 				'delivery_company_address'	=> $this->input->post('delivery_company_address'),
 				'delivery_address'          => $this->input->post('delivery_address'),
@@ -257,6 +257,8 @@ class Inventory extends CI_Controller
 				'delivery_bank'				=> $this->input->post('delivery_bank'),
 				'delivery_payment'			=> $this->input->post('delivery_payment'),
 				'delivery_style'            => $this->input->post('delivery_style'),
+				'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
+				'delivery_commission'       => $this->input->post('delivery_commission'),
 				'editor_id' 				=> $this->session->userdata('user_id')
 			);
 
@@ -360,7 +362,7 @@ class Inventory extends CI_Controller
 						'delivery_lc_status'		=> $this->input->post('delivery_lc_status'),
 						'delivery_lc_date'			=> $this->input->post('delivery_lc_date'),
 						'delivery_item_no'          => $this->input->post('delivery_item_no'),
-		                'delivery_type'             => $this->input->post('delivery_type'),
+						'delivery_type'             => $this->input->post('delivery_type'),
 						'delivery_company_name'		=> $this->input->post('delivery_company_name'),
 						'delivery_company_address'	=> $this->input->post('delivery_company_address'),
 						'delivery_address'          => $this->input->post('delivery_address'),
@@ -369,6 +371,9 @@ class Inventory extends CI_Controller
 						'delivery_bank'				=> $this->input->post('delivery_bank'),
 						'delivery_payment'			=> $this->input->post('delivery_payment'),
 						'delivery_style'            => $this->input->post('delivery_style'),
+						'delivery_revised'          => $this->input->post('delivery_revised'),
+						'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
+						'delivery_commission'       => $this->input->post('delivery_commission'),
 						'editor_id' 				=> $this->session->userdata('user_id')
 					);
 				}

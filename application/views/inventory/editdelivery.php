@@ -211,7 +211,23 @@
 														</div>													
 														<div class="col-sm-2">
 															<label for="delivery_style" class="unreq">Style</label>
-															<textarea id="delivery_style" name="delivery_style" class="form-control double-text" type="text"><?php echo $del['delivery_style']; ?></textarea>
+															<input id="delivery_style" name="delivery_style" class="form-control" type="text" value="<?php echo $del['delivery_style']; ?>">
+															<label for="delivery_revised" class="unreq double-input-unreq">Revised</label>
+															<select id="delivery_revised" name="delivery_revised" class="form-control">
+															<?php 
+																$this->tank_auth->load_select_options(array('No', 'Yes'), $del['delivery_revised']);
+															?>
+															</select>	
+														</div>														
+														<div class="col-sm-2">
+															<label for="delivery_commission_status" class="unreq">Commission Status</label>
+															<select id="delivery_commission_status" name="delivery_commission_status" class="form-control">
+															<?php 
+																$this->tank_auth->load_select_options(array('Pending', 'Partial', 'Complete'), $del['delivery_commission_status']);
+															?>								
+															</select>
+															<label for="delivery_commission" class="unreq double-input-unreq">Commission Amount ($)</label>
+															<input id="delivery_commission" name="delivery_commission" class="form-control" type="text" value="<?php echo $del['delivery_commission']; ?>">
 														</div>
 														<div class="col-sm-2 right">
 															<div id="lc_box">

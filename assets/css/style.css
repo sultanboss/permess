@@ -1278,3 +1278,28 @@
 	}	
 
 
+	/* Report Printing CSS */
+
+	.DTTT_Print .dt-wrapper {
+	    overflow: visible;
+	}
+
+	.DTTT_Print #mobile_navigation {
+		display: none !important;
+	}
+
+	.DTTT_Print .panel-default {
+		border: none !important;
+	}
+
+	.DTTT_Print #main_content {
+		margin: 0px !important;
+	}
+
+	.DTTT_Print #report_table th, .DTTT_Print #report_table td, .DTTT_Print #report_table td {
+		border: 1px solid #333;
+		padding: 0px;
+		font-size: 10px;
+	}
+
+

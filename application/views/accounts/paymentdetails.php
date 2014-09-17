@@ -119,16 +119,6 @@
 														<div class="col-sm-2">
 															<label for="bill_challan" class="unreq">Challan Info <small>(With Date)</small></label>
 															<textarea id="bill_challan" name="bill_challan" class="form-control double-text" type="text"><?php echo $value['bill_challan']; ?></textarea>
-														</div>
-														<div class="col-sm-2">
-															<label for="bill_comission_status" class="unreq">Commission Status</label>
-															<select id="bill_comission_status" name="bill_comission_status" class="form-control">
-															<?php 
-																$this->tank_auth->load_select_options(array('Pending', 'Partial', 'Complete'), $value['bill_comission_status']);
-															?>								
-															</select>
-															<label for="bill_comission" class="unreq double-input-unreq">Commission Amount ($)</label>
-															<input id="bill_comission" name="bill_comission" class="form-control" type="text" value="<?php echo $value['bill_comission']; ?>">
 														</div>	
 														<div class="col-sm-2 right">
 															<label for="bill_payment_status" class="req">Payment Status</label>
@@ -202,7 +192,7 @@
 								<div class="panel panel-default">
 									<div class="panel_controls" style="border-bottom: 0px;">
 										<div class="print">
-											<h4 class="heading_a text-center underline">Cash Bill</h4>
+											<h4 class="heading_a text-center underline">Cash Bill  <?php if($delivery[0]['delivery_revised'] == 1) { echo "- <b>Revised</b>"; } ?></h4>
 											<div class="row">											
 												<div class="col-sm-4">
 													<p>PROFORMANCE INVOICE OF INTERLINING</p>

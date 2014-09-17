@@ -116,6 +116,8 @@
 							ar['delivery_bank']             = $('#delivery_bank').val();
 							ar['delivery_payment']          = $('#delivery_payment').val();
 							ar['delivery_style']            = $('#delivery_style').val();
+							ar['delivery_commission_status']= $('#delivery_commission_status').val();
+							ar['delivery_commission']       = $('#delivery_commission').val();
 							ar['editor_id']                 = $('#editor_id').val();
 
 							var i = 0;
@@ -193,7 +195,10 @@
 							ar['delivery_buyer']            = $('#delivery_buyer').val();
 							ar['delivery_bank']             = $('#delivery_bank').val();
 							ar['delivery_payment']          = $('#delivery_payment').val();
-							ar['delivery_style']            = $('#delivery_style').val();
+							ar['delivery_style']            = $('#delivery_style').val();		
+							ar['delivery_revised']          = $('#delivery_revised').val();						
+							ar['delivery_commission_status']= $('#delivery_commission_status').val();
+							ar['delivery_commission']       = $('#delivery_commission').val();
 							ar['editor_id']                 = $('#editor_id').val();
 
 							var i = 0;
