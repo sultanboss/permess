@@ -93,6 +93,63 @@ class Reports extends CI_Controller
 		$this->load->view('common/footer', $data);
 	}
 
+	function sales()
+	{
+		$this->tank_auth->check_login();
+
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
+		$data['title'] = 'Sales - Reports';
+
+		$data['css'] = $this->tank_auth->load_admin_css(array(
+			'js/lib/datepicker/css/datepicker.css',
+			'js/lib/select2/select2.css', 
+			'js/lib/select2/ebro_select2.css', 
+			'js/lib/dataTables/media/DT_bootstrap.css', 
+			'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+			'js/lib/Sticky/sticky.css'));
+
+		$data['js'] = $this->tank_auth->load_admin_js(array(
+			'js/lib/iCheck/jquery.icheck.min.js', 
+			'js/lib/parsley/parsley.min.js', 
+			'js/pages/ebro_form_validate.js', 
+			'js/lib/select2/select2.min.js', 
+			'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+			'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+			'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+			'js/lib/dataTables/extras/TableTools/media/js/TableTools.min.js',
+			'js/lib/dataTables/extras/TableTools/media/js/ZeroClipboard.js',
+			'js/lib/dataTables/media/DT_bootstrap.js', 
+			'js/pages/ebro_datatables.js', 
+			'js/lib/bootbox/bootbox.min.js', 
+			'js/lib/datepicker/js/bootstrap-datepicker.js', 
+			'js/lib/Sticky/sticky.js', 
+			'js/pages/ebro_notifications.js',
+			'js/pages/ebro_reports.js'));
+
+		$this->breadcrumbs->push('Reports', '#');
+		$this->breadcrumbs->push('Sales', '#');
+
+		$data['breadcrumbs'] = $this->breadcrumbs->show();
+
+		$data['start_date'] 		= '';
+		$data['end_date'] 			= '';
+		$data['sales'] = array();
+		if ( isset($_POST['start_date']) && isset($_POST['end_date']) && ($_POST['start_date'] != '') && ($_POST['end_date'] != '')) {
+			$data['sales'] = $this->reports_model->get_sales_data($_POST['start_date'], $_POST['end_date']);
+
+			$data['start_date'] 		= $_POST['start_date'];
+			$data['end_date'] 			= $_POST['end_date'];
+		}	
+
+		$this->load->view('common/header', $data);
+		$this->load->view('reports/sales', $data);
+		$this->load->view('common/footer', $data);
+	}
 
 	function stock()
 	{
