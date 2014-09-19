@@ -157,20 +157,20 @@ class Inventory extends CI_Controller
 
 		if ( isset($id) ) {
 
-			if($this->tank_auth->is_group_member('Accounts')) {
-				if(!$this->inventory_model->accounts_delivery_check($id)) {
-					$this->session->set_flashdata('msg', 'Invalid Access!');
-					$this->session->set_flashdata('msg_type', 'warning');
-					redirect('');
-				}
-			}
-			else if($this->tank_auth->is_group_member('Users')) {
+			if($this->tank_auth->is_group_member('Users')) {
 				if(!$this->inventory_model->users_delivery_check($id)) {
 					$this->session->set_flashdata('msg', 'Invalid Access!');
 					$this->session->set_flashdata('msg_type', 'warning');
 					redirect('');
 				}
 			}
+			/*else if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->inventory_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}*/
 
 			$data['delivery'] = $this->inventory_model->get_delivery_by_id($id);
 			if(empty($data['delivery'])) {
@@ -348,8 +348,14 @@ class Inventory extends CI_Controller
 						'editor_id' 				=> $this->session->userdata('user_id')
 					);
 				}
-				else if($this->tank_auth->is_group_member('Accounts') || $this->tank_auth->is_group_member('Users')) {
+				else if($this->tank_auth->is_group_member('Users')) {
 					$data['data'] = array();
+				}
+				else if($this->tank_auth->is_group_member('Accounts')) {
+					$data['data'] = array(
+						'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
+						'delivery_commission'       => $this->input->post('delivery_commission')
+					);
 				}
 				else {
 					$data['data'] = array(
@@ -481,20 +487,20 @@ class Inventory extends CI_Controller
 
 		if ( isset($id) ) {
 
-			if($this->tank_auth->is_group_member('Accounts')) {
-				if(!$this->inventory_model->accounts_delivery_check($id)) {
-					$this->session->set_flashdata('msg', 'Invalid Access!');
-					$this->session->set_flashdata('msg_type', 'warning');
-					redirect('');
-				}
-			}
-			else if($this->tank_auth->is_group_member('Users')) {
+			if($this->tank_auth->is_group_member('Users')) {
 				if(!$this->inventory_model->users_delivery_check($id)) {
 					$this->session->set_flashdata('msg', 'Invalid Access!');
 					$this->session->set_flashdata('msg_type', 'warning');
 					redirect('');
 				}
 			}
+			/*else if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->inventory_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}*/
 
 			$data['delivery'] = $this->inventory_model->get_delivery_by_id($id);
 			if(empty($data['delivery'])) {

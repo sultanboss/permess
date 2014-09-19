@@ -68,12 +68,12 @@ class Inventory_model extends CI_Model {
 			$this->datatables->from("delivery"); 
 			$this->datatables->join('users', 'users.id = delivery.delivery_by AND ak_users.id = '.$this->session->userdata('user_id'));
 		}
-		else if($this->tank_auth->is_group_member('Accounts')) {
+		/*else if($this->tank_auth->is_group_member('Accounts')) {
 			$this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname, delivery_payment"); 
 			$this->datatables->where("delivery_payment", '1');  
 			$this->datatables->from("delivery"); 
 			$this->datatables->join('users', 'users.id = delivery.delivery_by'); 
-		} 
+		}*/ 
 		else {
 			$this->datatables->select("delivery_id, delivery_date, delivery_company_name, delivery_doc_status, delivery_status, delivery_lc_status, fname, lname, delivery_payment");  
 			$this->datatables->from("delivery"); 

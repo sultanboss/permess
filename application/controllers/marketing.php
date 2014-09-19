@@ -67,20 +67,20 @@ class Marketing extends CI_Controller
 				redirect('/commercial/lcstatements');
 			}
 
-			if($this->tank_auth->is_group_member('Accounts')) {
-				if(!$this->marketing_model->accounts_delivery_check($id)) {
-					$this->session->set_flashdata('msg', 'Invalid Access!');
-					$this->session->set_flashdata('msg_type', 'warning');
-					redirect('');
-				}
-			}
-			else if($this->tank_auth->is_group_member('Users')) {
+			if($this->tank_auth->is_group_member('Users')) {
 				if(!$this->marketing_model->users_delivery_check($id)) {
 					$this->session->set_flashdata('msg', 'Invalid Access!');
 					$this->session->set_flashdata('msg_type', 'warning');
 					redirect('');
 				}
 			}
+			/*else if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->marketing_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}*/
 
 			$data['title'] = 'Update Order';
 
@@ -233,20 +233,20 @@ class Marketing extends CI_Controller
 				redirect('/commercial/lcstatements');
 			}
 
-			if($this->tank_auth->is_group_member('Accounts')) {
-				if(!$this->marketing_model->accounts_delivery_check($id)) {
-					$this->session->set_flashdata('msg', 'Invalid Access!');
-					$this->session->set_flashdata('msg_type', 'warning');
-					redirect('');
-				}
-			}
-			else if($this->tank_auth->is_group_member('Users')) {
+			if($this->tank_auth->is_group_member('Users')) {
 				if(!$this->marketing_model->users_delivery_check($id)) {
 					$this->session->set_flashdata('msg', 'Invalid Access!');
 					$this->session->set_flashdata('msg_type', 'warning');
 					redirect('');
 				}
 			}
+			/*else if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->marketing_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}*/
 
 			$data['title'] = 'Edit LC Statements';
 
