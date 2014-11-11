@@ -42,11 +42,15 @@
 													<div class="col-sm-3"><?php echo $value['source_name']; ?></div>
 													<div class="col-sm-1"><strong>Description:</strong> </div>
 													<div class="col-sm-11"><?php echo $value['description_name']; ?></div>
-													<div class="col-sm-12">&nbsp;</div>
 													<div class="col-sm-1"><strong>Date:</strong> </div>
 													<div class="col-sm-3"><?php echo $value['raw_date']; ?></div>
+													<div class="col-sm-1"><strong>Received:</strong> </div>
+													<div class="col-sm-3"><?php echo $value['raw_received_balance']; ?> Yards.</div>
+													<div class="col-sm-12">&nbsp;</div>
 													<div class="col-sm-1"><strong>P. I. No:</strong> </div>
 													<div class="col-sm-3"><?php echo $value['raw_pi_no']; ?></div>
+													<div class="col-sm-1"><strong>L. C. No:</strong> </div>
+													<div class="col-sm-3"><?php echo $value['raw_lc_no']; ?></div>
 													<div class="col-sm-1"><strong>Status:</strong> </div>
 													<div class="col-sm-3">
 													<?php
@@ -70,10 +74,6 @@
 													}
 													?>	
 													</div>
-													<div class="col-sm-1"><strong>Received:</strong> </div>
-													<div class="col-sm-3"><?php echo $value['raw_received_balance']; ?> Yards.</div>
-													<div class="col-sm-1"><strong>L. C. No:</strong> </div>
-													<div class="col-sm-3"><?php echo $value['raw_lc_no']; ?></div>
 												<?php 
 												}
 												?>
