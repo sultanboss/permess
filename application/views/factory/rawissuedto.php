@@ -41,7 +41,7 @@
 													<div class="col-sm-1"><strong>Source:</strong> </div>
 													<div class="col-sm-3"><?php echo $value['source_name']; ?></div>
 													<div class="col-sm-1"><strong>Description:</strong> </div>
-													<div class="col-sm-3"><?php echo $value['description_name']; ?></div>
+													<div class="col-sm-11"><?php echo $value['description_name']; ?></div>
 													<div class="col-sm-12">&nbsp;</div>
 													<div class="col-sm-1"><strong>Date:</strong> </div>
 													<div class="col-sm-3"><?php echo $value['raw_date']; ?></div>
