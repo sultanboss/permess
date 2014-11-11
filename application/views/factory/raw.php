@@ -108,7 +108,7 @@
 									                                </div>												
 																</div>	
 																<div class="form_sep">
-																	<div class="col-sm-12">
+																	<div class="col-sm-12 start">
 																		<label for="description_name" class="req">Description</label>					
 																		<select id="description_name" name="description_name" class="form-control" data-required="true">
 																			<?php
@@ -266,7 +266,7 @@
 									                                </div>												
 																</div>	
 																<div class="form_sep">
-																	<div class="col-sm-12">
+																	<div class="col-sm-12 start">
 																		<label for="edit_description_name" class="req">Description</label>					
 																		<select id="edit_description_name" name="edit_description_name" class="form-control" data-required="true">
 																			<?php

@@ -119,6 +119,7 @@ class Factory extends CI_Controller
 				'softness_id'			=> $this->input->post('edit_softness_name'),
 				'color_id'				=> $this->input->post('edit_color_name'),
 				'source_id'				=> $this->input->post('edit_source_name'),
+				'description_id'		=> $this->input->post('edit_description_name'),
 				'raw_date'				=> $this->input->post('edit_raw_date'),
 				'raw_received_balance'	=> $this->input->post('edit_raw_received_balance'),
 				'raw_lc_no'				=> $this->input->post('edit_raw_lc_no'),

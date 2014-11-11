@@ -363,6 +363,7 @@
                             $("#edit_softness_name").val($(this).attr('data-softness'));
                             $("#edit_color_name").val($(this).attr('data-color'));
                             $("#edit_source_name").val($(this).attr('data-source'));
+                            $("#edit_description_name").val($(this).attr('data-description'));
                             $("#edit_raw_date").val($(this).attr('data-date'));
                             $("#edit_raw_received_balance").val($(this).attr('data-received'));
                             $("#edit_raw_lc_no").val($(this).attr('data-lc'));
