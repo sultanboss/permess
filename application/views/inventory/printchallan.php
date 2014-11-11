@@ -226,7 +226,7 @@
 												<div class="col-sm-12 challan-print-table">	
 													<table width="100%">
 														<tr>
-															<td colspan="3" align="center">Received the above interlinings in good condition</td>
+															<td colspan="3" align="center" style="font-weight: bold; text-decoration: underline;">Received the above interlinings in good condition</td>
 														</tr>
 														<tr>
 															<td colspan="2" width="50%">Receipent Name:</td>

@@ -107,6 +107,20 @@
 										                                </select>
 									                                </div>												
 																</div>	
+																<div class="form_sep">
+																	<div class="col-sm-12">
+																		<label for="description_name" class="req">Description</label>					
+																		<select id="description_name" name="description_name" class="form-control" data-required="true">
+																			<?php
+																			foreach ($descriptions as $key => $value) {							
+																			?>
+																			<option value="<?php echo $value['description_id']; ?>"><?php echo $value['description_name']; ?></option>
+																			<?php						
+																			}																	
+																			?>				
+										                                </select>
+									                                </div>																		
+																</div>
 																<div class="form_sep">																	
 																	<div class="col-sm-6 start">
 																		<label for="raw_date" class="req">Import Date</label>
@@ -251,6 +265,20 @@
 										                                </select>
 									                                </div>												
 																</div>	
+																<div class="form_sep">
+																	<div class="col-sm-12">
+																		<label for="edit_description_name" class="req">Description</label>					
+																		<select id="edit_description_name" name="edit_description_name" class="form-control" data-required="true">
+																			<?php
+																			foreach ($descriptions as $key => $value) {							
+																			?>
+																			<option value="<?php echo $value['description_id']; ?>"><?php echo $value['description_name']; ?></option>
+																			<?php						
+																			}																	
+																			?>				
+										                                </select>
+									                                </div>																		
+																</div>
 																<div class="form_sep">																	
 																	<div class="col-sm-6 start">
 																		<label for="edit_raw_date" class="req">Import Date</label>

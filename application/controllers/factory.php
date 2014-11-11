@@ -56,6 +56,7 @@ class Factory extends CI_Controller
 		$data['softnesses'] = $this->factory_model->get_all_softness();
 		$data['colors'] = $this->factory_model->get_all_color();
 		$data['sources'] = $this->factory_model->get_all_source();
+		$data['descriptions'] = $this->factory_model->get_all_description();
 
 		$this->load->view('common/header', $data);
 		$this->load->view('factory/raw', $data);
@@ -80,6 +81,7 @@ class Factory extends CI_Controller
 				'softness_id'			=> $this->input->post('softness_name'),
 				'color_id'				=> $this->input->post('color_name'),
 				'source_id'				=> $this->input->post('source_name'),
+				'description_id'		=> $this->input->post('description_name'),
 				'raw_date'				=> $this->input->post('raw_date'),
 				'raw_received_balance'	=> $this->input->post('raw_received_balance'),
 				'raw_lc_no'				=> $this->input->post('raw_lc_no'),
