@@ -10,7 +10,7 @@ class Factory_model extends CI_Model {
 
     function get_raw_by_id($raw_id)
     {
-        $this->db->select('r.*, a.article_name, c.construction_name, w.width_name, s.softness_name, t.color_name, p.source_name');
+        $this->db->select('r.*, a.article_name, c.construction_name, w.width_name, s.softness_name, t.color_name, p.source_name, d.description_name');
         $this->db->from('raw r');
         $this->db->where('r.raw_id', $raw_id);
         $this->db->join('article a', 'r.article_id = a.article_id');
@@ -19,6 +19,7 @@ class Factory_model extends CI_Model {
         $this->db->join('softness s', 'r.softness_id = s.softness_id');
         $this->db->join('color t', 'r.color_id = t.color_id');
         $this->db->join('source p', 'r.source_id = p.source_id');
+        $this->db->join('description d', 'r.description_id = d.description_id');
         $q = $this->db->get();
         return $q->result_array();
     }
@@ -81,7 +82,7 @@ class Factory_model extends CI_Model {
 
     function get_raw_data() 
     {
-        $this->datatables->select('raw_id, raw_date, raw_pi_no, raw_lc_no, article_name, construction_name, width_name, softness_name, color_name, source_name, (SELECT sum( r.raw_received_balance ) FROM ak_raw r WHERE r.raw_id < ak_raw.raw_id and ak_raw.article_id = r.article_id and ak_raw.construction_id = r.construction_id and ak_raw.width_id = r.width_id and ak_raw.softness_id = r.softness_id and ak_raw.color_id = r.color_id and ak_raw.source_id = r.source_id) AS prev_balance, raw_received_balance, raw_id as total, raw_date as date, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id');   
+        $this->datatables->select('raw_id, raw_date, raw_pi_no, raw_lc_no, article_name, construction_name, width_name, softness_name, color_name, source_name, (SELECT sum( r.raw_received_balance ) FROM ak_raw r WHERE r.raw_id < ak_raw.raw_id and ak_raw.article_id = r.article_id and ak_raw.construction_id = r.construction_id and ak_raw.width_id = r.width_id and ak_raw.softness_id = r.softness_id and ak_raw.color_id = r.color_id and ak_raw.source_id = r.source_id) AS prev_balance, raw_received_balance, raw_id as total, raw_date as date, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, description.description_id');   
         $this->datatables->from('raw'); 
         $this->datatables->join('article', 'article.article_id = raw.article_id');  
         $this->datatables->join('construction', 'construction.construction_id = raw.construction_id');  
@@ -91,7 +92,7 @@ class Factory_model extends CI_Model {
         $this->datatables->join('source', 'source.source_id = raw.source_id');  
         $this->datatables->join('description', 'description.description_id = raw.description_id'); 
 
-        $this->datatables->edit_column('date', '<a title="edit" class="raw_edit" data-id="$1" data-date="$2" data-pi="$3" data-lc="$4" data-article="$5" data-construction="$6" data-width="$7" data-softness="$8" data-color="$9" data-source="$a" data-received="$b" data-description="$c" data-toggle="modal" href="#edit_raw"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleteraw/$1"><span class="icon-trash"></span></a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="'.base_url().'factory/rawissuedto/$1" title="issued to"><span class="glyphicon glyphicon-stop color-x"></span></a>', 'raw_id, raw_date, raw_pi_no, raw_lc_no, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, raw_received_balance', ', description.description_id');
+        $this->datatables->edit_column('date', '<a title="edit" class="raw_edit" data-id="$1" data-date="$2" data-pi="$3" data-lc="$4" data-article="$5" data-construction="$6" data-width="$7" data-softness="$8" data-color="$9" data-source="$a" data-received="$b" data-description="$c" data-toggle="modal" href="#edit_raw"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleteraw/$1"><span class="icon-trash"></span></a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="'.base_url().'factory/rawissuedto/$1" title="issued to"><span class="glyphicon glyphicon-stop color-x"></span></a>', 'raw_id, raw_date, raw_pi_no, raw_lc_no, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, raw_received_balance, description.description_id');
 
         $res = $this->datatables->generate();
 
@@ -107,6 +108,7 @@ class Factory_model extends CI_Model {
 
             $res->aaData[$key][13] = str_replace('$a', $res->aaData[$key][19], $res->aaData[$key][13]);
             $res->aaData[$key][13] = str_replace('$b', $res->aaData[$key][11], $res->aaData[$key][13]);
+            $res->aaData[$key][13] = str_replace('$c', $res->aaData[$key][20], $res->aaData[$key][13]);
 
             if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) 
             {
