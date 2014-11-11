@@ -125,6 +125,7 @@
 												</div>
 												<div class="col-sm-3">&nbsp;</div>
 												<div class="col-sm-5">
+													<p><b>Challan No #</b><?php echo 100+$delivery[0]['delivery_id'];?></p>
 													<p><b>P/I #</b> PSEAL/<?php	if($delivery[0]['delivery_pi_name'] != '') { echo $delivery[0]['delivery_pi_name'].'/'; } ?><?php echo $delivery[0]['delivery_id'];?>/<?php echo date('Y');?></p>
 													<p><b>Date:</b> <?php echo $delivery[0]['delivery_date'];?></p>
 													<p><b>Contact Person:</b> <?php echo $delivery[0]['delivery_contact_person'];?></p>
@@ -146,7 +147,6 @@
 																<th class="text-center">Description</th>
 																<th class="text-right">Quantity In (Yards)</th>
 																<th class="text-right">Quantity Delivered</th>
-																<th class="text-right">Total Amount</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -158,6 +158,7 @@
 															$des = '';
 															$wid = '';
 															$ttl = 0;
+															$dqty = 0;
 															foreach ($delivery_products as $key => $value) {															
 															if($des != $value['description_name'] || $wid != $value['width_name']) {
 																$des = $value['description_name'];
@@ -190,7 +191,7 @@
 															</tr>
 															<?php
 																$qty = $qty + $value['order_quantity'];
-																$total = $total + ($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price']));
+																$dqty = $dqty + $value['delivery_quantity'];
 																$x++;
 															}
 															?>															
@@ -204,40 +205,42 @@
 															</tr>
 														</tfoot>
 													</table>
-													<p><i><b>Amount in words:</b></i> <span class="upper">us dollar <?php echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', '')); ?> only.</span></p>												
 												</div>										
 												<div class="col-sm-12">													
 													<p><strong class="underline">Terms & Conditions:</strong></p>
 													<p>* Delivery will be started after 20 days of receiving of the irrevocable of letter of credit.</p>
 													<p>* Letter of credit will be opened as per address: Permess South East Asia Ltd. Gorai Industrail Area, Mirzapur, Tangail.</p>
 													<br>
-													<?php 
-													$bank = array('UCBL Principal Branch Motijheel', 'Islami Bank Local Office Branch Motijheel');
-													$bank_account = array('000111100092334', '20501020101105016');
-													echo '<p><b>Advisin Bank: '.$bank[$delivery[0]['delivery_bank']].'</b></p><p><b>A/C # '.$bank_account[$delivery[0]['delivery_bank']].'</b></p>';
-													?>													
-													<p class="underline">** L/C Shipment date s/b 15 days plus from the last delivery date.</p>
-													<p><b>a)</b> Matutity date to be counted from the date of receipt of goods.</p>
-													<p class="double"><b>b) The invoice value must be paid at 90 days sight in US($) by confirmed irrevocable letter of credit on UCBL Principal Branch, Motijheel, Dhaka. Through FDD drawn on Bangladesh Bank in favour of Permess South East Asia LTd.</b></p>
-													<p><b>c)</b> Partial delivery / payment allowed.</p>
-													<p><b>d)</b> All charges outside of beneficiary's bank are on opener's account.</p>
-													<p><b>e)</b> Please insert VAT Registration Certificate Number in the Letter of Credit.</p>
-													<p><b>f) UD MUST BE REQUIRED FOR DOCUMENTATION.</b></p>
-													<p><b>g) H.S.Code No: 5903.90.10</b></p> 
-													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;TIN NO: 150-200-5020/Circle-50, Dhaka.</b></p>
-													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;Swift # UCBLBDDHPRB</b></p>												
 												</div>
 												<div class="col-sm-6">
 													<i>For Permess South East Asia Ltd.</i>
 													<br><br>
 													___________________________
 													<p>Authorised Signature</p>
-													</div>
-													<div class="col-sm-6 text-right">
+												</div>
+												<div class="col-sm-6 text-right">
 													<i>Accepted by Buyer.</i>
 													<br><br>
 													___________________________
 													<p>Authorised Signature</p>
+												</div>
+												<div class="col-sm-12">	
+													<table>
+														<tr>
+															<td colspan="3">Received the above interlinings in good condition</td>
+														</tr>
+														<tr>
+															<td colspan="2" width="50%">Receipent Name:</td>
+															<td rowspan="3">Signature<br>and<br>Seal</td>
+														</tr>
+														<tr>
+															<td colspan="2">Receipent Title:</td>
+														</tr>
+														<tr>
+															<td>Receive Date:</td>
+															<td>Receive Time:</td>
+														</tr>
+													</table>
 												</div>
 											</div>
 										</div>
