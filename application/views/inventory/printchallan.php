@@ -176,7 +176,6 @@
 																<td class="text-center"><b><?php echo $des.', Width: '.$wid?></b></td>
 																<td></td>
 																<td></td>
-																<td></td>
 															</tr>
 															<?php
 															}
@@ -187,7 +186,6 @@
 																</td>
 																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?></td>
 																<td class="text-right"><?php echo number_format((float)($value['delivery_quantity']), 2, '.', ''); ?></td>
-																<td class="text-right">$ <?php echo number_format((float)($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price'])), 2, '.', ''); ?></td>
 															</tr>
 															<?php
 																$qty = $qty + $value['order_quantity'];
@@ -200,8 +198,7 @@
 															<tr>
 																<td class="text-right"><b>Total:</b></td>
 																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
-																<td></td>
-																<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$dqty, 2, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
 													</table>
@@ -225,7 +222,7 @@
 													<p>Authorised Signature</p>
 												</div>
 												<div class="col-sm-12">	
-													<table>
+													<table width="100%" class="challan-print-table">
 														<tr>
 															<td colspan="3">Received the above interlinings in good condition</td>
 														</tr>
