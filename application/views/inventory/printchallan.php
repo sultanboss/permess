@@ -203,7 +203,8 @@
 														</tfoot>
 													</table>
 												</div>										
-												<div class="col-sm-12">													
+												<div class="col-sm-12">	
+													<br><br>											
 													<p><strong class="underline">Terms & Conditions:</strong></p>
 													<p>* Delivery will be started after 20 days of receiving of the irrevocable of letter of credit.</p>
 													<p>* Letter of credit will be opened as per address: Permess South East Asia Ltd. Gorai Industrail Area, Mirzapur, Tangail.</p>
@@ -221,10 +222,11 @@
 													___________________________
 													<p>Authorised Signature</p>
 												</div>
-												<div class="col-sm-12">	
+												<br><br>
+												<div class="col-12">	
 													<table width="100%" class="challan-print-table">
 														<tr>
-															<td colspan="3">Received the above interlinings in good condition</td>
+															<td colspan="3" align="center">Received the above interlinings in good condition</td>
 														</tr>
 														<tr>
 															<td colspan="2" width="50%">Receipent Name:</td>
