@@ -101,9 +101,9 @@
 													}
 													?>
 													</a>
-													<a href="<?php echo base_url(); ?>factory/printchallan/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Challan"><span class="glyphicon glyphicon-list largex color-gray"></span></a>
-													<a href="javascript:void(0)" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-green toolbar-active"></span></a>
-													<button id="invoice_print" class="btn btn-success btn-sm"><span class="icon-print"></span> Print Invoice</button>
+													<a href="javascript:void(0)" class="hint--top" data-hint="Print Challan"><span class="glyphicon glyphicon-list largex color-green toolbar-active"></span></a>
+													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-gray"></span></a>
+													<button id="chalan_print" class="btn btn-success btn-sm"><span class="icon-print"></span> Print Challan</button>
 												</div>	
 								</div>
 								<div class="panel panel-default">
@@ -145,7 +145,7 @@
 															<tr>
 																<th class="text-center">Description</th>
 																<th class="text-right">Quantity In (Yards)</th>
-																<th class="text-right">Unit Price USD</th>
+																<th class="text-right">Quantity Delivered</th>
 																<th class="text-right">Total Amount</th>
 															</tr>
 														</thead>
@@ -185,7 +185,7 @@
 																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
 																</td>
 																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?></td>
-																<td class="text-right">$ <?php echo number_format((float)($value['unit_price']+$value['over_invoice_unit_price']), 2, '.', ''); ?></td>
+																<td class="text-right"><?php echo number_format((float)($value['delivery_quantity']), 2, '.', ''); ?></td>
 																<td class="text-right">$ <?php echo number_format((float)($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price'])), 2, '.', ''); ?></td>
 															</tr>
 															<?php

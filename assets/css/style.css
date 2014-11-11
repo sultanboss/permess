@@ -1302,4 +1302,10 @@
 		font-size: 10px;
 	}
 
+	#invoice_print, #chalan_print {
+	    position: absolute;
+	    right: 25px;
+	    top: 49px;
+	}
+
 

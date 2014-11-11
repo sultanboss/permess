@@ -562,5 +562,86 @@ class Inventory extends CI_Controller
 		}
 	}
 
+	function printchallan($id)
+	{
+		$this->tank_auth->check_login();
+
+		if ( isset($id) ) {
+
+			if($this->tank_auth->is_group_member('Users')) {
+				if(!$this->inventory_model->users_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}
+			/*else if($this->tank_auth->is_group_member('Accounts')) {
+				if(!$this->inventory_model->accounts_delivery_check($id)) {
+					$this->session->set_flashdata('msg', 'Invalid Access!');
+					$this->session->set_flashdata('msg_type', 'warning');
+					redirect('');
+				}
+			}*/
+
+			$data['delivery'] = $this->inventory_model->get_delivery_by_id($id);
+			if(empty($data['delivery'])) {
+				$this->session->set_flashdata('msg', 'Invalid delivery input!');
+				$this->session->set_flashdata('msg_type', 'warning');
+				redirect('/factory/delivery');
+			}
+
+			$data['title'] = 'Print Delivery';
+
+			$data['css'] = $this->tank_auth->load_admin_css(array(
+				'js/lib/dataTables/media/DT_bootstrap.css', 
+				'js/lib/datepicker/css/datepicker.css',
+				'js/lib/dataTables/extras/TableTools/media/css/TableTools.css',
+				'css/hint-css/hint.css',
+				'js/lib/Sticky/sticky.css'));
+
+			$data['js'] = $this->tank_auth->load_admin_js(array(
+				'js/lib/iCheck/jquery.icheck.min.js', 
+				'js/lib/parsley/parsley.min.js', 
+				'js/pages/ebro_form_validate.js', 
+				'js/lib/dataTables/media/js/jquery.dataTables.min.js', 
+				'js/lib/dataTables/extras/ColReorder/media/js/ColReorder.min.js',
+				'js/lib/dataTables/extras/ColVis/media/js/ColVis.min.js', 
+				'js/lib/dataTables/media/DT_bootstrap.js', 
+				'js/pages/ebro_datatables.js', 
+				'js/lib/bootbox/bootbox.min.js', 
+				'js/lib/datepicker/js/bootstrap-datepicker.js', 
+				'js/lib/Sticky/sticky.js', 
+				'js/pages/ebro_notifications.js',
+				'js/pages/ebro_invoices.js'));
+
+			$this->breadcrumbs->push('Factory', '#');
+			$this->breadcrumbs->push('Delivery', '../../factory/delivery');
+			$this->breadcrumbs->push('Print Delivery', '#');
+
+			$data['breadcrumbs'] = $this->breadcrumbs->show();	
+			$data['delivery_user'] = $this->factory_model->get_delivery_user($data['delivery'][0]['delivery_by']);
+			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
+			$data['payment'] = $this->inventory_model->get_payment_status($id);
+
+			foreach ($data['delivery_products'] as $key => $value) {
+				$data['delivery_products'][$key]['article_name'] = $this->factory_model->get_article_alt_name($value['article_alt']);
+				$data['delivery_products'][$key]['description_name'] = $this->factory_model->get_description($value['description_id']);
+				$data['delivery_products'][$key]['width_name'] = $this->factory_model->get_width($value['width_id']);
+				$data['delivery_products'][$key]['softness_name'] = $this->factory_model->get_softness($value['softness_id']);
+				$data['delivery_products'][$key]['color_name'] = $this->factory_model->get_color($value['color_id']);
+			}
+
+			$this->load->view('common/header', $data);
+			$this->load->view('inventory/printchallan', $data);
+			$this->load->view('common/footer', $data);
+		}
+		else
+		{
+			$this->session->set_flashdata('msg', 'Invalid delivery input!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('/factory/delivery');
+		}
+	}
+
 
 }

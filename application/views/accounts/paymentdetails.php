@@ -72,7 +72,8 @@
 														<?php
 													}
 													?>
-													</a>													
+													</a>
+													<a href="<?php echo base_url(); ?>factory/printchallan/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Challan"><span class="glyphicon glyphicon-list largex color-gray"></span></a>													
 													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-print"></span></a>						
 												</div>
 								</div>
@@ -185,7 +186,8 @@
 								<div style="margin-top: 50px;">
 									<div class="col-sm-4 pull-right top-right-btn">	
 										<div class="btn-group">	
-											<a id="invoice_print" href="javascript:void(0)" class="hint--top" data-hint="Print Cash Bill"><span class="glyphicon glyphicon-print largex color-blue toolbar-active"></span></a>
+											<a href="javascript:void(0)" class="hint--top" data-hint="Print Cash Bill"><span class="glyphicon glyphicon-print largex color-green toolbar-active"></span></a>
+											<button id="invoice_print" class="btn btn-success btn-sm"><span class="icon-print"></span> Print Cash Bill</button>
 										</div>
 									</div>
 								</div>

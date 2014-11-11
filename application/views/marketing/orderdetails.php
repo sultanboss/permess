@@ -100,7 +100,8 @@
 														<?php
 													}
 													?>
-													</a>													
+													</a>	
+													<a href="<?php echo base_url(); ?>factory/printchallan/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Challan"><span class="glyphicon glyphicon-list largex color-gray"></span></a>												
 													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $status[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-print"></span></a>						
 												</div>
 								</div>

@@ -42,6 +42,7 @@ $route['newdelivery'] 							= 'inventory/newdelivery';
 $route['factory/stock'] 						= 'inventory/stock';
 $route['factory/editdelivery/(:any)'] 			= 'inventory/editdelivery/$1';
 $route['factory/printdelivery/(:any)'] 			= 'inventory/printdelivery/$1';
+$route['factory/printchallan/(:any)'] 			= 'inventory/printchallan/$1';
 $route['factory/delivery'] 						= 'inventory/delivery';
 
 $route['commercial/lcstatements'] 				= 'marketing/lcstatements';
