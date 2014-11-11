@@ -109,7 +109,7 @@
 								<div class="panel panel-default">
 									<div class="panel_controls" style="border-bottom: none;">
 										<div class="print">											
-											<h4 class="heading_a text-center underline">Performance Invoice <?php if($delivery[0]['delivery_revised'] == 1) { echo "- <b>Revised</b>"; } ?></h4>
+											<h4 class="heading_a text-center underline">Delivery Challan</h4>
 											<div class="row">											
 												<div class="col-sm-4">
 													<p>To</p>
