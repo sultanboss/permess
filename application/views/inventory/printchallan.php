@@ -145,8 +145,9 @@
 														<thead>
 															<tr>
 																<th class="text-center">Description</th>
-																<th class="text-right">Quantity In (Yards)</th>
+																<th class="text-right">Quantity Ordered</th>
 																<th class="text-right">Quantity Delivered</th>
+																<th class="text-right">Quantity Pending</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -159,6 +160,7 @@
 															$wid = '';
 															$ttl = 0;
 															$dqty = 0;
+															$qtyp = 0;
 															foreach ($delivery_products as $key => $value) {															
 															if($des != $value['description_name'] || $wid != $value['width_name']) {
 																$des = $value['description_name'];
@@ -184,8 +186,9 @@
 																<td class="text-center">
 																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
 																</td>
-																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?></td>
-																<td class="text-right"><?php echo number_format((float)($value['delivery_quantity']), 2, '.', ''); ?></td>
+																<td class="text-right"><?php $qo = number_format((float)$value['order_quantity'], 2, '.', ''); echo $qo; ?></td>
+																<td class="text-right"><?php $qd = number_format((float)($value['delivery_quantity']), 2, '.', ''); echo $qd; ?></td>
+																<td class="text-right"><?php $qp = number_format((float)($qo-$qd), 2, '.', ''); echo $qp; $qtyp = $qtyp + $qp; ?></td>
 															</tr>
 															<?php
 																$qty = $qty + $value['order_quantity'];
@@ -199,6 +202,7 @@
 																<td class="text-right"><b>Total:</b></td>
 																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
 																<td class="text-right"><b><?php echo number_format((float)$dqty, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qtyp, 2, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
 													</table>
@@ -214,10 +218,10 @@
 													<i>For Permess South East Asia Ltd.</i>
 													<br><br>
 													___________________________
-													<p>Authorised Signature</p>
+													<p>Store Officer/Deliver In-charge</p>
 												</div>
 												<div class="col-sm-6 text-right">
-													<i>Accepted by Buyer.</i>
+													<i>Authorised by.</i>
 													<br><br>
 													___________________________
 													<p>Authorised Signature</p>

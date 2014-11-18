@@ -590,7 +590,7 @@ class Inventory extends CI_Controller
 				redirect('/factory/delivery');
 			}
 
-			$data['title'] = 'Print Delivery';
+			$data['title'] = 'Print Challan';
 
 			$data['css'] = $this->tank_auth->load_admin_css(array(
 				'js/lib/dataTables/media/DT_bootstrap.css', 
