@@ -1308,6 +1308,10 @@
 	    top: 49px;
 	}
 
+	#chalan_print {
+		top: auto;
+	}
+
 	.challan-print-table {
 		width: 100% !important;
 		overflow: auto;

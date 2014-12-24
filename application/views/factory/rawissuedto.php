@@ -46,6 +46,10 @@
 													<div class="col-sm-3"><?php echo $value['raw_date']; ?></div>
 													<div class="col-sm-1"><strong>Received:</strong> </div>
 													<div class="col-sm-3"><?php echo $value['raw_received_balance']; ?> Yards.</div>
+													<div class="col-sm-1"><strong>Supplier:</strong> </div>
+													<div class="col-sm-3"><?php echo nl2br($value['raw_supplier']); ?></div>
+													<div class="col-sm-1"><strong>Remarks:</strong> </div>
+													<div class="col-sm-3"><?php echo nl2br($value['raw_remarks']); ?></div>
 													<div class="col-sm-12">&nbsp;</div>
 													<div class="col-sm-1"><strong>P. I. No:</strong> </div>
 													<div class="col-sm-3"><?php echo $value['raw_pi_no']; ?></div>

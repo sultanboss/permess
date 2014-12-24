@@ -562,11 +562,11 @@ class Inventory extends CI_Controller
 		}
 	}
 
-	function printchallan($id)
+	function printchallan($id = null, $challanid = 0)
 	{
 		$this->tank_auth->check_login();
 
-		if ( isset($id) ) {
+		if ($id != null) {
 
 			if($this->tank_auth->is_group_member('Users')) {
 				if(!$this->inventory_model->users_delivery_check($id)) {
@@ -590,7 +590,7 @@ class Inventory extends CI_Controller
 				redirect('/factory/delivery');
 			}
 
-			$data['title'] = 'Print Challan';
+			$data['title'] = 'Delivery Challan';
 
 			$data['css'] = $this->tank_auth->load_admin_css(array(
 				'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -620,8 +620,15 @@ class Inventory extends CI_Controller
 
 			$data['breadcrumbs'] = $this->breadcrumbs->show();	
 			$data['delivery_user'] = $this->factory_model->get_delivery_user($data['delivery'][0]['delivery_by']);
-			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
 			$data['payment'] = $this->inventory_model->get_payment_status($id);
+
+			$data['challan_list'] = $this->inventory_model->get_challan_list_by_id($id);
+
+			foreach ($data['challan_list'] as $key => $value) {
+				
+			}
+
+			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
 
 			foreach ($data['delivery_products'] as $key => $value) {
 				$data['delivery_products'][$key]['article_name'] = $this->factory_model->get_article_alt_name($value['article_alt']);

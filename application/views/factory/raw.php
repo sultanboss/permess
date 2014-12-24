@@ -144,7 +144,17 @@
 																		<input id="raw_lc_no" name="raw_lc_no" class="form-control" type="text" data-required="true">
 																		
 																	</div>
-																</div>																				
+																</div>		
+																<div class="form_sep">																	
+																	<div class="col-sm-6 start">
+																		<label for="raw_supplier" class="req">Supplier Name.</label>
+																		<textarea id="raw_supplier" name="raw_supplier" class="form-control" data-required="true"></textarea>
+																	</div>
+																	<div class="col-sm-6 end">
+																		<label for="raw_remarks" class="unreq">Remarks.</label>
+																		<textarea id="raw_remarks" name="raw_remarks" class="form-control"></textarea>																		
+																	</div>
+																</div>																			
 																<div class="form_sep text-right">
 																	<button class="btn btn-success btn-sm" type="submit"><span class="icon-plus"></span> Add Raw</button>
 																</div>						
@@ -299,10 +309,19 @@
 																	</div>
 																	<div class="col-sm-6 end">
 																		<label for="edit_raw_lc_no" class="req">L.C. No.</label>
-																		<input id="edit_raw_lc_no" name="edit_raw_lc_no" class="form-control" type="text" data-required="true">
-																		
+																		<input id="edit_raw_lc_no" name="edit_raw_lc_no" class="form-control" type="text" data-required="true">																		
 																	</div>
-																</div>																				
+																</div>				
+																<div class="form_sep">																	
+																	<div class="col-sm-6 start">
+																		<label for="edit_raw_supplier" class="req">Supplier Name.</label>
+																		<textarea id="edit_raw_supplier" name="edit_raw_supplier" class="form-control" data-required="true"></textarea>
+																	</div>
+																	<div class="col-sm-6 end">
+																		<label for="edit_raw_remarks" class="unreq">Remarks.</label>
+																		<textarea id="edit_raw_remarks" name="edit_raw_remarks" class="form-control"></textarea>																		
+																	</div>
+																</div>																			
 																<div class="form_sep text-right">
 																	<button class="btn btn-success btn-sm" type="submit"><span class="icon-refresh"></span> Update</button>
 																</div>						

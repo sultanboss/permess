@@ -368,6 +368,8 @@
                             $("#edit_raw_received_balance").val($(this).attr('data-received'));
                             $("#edit_raw_lc_no").val($(this).attr('data-lc'));
                             $("#edit_raw_pi_no").val($(this).attr('data-pi'));
+                            $("#edit_raw_supplier").val($(this).attr('data-supplier'));
+                            $("#edit_raw_remarks").val($(this).attr('data-remarks'));
                         });
 
                         $('#raw_table').delegate('.bootbox_confirm', 'click', function(e) {

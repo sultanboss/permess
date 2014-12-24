@@ -103,11 +103,20 @@
 													</a>
 													<a href="javascript:void(0)" class="hint--top" data-hint="Print Challan"><span class="glyphicon glyphicon-list largex color-green toolbar-active"></span></a>
 													<a href="<?php echo base_url(); ?>factory/printdelivery/<?php echo $delivery[0]['delivery_id']; ?>" class="hint--top" data-hint="Print Invoice"><span class="glyphicon glyphicon-print largex color-gray"></span></a>
-													<button id="chalan_print" class="btn btn-success btn-sm"><span class="icon-print"></span> Print Challan</button>
 												</div>	
 								</div>
 								<div class="panel panel-default">
 									<div class="panel_controls" style="border-bottom: none;">
+										<h4 class="heading_a">Delivery Challans: </h4>
+										<div class="clear"></div>
+										<div class="row">
+											<div class="col-sm-12 pad5">
+											Challan list will goes here. Work on progress.
+											</div>
+										</div>
+										<h4 class="heading_a">Print Challan: </h4>
+										<div class="clear"></div>
+										<button id="chalan_print" class="btn btn-success btn-sm"><span class="icon-print"></span> Print Challan</button>
 										<div class="print">											
 											<h4 class="heading_a text-center underline">Delivery Challan</h4>
 											<div class="row">											

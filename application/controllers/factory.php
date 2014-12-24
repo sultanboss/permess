@@ -86,6 +86,8 @@ class Factory extends CI_Controller
 				'raw_received_balance'	=> $this->input->post('raw_received_balance'),
 				'raw_lc_no'				=> $this->input->post('raw_lc_no'),
 				'raw_pi_no'				=> $this->input->post('raw_pi_no'),
+				'raw_supplier'			=> $this->input->post('raw_supplier'),
+				'raw_remarks'			=> $this->input->post('raw_remarks'),
 				'editor_id' 			=> $this->session->userdata('user_id')
 			);
 
@@ -124,6 +126,8 @@ class Factory extends CI_Controller
 				'raw_received_balance'	=> $this->input->post('edit_raw_received_balance'),
 				'raw_lc_no'				=> $this->input->post('edit_raw_lc_no'),
 				'raw_pi_no'				=> $this->input->post('edit_raw_pi_no'),
+				'raw_supplier'			=> $this->input->post('edit_raw_supplier'),
+				'raw_remarks'			=> $this->input->post('edit_raw_remarks'),
 				'editor_id' 			=> $this->session->userdata('user_id')
 			);
 

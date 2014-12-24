@@ -82,7 +82,7 @@ class Factory_model extends CI_Model {
 
     function get_raw_data() 
     {
-        $this->datatables->select('raw_id, raw_date, raw_pi_no, raw_lc_no, article_name, construction_name, width_name, softness_name, color_name, source_name, (SELECT sum( r.raw_received_balance ) FROM ak_raw r WHERE r.raw_id < ak_raw.raw_id and ak_raw.article_id = r.article_id and ak_raw.construction_id = r.construction_id and ak_raw.width_id = r.width_id and ak_raw.softness_id = r.softness_id and ak_raw.color_id = r.color_id and ak_raw.source_id = r.source_id) AS prev_balance, raw_received_balance, raw_id as total, raw_date as date, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, description.description_id');   
+        $this->datatables->select('raw_id, raw_date, raw_pi_no, raw_lc_no, article_name, construction_name, width_name, softness_name, color_name, source_name, ((SELECT sum( r.raw_received_balance - ri.total_finish_goods) FROM ak_raw r, ak_issue ri WHERE r.raw_id < ak_raw.raw_id and ak_raw.article_id = r.article_id and ak_raw.construction_id = r.construction_id and ak_raw.width_id = r.width_id and ak_raw.softness_id = r.softness_id and ak_raw.color_id = r.color_id and ak_raw.source_id = r.source_id and r.raw_id = ri.raw_id ) - (SELECT rr.raw_received_balance FROM ak_raw rr WHERE rr.raw_id < ak_raw.raw_id and ak_raw.article_id = rr.article_id and ak_raw.construction_id = rr.construction_id and ak_raw.width_id = rr.width_id and ak_raw.softness_id = rr.softness_id and ak_raw.color_id = rr.color_id and ak_raw.source_id = rr.source_id LIMIT 1)) AS prev_balance, raw_received_balance, raw_id as total, raw_date as date, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, description.description_id, raw_supplier, raw_remarks');   
         $this->datatables->from('raw'); 
         $this->datatables->join('article', 'article.article_id = raw.article_id');  
         $this->datatables->join('construction', 'construction.construction_id = raw.construction_id');  
@@ -92,13 +92,14 @@ class Factory_model extends CI_Model {
         $this->datatables->join('source', 'source.source_id = raw.source_id');  
         $this->datatables->join('description', 'description.description_id = raw.description_id'); 
 
-        $this->datatables->edit_column('date', '<a title="edit" class="raw_edit" data-id="$1" data-date="$2" data-pi="$3" data-lc="$4" data-article="$5" data-construction="$6" data-width="$7" data-softness="$8" data-color="$9" data-source="$a" data-received="$b" data-description="$c" data-toggle="modal" href="#edit_raw"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleteraw/$1"><span class="icon-trash"></span></a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="'.base_url().'factory/rawissuedto/$1" title="issued to"><span class="glyphicon glyphicon-stop color-x"></span></a>', 'raw_id, raw_date, raw_pi_no, raw_lc_no, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, raw_received_balance, description.description_id');
+        $this->datatables->edit_column('date', '<a title="edit" class="raw_edit" data-id="$1" data-date="$2" data-pi="$3" data-lc="$4" data-article="$5" data-construction="$6" data-width="$7" data-softness="$8" data-color="$9" data-source="$a" data-received="$b" data-description="$c" data-supplier="$d" data-remarks="$e" data-toggle="modal" href="#edit_raw"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleteraw/$1"><span class="icon-trash"></span></a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="'.base_url().'factory/rawissuedto/$1" title="issued to"><span class="glyphicon glyphicon-stop color-x"></span></a>', 'raw_id, raw_date, raw_pi_no, raw_lc_no, article.article_id, construction.construction_id, width.width_id, softness.softness_id, color.color_id, source.source_id, raw_received_balance, description.description_id, raw_supplier, raw_remarks');
 
         $res = $this->datatables->generate();
 
         $res = json_decode($res);
 
         foreach ($res->aaData as $key => $value) {
+
             if($value[10] == NULL) {
                 $res->aaData[$key][10] = '-';
                 $res->aaData[$key][12] = $res->aaData[$key][11];
@@ -109,6 +110,8 @@ class Factory_model extends CI_Model {
             $res->aaData[$key][13] = str_replace('$a', $res->aaData[$key][19], $res->aaData[$key][13]);
             $res->aaData[$key][13] = str_replace('$b', $res->aaData[$key][11], $res->aaData[$key][13]);
             $res->aaData[$key][13] = str_replace('$c', $res->aaData[$key][20], $res->aaData[$key][13]);
+            $res->aaData[$key][13] = str_replace('$d', $res->aaData[$key][21], $res->aaData[$key][13]);
+            $res->aaData[$key][13] = str_replace('$e', $res->aaData[$key][22], $res->aaData[$key][13]);
 
             if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Factory')) 
             {
@@ -134,7 +137,7 @@ class Factory_model extends CI_Model {
         $this->datatables->where('raw_id', $raw_id); 
         $this->datatables->join('issue_type', 'issue_type.issue_type_id = issue.issue_type_id'); 
 
-        $this->datatables->edit_column('ak_issue.editor_id', '<a title="edit" class="raw_edit_issue" data-id="$1" data-date="$2" data-type="$3" data-quantity="$4" data-total="$5" data-raw="$6" data-detail="$7" data-toggle="modal" href="#edit_rawissue_type"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleterawissuedto/$1/$6"><span class="icon-trash"></span></a>', 'issue_id, issue_date,  issue.issue_type_id, issue_quantity, total_finish_goods, raw_id,  wastage_detail');
+        $this->datatables->edit_column('ak_issue.editor_id', '<a title="edit" class="raw_edit_issue" data-id="$1" data-date="$2" data-type="$3" data-quantity="$4" data-total="$5" data-raw="$6" data-detail="$7" data-toggle="modal" href="#edit_rawissue_type"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class=" bootbox_confirm" href="'.base_url().'factory/deleterawissuedto/$1/$6"><span class="icon-trash"></span></a>', 'issue_id, issue_date,  ak_issue.issue_type_id, issue_quantity, total_finish_goods, raw_id,  wastage_detail');
 
         $res = $this->datatables->generate();
 
