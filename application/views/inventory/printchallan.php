@@ -106,14 +106,61 @@
 												</div>	
 								</div>
 								<div class="panel panel-default">
-									<div class="panel_controls" style="border-bottom: none;">
+									<div class="panel_controls" style="border-bottom: none; min-height: 350px;">
 										<h4 class="heading_a">Delivery Challans: </h4>
 										<div class="clear"></div>
 										<div class="row">
 											<div class="col-sm-12 pad5">
-											Challan list will goes here. Work on progress.
+												<table class="table table-hover table-striped table-challan">
+													<thead>
+														<tr>
+															<th>Challan ID</th>
+															<th>Challan Date</th>
+															<th>Created By</th>
+															<th>Change</th>
+														</tr>
+													</thead>
+													<tbody>
+														<?php
+														$actvar = false;
+														foreach ($challan_list as $key => $value) {
+														$act = '';
+														if($cid == 0 && $actvar == false) {
+															$act = 'active';
+															$actvar = true;
+														}
+														else {
+															if($cid == $value['challan_id'] &&  $actvar == false) {																
+																$act = 'active';
+																$actvar = true;
+															}
+														}
+														?>
+														<tr class="<?php echo $act; ?>">
+															<td><?php echo $value['challan_id']; ?></td>
+															<td><?php echo $value['created']; ?></td>
+															<td><?php echo $this->factory_model->get_delivery_user($value['editor_id']); ?></td>
+															<td><a href="<?php echo base_url(); ?>factory/printchallan/<?php echo $value['delivery_id']; ?>/<?php echo $value['challan_id']; ?>"><span class="icon-edit"></span></a></td>
+														</tr>
+														<?php
+														$act = '';
+														}
+														if(count($challan_list) <= 0) {
+														?>
+														<tr class="active">
+															<td class="text-center" colspan="4">No challan records found</td>
+														</tr>
+														<?php
+														}
+														?>
+													</tbody>
+												</table>											
 											</div>
 										</div>
+										<?php 
+										if(count($challan_details) > 0)
+										{
+										?>
 										<h4 class="heading_a">Print Challan: </h4>
 										<div class="clear"></div>
 										<button id="chalan_print" class="btn btn-success btn-sm"><span class="icon-print"></span> Print Challan</button>
@@ -134,7 +181,7 @@
 												</div>
 												<div class="col-sm-3">&nbsp;</div>
 												<div class="col-sm-5">
-													<p><b>Challan No #</b><?php echo 100+$delivery[0]['delivery_id'];?></p>
+													<p><b>Challan No #</b><?php echo $cid;?></p>
 													<p><b>P/I #</b> PSEAL/<?php	if($delivery[0]['delivery_pi_name'] != '') { echo $delivery[0]['delivery_pi_name'].'/'; } ?><?php echo $delivery[0]['delivery_id'];?>/<?php echo date('Y');?></p>
 													<p><b>Date:</b> <?php echo $delivery[0]['delivery_date'];?></p>
 													<p><b>Contact Person:</b> <?php echo $delivery[0]['delivery_contact_person'];?></p>
@@ -193,15 +240,60 @@
 															?>
 															<tr>
 																<td class="text-center">
-																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
+																<?php
+																	if($value['type'] == 'returned') {
+																	?>
+																		<strike>Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?></strike>
+																	<?php
+																	}
+																	else {
+																	?>
+																		Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
+																	<?php
+																	}
+																	?>
 																</td>
-																<td class="text-right"><?php $qo = number_format((float)$value['order_quantity'], 2, '.', ''); echo $qo; ?></td>
-																<td class="text-right"><?php $qd = number_format((float)($value['delivery_quantity']), 2, '.', ''); echo $qd; ?></td>
-																<td class="text-right"><?php $qp = number_format((float)($qo-$qd), 2, '.', ''); echo $qp; $qtyp = $qtyp + $qp; ?></td>
+																<td class="text-right">
+																<?php 
+																	$qo = number_format((float)$value['order_quantity'], 2, '.', ''); 
+																	if($value['type'] == 'returned') {
+																		echo '<strike>'.$qo.'<strike>';
+																	}
+																	else {
+																		echo $qo;
+																	}
+																?>
+																</td>
+																<td class="text-right">
+																<?php 
+																	$qd = number_format((float)($value['cur_delivery_quantity']), 2, '.', ''); 																	
+																	if($value['type'] == 'returned') {
+																		echo '<strike>'.$qd.'<strike>';
+																	}
+																	else {
+																		echo $qd;
+																	}
+																?>
+																</td>
+																<td class="text-right">
+																<?php 
+																	$qd = number_format((float)($value['delivery_quantity']), 2, '.', '');
+																	$qp = number_format((float)($qo-$qd), 2, '.', ''); 																	
+																	if($value['type'] != 'returned') {
+																		echo $qp; 
+																		$qtyp = $qtyp + $qp; 
+																	}
+																	else {
+																		echo '<strike>'.$qp.'<strike>';
+																	}
+																?>
+																</td>
 															</tr>
 															<?php
-																$qty = $qty + $value['order_quantity'];
-																$dqty = $dqty + $value['delivery_quantity'];
+																if($value['type'] != 'returned') {
+																	$qty = $qty + $value['order_quantity'];
+																	$dqty = $dqty + $value['cur_delivery_quantity'];
+																}
 																$x++;
 															}
 															?>															
@@ -254,8 +346,11 @@
 														</tr>
 													</table>
 												</div>
-											</div>
+											</div>											
 										</div>
+										<?php
+										}
+										?>
 									</div>
 								</div>
 							</div>

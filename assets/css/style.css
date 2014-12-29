@@ -1322,4 +1322,9 @@
 		border: 1px dotted #000;
 	}
 
+	.table-challan {
+		background: #fff;
+		border-bottom: 1px solid #DDDDDD;
+	}
+
 

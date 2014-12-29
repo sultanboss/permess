@@ -314,6 +314,8 @@ class Inventory extends CI_Controller
 				$this->accounts_model->add_bill($data['bill']);
 			}
 
+			$this->inventory_model->add_challan($delivery_id);
+
 			echo $delivery_id;
 
 			$this->session->set_flashdata('msg', 'Delivery added successfully!');
@@ -464,6 +466,8 @@ class Inventory extends CI_Controller
 						$this->accounts_model->update_bill($this->input->post('delivery_id'), $data['bill']);
 					}
 				}
+
+				$this->inventory_model->add_challan($this->input->post('delivery_id'));
 
 				$this->session->set_flashdata('msg', 'Delivery updated successfully!');
 				$this->session->set_flashdata('msg_type', 'success');
@@ -616,26 +620,103 @@ class Inventory extends CI_Controller
 
 			$this->breadcrumbs->push('Factory', '#');
 			$this->breadcrumbs->push('Delivery', '../../factory/delivery');
-			$this->breadcrumbs->push('Print Delivery', '#');
+			$this->breadcrumbs->push('Print Challan', '#');
 
 			$data['breadcrumbs'] = $this->breadcrumbs->show();	
 			$data['delivery_user'] = $this->factory_model->get_delivery_user($data['delivery'][0]['delivery_by']);
 			$data['payment'] = $this->inventory_model->get_payment_status($id);
 
 			$data['challan_list'] = $this->inventory_model->get_challan_list_by_id($id);
-
-			foreach ($data['challan_list'] as $key => $value) {
-				
+			if($challanid == 0) {
+				$data['challan_details_data'] = $this->inventory_model->get_first_challan_by_id($id);
+				$data['challan_details'] = $data['challan_details_data']['challan_details'];
+				$challanid = $data['challan_details_data']['challan_id'];
 			}
+			else {
+				$data['challan_details'] = $this->inventory_model->get_challan_by_id($challanid);
+			}	
 
-			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
+			if($data['challan_details'] != null) {	
 
-			foreach ($data['delivery_products'] as $key => $value) {
-				$data['delivery_products'][$key]['article_name'] = $this->factory_model->get_article_alt_name($value['article_alt']);
-				$data['delivery_products'][$key]['description_name'] = $this->factory_model->get_description($value['description_id']);
-				$data['delivery_products'][$key]['width_name'] = $this->factory_model->get_width($value['width_id']);
-				$data['delivery_products'][$key]['softness_name'] = $this->factory_model->get_softness($value['softness_id']);
-				$data['delivery_products'][$key]['color_name'] = $this->factory_model->get_color($value['color_id']);
+				$data['cid'] = $challanid;	
+
+				$data['challan_details'] = unserialize($data['challan_details']);
+
+				foreach ($data['challan_details'] as $key => $value) {
+					$data['delivery_products'][$key]['type'] 				= 'normal';
+					$data['delivery_products'][$key]['delivery_product_id'] = $value['delivery_product_id'];
+				    $data['delivery_products'][$key]['delivery_id'] 		= $value['delivery_id'];
+				    $data['delivery_products'][$key]['article_id'] 			= $value['article_id'];
+				    $data['delivery_products'][$key]['article_alt'] 		= $value['article_alt'];
+				    $data['delivery_products'][$key]['width_id'] 			= $value['width_id'];
+				    $data['delivery_products'][$key]['softness_id'] 		= $value['softness_id'];
+				    $data['delivery_products'][$key]['color_id'] 			= $value['color_id'];
+				    $data['delivery_products'][$key]['description_id'] 		= $value['description_id'];
+				    $data['delivery_products'][$key]['order_quantity'] 		= $value['order_quantity'];
+				    $data['delivery_products'][$key]['delivery_quantity'] 	= $value['delivery_quantity'];
+				    $data['delivery_products'][$key]['unit_price'] 			= $value['unit_price'];
+				    $data['delivery_products'][$key]['over_invoice_unit_price'] = $value['over_invoice_unit_price'];
+				    $data['delivery_products'][$key]['editor_id'] 			= $value['editor_id'];
+				    $data['delivery_products'][$key]['created'] 			= $value['created'];
+				    $data['delivery_products'][$key]['modified'] 			= $value['modified'];
+					$data['delivery_products'][$key]['article_name'] 		= $this->factory_model->get_article_alt_name($value['article_alt']);
+					$data['delivery_products'][$key]['description_name'] 	= $this->factory_model->get_description($value['description_id']);
+					$data['delivery_products'][$key]['width_name'] 			= $this->factory_model->get_width($value['width_id']);
+					$data['delivery_products'][$key]['softness_name'] 		= $this->factory_model->get_softness($value['softness_id']);
+					$data['delivery_products'][$key]['color_name'] 			= $this->factory_model->get_color($value['color_id']);
+
+				    $data['delivery_products'][$key]['cur_delivery_quantity'] = $value['delivery_quantity'];
+				}
+
+				$data['challan_returned'] = $this->inventory_model->get_previous_challan($data['cid']);
+
+				$csize = count($data['delivery_products']);
+
+				if($data['challan_returned'] != null) {
+				
+					foreach ($data['challan_returned'] as $key => $value) {
+						$is_returned = false;
+						foreach ($data['challan_details'] as $k => $v) {
+							if(($value['article_id'] == $v['article_id']) && ($value['width_id'] == $v['width_id']) && ($value['softness_id'] == $v['softness_id']) && ($value['color_id'] == $v['color_id']) && ($value['description_id'] == $v['description_id'])) {
+								break;
+							}
+							else {
+								$is_returned = true;
+								break;
+							}
+						}
+
+						if($is_returned == true) {
+							$data['delivery_products'][$csize]['type'] 					= 'returned';
+							$data['delivery_products'][$csize]['delivery_product_id'] 	= $value['delivery_product_id'];
+						    $data['delivery_products'][$csize]['delivery_id'] 			= $value['delivery_id'];
+						    $data['delivery_products'][$csize]['article_id'] 			= $value['article_id'];
+						    $data['delivery_products'][$csize]['article_alt'] 			= $value['article_alt'];
+						    $data['delivery_products'][$csize]['width_id'] 				= $value['width_id'];
+						    $data['delivery_products'][$csize]['softness_id'] 			= $value['softness_id'];
+						    $data['delivery_products'][$csize]['color_id'] 				= $value['color_id'];
+						    $data['delivery_products'][$csize]['description_id'] 		= $value['description_id'];
+						    $data['delivery_products'][$csize]['order_quantity'] 		= $value['order_quantity'];
+						    $data['delivery_products'][$csize]['delivery_quantity'] 	= $value['delivery_quantity'];
+						    $data['delivery_products'][$csize]['unit_price'] 			= $value['unit_price'];
+						    $data['delivery_products'][$csize]['over_invoice_unit_price'] = $value['over_invoice_unit_price'];
+						    $data['delivery_products'][$csize]['editor_id'] 			= $value['editor_id'];
+						    $data['delivery_products'][$csize]['created'] 				= $value['created'];
+						    $data['delivery_products'][$csize]['modified'] 				= $value['modified'];
+							$data['delivery_products'][$csize]['article_name'] 			= $this->factory_model->get_article_alt_name($value['article_alt']);
+							$data['delivery_products'][$csize]['description_name'] 		= $this->factory_model->get_description($value['description_id']);
+							$data['delivery_products'][$csize]['width_name'] 			= $this->factory_model->get_width($value['width_id']);
+							$data['delivery_products'][$csize]['softness_name'] 		= $this->factory_model->get_softness($value['softness_id']);
+							$data['delivery_products'][$csize]['color_name'] 			= $this->factory_model->get_color($value['color_id']);
+
+				    		$data['delivery_products'][$csize]['cur_delivery_quantity'] = $value['delivery_quantity'];
+							$csize++;
+						}
+						else {
+							$data['delivery_products'][$key]['cur_delivery_quantity'] = $data['delivery_products'][$key]['cur_delivery_quantity']-$value['delivery_quantity'];
+						}
+					}
+				}
 			}
 
 			$this->load->view('common/header', $data);

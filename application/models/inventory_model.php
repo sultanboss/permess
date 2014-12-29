@@ -139,23 +139,9 @@ class Inventory_model extends CI_Model {
 	function add_delivery_product($data)
 	{
 		$data['created'] = date('Y-m-d H:i:s');
-		$id = '';
-
 		if ($this->db->insert('delivery_product', $data)) {
-			$id = $this->db->insert_id();
+			return $this->db->insert_id();
 		}
-
-		if($id != '') {
-			$challan_data['delivery_id'] 	= $data['delivery_id'];
-			$challan_data['challan_info'] 	= serialize($data);
-			$challan_data['editor_id'] 		= $this->session->userdata('user_id');
-			$challan_data['created'] 		= $data['created'];
-
-			if ($this->db->insert('challan', $challan_data)) {
-				return $id;
-			}
-		}
-
 		return NULL;
 	}
 
@@ -163,24 +149,7 @@ class Inventory_model extends CI_Model {
 	{
 		$this->db->where('delivery_product_id', $id);
 		if ($this->db->update('delivery_product', $data)) {
-
-			$this->db->from('delivery_product');
-			$this->db->where('delivery_product_id', $id);
-			$cdata = $this->db->get();
-			$cdata = $cdata->result_array();
-
-			foreach ($cdata as $key => $value) {
-				unset($value['delivery_product_id']);
-				unset($value['modified']);
-				$challan_data['delivery_id'] 	= $value['delivery_id'];
-				$challan_data['challan_info'] 	= serialize($value);
-				$challan_data['editor_id'] 		= $this->session->userdata('user_id');
-				$challan_data['created'] 		= $value['created'];
-
-				if ($this->db->insert('challan', $challan_data)) {
-					return true;
-				}
-			}			
+			return true;	
 		}
 		return NULL;
 	}
@@ -222,12 +191,76 @@ class Inventory_model extends CI_Model {
 		return false;
 	}
 
+	function add_challan($delivery_id)
+	{
+		$query = $this->db->get_where('delivery_product', array('delivery_id' => $delivery_id));
+		if($query->num_rows() > 0) {
+			$res = $query->result_array();
+
+			$add = false;
+			foreach ($res as $key => $value) {
+				if($value['delivery_quantity'] > 0) {
+					$add = true;
+				}
+			}
+
+			$q = $this->db->get_where('challan', array('delivery_id' => $delivery_id), 1);
+			if($q->num_rows() > 0) {
+				$add = true;
+			}
+
+			if($add == true) {
+				$challan_data['delivery_id'] 	= $delivery_id;
+				$challan_data['challan_info'] 	= serialize($res);
+				$challan_data['editor_id'] 		= $this->session->userdata('user_id');
+				$challan_data['created'] 		= date('Y-m-d H:i:s');
+
+				$this->db->insert('challan', $challan_data);
+			}
+		}
+		return null; 
+	}
+
 	function get_challan_list_by_id($id) 
 	{
 		$this->db->from('challan');
 		$this->db->where('delivery_id',$id);
 		$q = $this->db->get();
 		return $q->result_array();
+	}
+
+	function get_challan_by_id($challanid) 
+	{
+		$query = $this->db->get_where('challan', array('challan_id' => $challanid), 1);
+		if($query->num_rows() > 0)
+			return $query->row()->challan_info;   
+		return null;      
+	}
+
+	function get_first_challan_by_id($delivery_id) 
+	{
+		$query = $this->db->get_where('challan', array('delivery_id' => $delivery_id), 1);
+		if($query->num_rows() > 0) {
+			$data['challan_details'] = $query->row()->challan_info; 
+			$data['challan_id'] = $query->row()->challan_id;    
+
+			return $data; 
+		}
+		return null;      
+	}
+
+	function get_previous_challan($challanid) 
+	{
+		$this->db->from('challan');
+		$this->db->where('challan_id <', $challanid);
+		$this->db->order_by('challan_id', 'DESC');
+		$this->db->limit(1, 0);
+		$query = $this->db->get();
+		if($query->num_rows() > 0) {
+			$data = $query->row()->challan_info; 
+			return unserialize($data); 
+		}
+		return null;      
 	}
 
 	function get_delivery_by_id($delivery_id)
