@@ -330,12 +330,28 @@ class Inventory_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	function get_companies()
+	{
+		$this->db->select('company_name');
+		$query = $this->db->get('address');
+		return $query->result_array();
+	}
+
 	function get_payment_status($id) 
 	{
 		$query = $this->db->get_where('bill', array('delivery_id' => $id), 1);
 		if($query->num_rows() > 0)
 			return $query->row()->bill_payment_status;   
 		return null;      
+	}
+
+	function get_delivery_address($company_name) 
+	{
+		$this->db->from('address');
+		$this->db->where('company_name', $company_name);
+		$this->db->limit(1);
+		$q = $this->db->get();
+		return $q->result_array();
 	}
 
 }

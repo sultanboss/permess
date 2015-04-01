@@ -83,7 +83,16 @@
 													<div class="form_sep">																
 														<div class="col-sm-2">
 															<label for="delivery_company_name" class="req">Company Name</label>
-															<input id="delivery_company_name" name="delivery_company_name" class="form-control" type="text" data-required="true">
+															<select id="delivery_company_name" name="delivery_company_name" class="form-control" data-required="true">
+																<option value="">Select</option>
+															<?php
+															foreach ($companies as $key => $value) {							
+															?>
+																<option value="<?php echo $value['company_name']; ?>"><?php echo $value['company_name']; ?></option>
+															<?php						
+															}																	
+															?>				
+											                </select>
 															<label for="delivery_contact_person" class="req double-input">Contact Person</label>
 															<input id="delivery_contact_person" name="delivery_contact_person" class="form-control" type="text" data-required="true">
 														</div>

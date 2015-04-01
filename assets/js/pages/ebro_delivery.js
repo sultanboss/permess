@@ -232,5 +232,36 @@
 				}
 			});
 
+			var prev_val;
+
+			$('#delivery_company_name').focus(function() {
+				prev_val = $(this).val();
+			}).change(function() {
+				$(this).blur();
+				if(confirm('Do you really want to change the address?')) {
+					if(this.value != "") {
+						$.ajax({
+							url: base_url + 'inventory/getDeliveryAddress/' + this.value,
+							success: function (data) {    
+								data = JSON.parse(data);   
+								$('#delivery_buyer').val(data['buyer']);
+								$('#delivery_contact_person').val(data['contact_person']);
+								$('#delivery_company_address').val(data['company_address']);
+								$('#delivery_address').val(data['delivery_address']);
+							}
+						});
+					}
+					else {
+						$('#delivery_buyer').val('');
+						$('#delivery_contact_person').val('');
+						$('#delivery_company_address').val('');
+						$('#delivery_address').val('');
+					}
+				}
+				else {
+					$(this).val(prev_val);
+				}
+			});
+
 		}
 	}

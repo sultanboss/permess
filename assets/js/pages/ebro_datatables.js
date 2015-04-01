@@ -271,6 +271,40 @@
                 });
             }
 
+            if($('#address_table').length) {
+                $('#address_table').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "address/data",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                        
+                        $('#address_table').delegate('.simple_edit', 'click', function() {
+                            $("#edit_company_name").val($(this).attr('data-name'));
+                            $("#edit_contact_person").val($(this).attr('data-contact'));
+                            $("#edit_buyer").val($(this).attr('data-buyer'));
+                            $("#edit_company_address").val($(this).attr('data-address'));
+                            $("#edit_delivery_address").val($(this).attr('data-delivery'));
+                            $("#edit_address_id").val($(this).attr('data-id'));
+                        });
+
+                        $('#address_table').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
+                    }
+                });
+            }
 
             if($('#issue_table').length) {
                 $('#issue_table').dataTable({

@@ -144,7 +144,8 @@ class Inventory extends CI_Controller
 		$data['softnesses'] = $this->factory_model->get_all_softness();
 		$data['colors'] = $this->factory_model->get_all_color();
 
-		$data['normal_users'] = $this->inventory_model->get_normal_users();
+		$data['normal_users'] 	 = $this->inventory_model->get_normal_users();
+		$data['companies']		 = $this->inventory_model->get_companies();
 
 		$this->load->view('common/header', $data);
 		$this->load->view('inventory/newdelivery', $data);
@@ -216,6 +217,7 @@ class Inventory extends CI_Controller
 
 			$data['normal_users'] = $this->inventory_model->get_normal_users();
 			$data['payment'] = $this->inventory_model->get_payment_status($id);
+			$data['companies'] = $this->inventory_model->get_companies();
 
 			$data['delivery_products'] = $this->inventory_model->get_delivery_products_by_id($id);
 
@@ -678,7 +680,7 @@ class Inventory extends CI_Controller
 						$is_returned = false;
 						foreach ($data['challan_details'] as $k => $v) {
 							if(($value['article_id'] == $v['article_id']) && ($value['width_id'] == $v['width_id']) && ($value['softness_id'] == $v['softness_id']) && ($value['color_id'] == $v['color_id']) && ($value['description_id'] == $v['description_id'])) {
-								break;
+								//break;
 							}
 							else {
 								$is_returned = true;
@@ -731,5 +733,21 @@ class Inventory extends CI_Controller
 		}
 	}
 
+	function getDeliveryAddress($company_name = null)
+	{
+		if($company_name != null) {
+			$company_name = urldecode($company_name);
+			$this->tank_auth->check_login();
+			$res = $this->inventory_model->get_delivery_address($company_name);	
+			foreach ($res as $key => $value) {				
+				$ar['contact_person'] 	= $value['contact_person'];
+				$ar['buyer'] 			= $value['buyer'];
+				$ar['company_address'] 	= $value['company_address'];
+				$ar['delivery_address'] = $value['delivery_address'];
+
+				echo json_encode($ar);
+			}
+		}
+	}
 
 }

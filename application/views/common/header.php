@@ -225,6 +225,7 @@
 									<li><a href="<?php echo base_url();?>settings/products/description">Description</a></li>
 								</ul>
 							</li>
+							<li><a href="<?php echo base_url();?>settings/address">Address</a></li>
 							<li><a href="<?php echo base_url();?>settings/price">Price</a></li>
 							<li><a href="<?php echo base_url();?>settings/issuetype">Issue Type</a></li>
 						</ul>
