@@ -135,6 +135,10 @@
 															?>						
 															</select>
 														</div>	
+														<div class="col-sm-2">
+															<label for="bill_received" class="unreq">Total Amount Received</label>
+															<input id="bill_received" name="bill_received" class="form-control" type="text" value="<?php echo $value['bill_received']; ?>">
+														</div>	
 													</div>	
 													<div class="form_sep">
 														<div class="col-sm-2">

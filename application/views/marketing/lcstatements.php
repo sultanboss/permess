@@ -17,12 +17,20 @@
 									<table id="lcstatements_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
-												<th width="10%">P.I. Issue</th>
+												<th width="10%">P.I. No.</th>
 												<th width="15%">Date</th>
 												<th width="20%">Company</th>
+												<th width="20%">L.C. No.</th>
+												<th width="20%">L.C. Date</th>
+												<th width="20%">Exp. Date.</th>
+												<th width="20%">Bank Name</th>
+												<th width="20%">Party Name</th>
+												<th width="20%">Bank Submit</th>
+												<th width="20%">Pur. Date</th>
+												<th width="20%">Pur. Tk.</th>
 												<th width="15%">Delivery Status</th>
 												<th width="15%">L.C. Status</th>
-												<th width="15%">Document Status</th>												
+												<th width="15%">Doc. Status</th>												
 												<th width="10%">Change</th>
 											</tr>
 										</thead>

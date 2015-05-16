@@ -8,7 +8,7 @@
 								<div class="panel panel-default">
 									<form method="post" id="parsley_addproduct">
 										<div class="panel_controls">
-											<h4 class="heading_a">New P.I. Issue:</h4>
+											<h4 class="heading_a">New P.I. No.:</h4>
 											<div class="row">
 												<div class="col-sm-12">	
 													<div class="form_sep">

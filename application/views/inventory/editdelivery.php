@@ -108,7 +108,7 @@
 								<div class="panel panel-default">
 									<form method="post" id="parsley_editproduct">
 										<div class="panel_controls">
-											<h4 class="heading_a">Update P.I. Issue: 
+											<h4 class="heading_a">Update P.I. No.: 
 												
 											</h4>
 											<?php

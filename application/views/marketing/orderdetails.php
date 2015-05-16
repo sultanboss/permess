@@ -124,7 +124,7 @@
 															<textarea id="delivery_details" name="delivery_details" class="form-control double-text parsley-validated"><?php echo $val['delivery_details']; ?></textarea>
 														</div>
 														<div class="col-sm-2 right">
-															<label for="delivery_id_old" class="req">P.I. Issue</label>
+															<label for="delivery_id_old" class="req">P.I. No.</label>
 															<input id="delivery_id_old" name="delivery_id_old" class="form-control parsley-validated" disabled="true" data-required="true" type="text" value="<?php echo $val['delivery_id']; ?>">
 															<input id="delivery_id" name="delivery_id" type="hidden" value="<?php echo $val['delivery_id']; ?>">
 															<label for="delivery_request" class="req double-input">Delivery Request</label>

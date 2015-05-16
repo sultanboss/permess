@@ -20,17 +20,35 @@ class Marketing_model extends CI_Model {
     function get_order_data() 
     {
         if($this->tank_auth->is_group_member('Users')) {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id, delivery_details, delivery_payment');   
+            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, 
+                (select SUM(order_quantity) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as order_quantity,
+                (select SUM(order_quantity*unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as pi_value,
+                (select SUM(order_quantity*over_invoice_unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as over_invoice,
+                (select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total,
+                buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, 
+                editor_id, delivery_details, delivery_payment'); 
             $this->datatables->where('delivery_by', $this->session->userdata('user_id'));
             $this->datatables->from('delivery');  
         }
         else if($this->tank_auth->is_group_member('Accounts')) {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id, delivery_details, delivery_payment');   
+            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, 
+                (select SUM(order_quantity) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as order_quantity,
+                (select SUM(order_quantity*unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as pi_value,
+                (select SUM(order_quantity*over_invoice_unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as over_invoice,
+                (select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total,
+                buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, 
+                editor_id, delivery_details, delivery_payment');
             $this->datatables->where("delivery_payment", '1'); 
             $this->datatables->from('delivery');    
         }  
         else {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, editor_id, delivery_details, delivery_payment');   
+            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, 
+                (select SUM(order_quantity) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as order_quantity,
+                (select SUM(order_quantity*unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as pi_value,
+                (select SUM(order_quantity*over_invoice_unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as over_invoice,
+                (select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total,
+                buyer_order_reference, delivery_lc_status, delivery_status, delivery_request, 
+                editor_id, delivery_details, delivery_payment');
             $this->datatables->from('delivery');
         }       
 
@@ -39,43 +57,43 @@ class Marketing_model extends CI_Model {
         $res = json_decode($res);
 
         foreach ($res->aaData as $key => $value) {
-            if($res->aaData[$key][5] == '0') {
-                $res->aaData[$key][5] = 'Pending';
-                $res->aaData[$key][7] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-red"></span></a>';
+            if($res->aaData[$key][9] == '0') {
+                $res->aaData[$key][9] = 'Pending';
+                $res->aaData[$key][11] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-red"></span></a>';
             }
-            else if($res->aaData[$key][5] == '2') {
-                $res->aaData[$key][5] = 'Complete';
-                $res->aaData[$key][7] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-green"></span></a>';
-            }
-            else {
-                $res->aaData[$key][5] = 'Partial';
-                $res->aaData[$key][7] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
-            }
-
-            if($res->aaData[$key][6] == '0') {
-                $res->aaData[$key][6] = 'Pending';
-            }
-            else if($res->aaData[$key][6] == '2') {
-                $res->aaData[$key][6] = 'Complete';
+            else if($res->aaData[$key][9] == '2') {
+                $res->aaData[$key][9] = 'Complete';
+                $res->aaData[$key][11] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-green"></span></a>';
             }
             else {
-                $res->aaData[$key][6] = 'Partial';
+                $res->aaData[$key][9] = 'Partial';
+                $res->aaData[$key][11] = '<a title="Edit Order" href="'.base_url().'marketing/orderdetails/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
             }
 
-            if($res->aaData[$key][9] == 0)
+            if($res->aaData[$key][10] == '0') {
+                $res->aaData[$key][10] = 'Pending';
+            }
+            else if($res->aaData[$key][10] == '2') {
+                $res->aaData[$key][10] = 'Complete';
+            }
+            else {
+                $res->aaData[$key][10] = 'Partial';
+            }
+
+            if($res->aaData[$key][13] == 0)
             {
-                if($res->aaData[$key][4] == '0') {
-                    $res->aaData[$key][4] = 'No';
+                if($res->aaData[$key][8] == '0') {
+                    $res->aaData[$key][8] = 'No';
                 }
                 else {
-                    $res->aaData[$key][4] = 'Yes';
+                    $res->aaData[$key][8] = 'Yes';
                 }
             }
             else
-                $res->aaData[$key][4] = '-';
+                $res->aaData[$key][8] = '-';
 
-            if($res->aaData[$key][3] == '') {
-                $res->aaData[$key][3] = '-';
+            if($res->aaData[$key][7] == '') {
+                $res->aaData[$key][7] = '-';
             }
 
         }
@@ -165,52 +183,44 @@ class Marketing_model extends CI_Model {
 
     function get_lcstatements_data() 
     {
-        if($this->tank_auth->is_group_member('Accounts')) {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, delivery_status, delivery_lc_status, delivery_doc_status, editor_id');   
-            $this->datatables->where('delivery_payment', '1');
-            $this->datatables->from('delivery'); 
-        }
-        else if($this->tank_auth->is_group_member('Users')) {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, delivery_status, delivery_lc_status, delivery_doc_status, editor_id');   
-            $this->datatables->where('delivery_by', $this->session->userdata('user_id'));
-            $this->datatables->from('delivery'); 
-        }  
-        else {
-            $this->datatables->select('delivery_id, delivery_date, delivery_company_name, delivery_status, delivery_lc_status, delivery_doc_status, editor_id');   
-            $this->datatables->where('delivery_payment', '0');
-            $this->datatables->from('delivery'); 
-        }    
+        $this->datatables->select('
+            ak_delivery.delivery_id, delivery_date, delivery_company_name, lc_no, lc_date, exp_date,
+            bank_name, party_name, bank_submit, purchase_date, purchase_tk,
+            delivery_status, delivery_lc_status, delivery_doc_status, ak_delivery.editor_id');   
+        $this->datatables->where('delivery_payment', '0');
+        $this->datatables->from('delivery');  
+        $this->db->join('statements', 'statements.delivery_id = delivery.delivery_id');  
 
         $res = $this->datatables->generate();
         
         $res = json_decode($res);
 
         foreach ($res->aaData as $key => $value) {
-            if($res->aaData[$key][3] == '0') {
-                $res->aaData[$key][3] = 'Pending';
-                $res->aaData[$key][6] = '<a title="Edit Statements" class="simple_edit" href="'.base_url().'commercial/editlcstatements/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-red"></span></a>';
+            if($res->aaData[$key][11] == '0') {
+                $res->aaData[$key][11] = 'Pending';
+                $res->aaData[$key][14] = '<a title="Edit Statements" class="simple_edit" href="'.base_url().'commercial/editlcstatements/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-red"></span></a>';
             }
-            else if($res->aaData[$key][3] == '2') {
-                $res->aaData[$key][3] = 'Complete';
-                $res->aaData[$key][6] = '<a title="Edit Statements" class="simple_edit" href="'.base_url().'commercial/editlcstatements/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-green"></span></a>';
+            else if($res->aaData[$key][11] == '2') {
+                $res->aaData[$key][11] = 'Complete';
+                $res->aaData[$key][14] = '<a title="Edit Statements" class="simple_edit" href="'.base_url().'commercial/editlcstatements/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-green"></span></a>';
             }
             else {
-                $res->aaData[$key][3] = 'Partial';
-                $res->aaData[$key][6] = '<a title="Edit Statements" class="simple_edit" href="'.base_url().'commercial/editlcstatements/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
+                $res->aaData[$key][11] = 'Partial';
+                $res->aaData[$key][14] = '<a title="Edit Statements" class="simple_edit" href="'.base_url().'commercial/editlcstatements/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
             }
 
-            if($res->aaData[$key][4] == '0') {
-                $res->aaData[$key][4] = 'No';
+            if($res->aaData[$key][12] == '0') {
+                $res->aaData[$key][12] = 'No';
             }
             else {
-                $res->aaData[$key][4] = 'Yes';
+                $res->aaData[$key][12] = 'Yes';
             }
 
-            if($res->aaData[$key][5] == '0') {
-                $res->aaData[$key][5] = 'No';
+            if($res->aaData[$key][13] == '0') {
+                $res->aaData[$key][13] = 'No';
             }
             else {
-                $res->aaData[$key][5] = 'Yes';
+                $res->aaData[$key][13] = 'Yes';
             }
         }
         

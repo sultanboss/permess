@@ -112,7 +112,7 @@ class Inventory extends CI_Controller
 			redirect('');
 		}
 
-		$data['title'] = 'New P.I. Issue';
+		$data['title'] = 'New P.I. No.';
 
 		$data['css'] = $this->tank_auth->load_admin_css(array(
 			'js/lib/dataTables/media/DT_bootstrap.css', 
@@ -135,7 +135,7 @@ class Inventory extends CI_Controller
 			'js/pages/ebro_notifications.js',
 			'js/pages/ebro_delivery.js'));
 
-		$this->breadcrumbs->push('New P.I. Issue', '#');
+		$this->breadcrumbs->push('New P.I. No.', '#');
 
 		$data['breadcrumbs'] = $this->breadcrumbs->show();
 		$data['articles'] = $this->factory_model->get_all_article_with_alt();

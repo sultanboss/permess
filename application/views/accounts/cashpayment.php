@@ -17,9 +17,13 @@
 									<table id="cashpayment_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
-												<th width="10%">P.I. Issue</th>
+												<th width="10%">P.I. No.</th>
 												<th width="15%">Date</th>
 												<th width="20%">Company</th>
+												<th width="20%">P.I. Value</th>
+												<th width="20%">Conversion Rate</th>
+												<th width="20%">Total Amount</th>
+												<th width="20%">Received Amount</th>
 												<th width="13%">Delivery Status</th>												
 												<th width="13%">Delivery Request</th>												
 												<th width="10%">Change</th>

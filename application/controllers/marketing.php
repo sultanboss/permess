@@ -355,6 +355,12 @@ class Marketing extends CI_Controller
 	{
 		$this->tank_auth->check_login();
 
+		if(!$this->tank_auth->is_admin() && !$this->tank_auth->is_group_member('Super Users') && !$this->tank_auth->is_group_member('Commercial')) {
+			$this->session->set_flashdata('msg', 'Invalid Access!');
+			$this->session->set_flashdata('msg_type', 'warning');
+			redirect('');
+		}
+
 		print_r($this->marketing_model->get_lcstatements_data());
 	}
 

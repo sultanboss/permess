@@ -168,6 +168,7 @@ class Accounts extends CI_Controller
 				'bill_from' 					=> $this->input->post('bill_from'),
 				'bill_to' 						=> $this->input->post('bill_to'),
 				'bill_usd_rate' 				=> $this->input->post('bill_usd_rate'),
+				'bill_received'					=> $this->input->post('bill_received'),
 				'bill_challan' 					=> $this->input->post('bill_challan'),
 				'bill_payment_status' 			=> $this->input->post('bill_payment_status'),
 				'bill_payment_method' 			=> $this->input->post('bill_payment_method'),	
