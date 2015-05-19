@@ -115,7 +115,8 @@ class Reports_model extends CI_Model {
             ak_delivery.delivery_id, delivery_date, delivery_company_name, lc_no, lc_date, exp_date,
             bank_name, party_name, bank_submit_value, purchase_date, purchase_tk,
             delivery_status, delivery_lc_status, delivery_doc_status,
-			(select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total');         
+			(select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total,
+			submit_party_rdate');         
         $this->db->from('delivery'); 
         $this->db->where('delivery_payment', '0');
         $this->db->where('delivery_date >=', $start);

@@ -42,13 +42,13 @@
 												<th>P. I. No.</th>
 												<th>Issue Date</th>
 												<th>LC Date</th>
+												<th>By</th>
 												<th class="text-right">Amount</th>
-												<th class="text-right">Qty</th>
 												<th class="text-right">Com.</th>
 												<th class="text-right">T. Commi.</th>
-												<th>By</th>
-												<th class="text-right">Goods Deli.</th>
-												<th class="text-right">Yrd/Mtr</th>
+												<th class="text-right">Quantity</th>
+												<th class="text-right">Delivered</th>
+												<th class="text-right">Pending</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -65,11 +65,11 @@
 												echo "<td>".$value['delivery_id']."</td>";
 												echo "<td>".$value['delivery_date']."</td>";
 												echo "<td>".$value['delivery_lc_date']."</td>";
+												echo "<td>".$value['delivery_by']."</td>";
 												echo "<td align='right'>$ ".$value['delivery_amount']."</td>";
-												echo "<td align='right'>".$value['delivery_qty']."</td>";
 												echo "<td align='right' style='max-width: 100px;'>".$value['delivery_com']."</td>";
 												echo "<td align='right'>$ ".$value['delivery_tcom']."</td>";
-												echo "<td>".$value['delivery_by']."</td>";
+												echo "<td align='right'>".$value['delivery_qty']."</td>";
 												echo "<td align='right'>".$value['delivery_done']."</td>";
 												echo "<td align='right'>".$value['delivery_left']."</td>";												
 
@@ -85,10 +85,10 @@
 											<tr>
 												<th class="text-right">Total sales :</th>
 												<th colspan="3"><?php echo count($sales); ?></th>
-												<th class="text-right">$ <?php echo number_format((float)$amount, 2, '.', '');?></th>
-												<th class="text-right"><?php echo number_format((float)$qty, 2, '.', '');?></th>
+												<th class="text-right" colspan="2">$ <?php echo number_format((float)$amount, 2, '.', '');?></th>
 												<th class="text-right" colspan="2">$ <?php echo number_format((float)$tcom, 2, '.', '');?></th>
-												<th class="text-right" colspan="2"><?php echo number_format((float)$done, 2, '.', '');?></th>
+												<th class="text-right"><?php echo number_format((float)$qty, 2, '.', '');?></th>
+												<th class="text-right"><?php echo number_format((float)$done, 2, '.', '');?></th>
 												<th class="text-right"><?php echo number_format((float)$left, 2, '.', '');?></th>
 											</tr>											
 										</tfoot>				

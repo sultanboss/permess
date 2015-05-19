@@ -58,10 +58,15 @@
 											<?php 
 											$lcval = 0;
 											$bnval = 0;
+											$spval = 0;
 											foreach ($commercial as $key => $value) {
 
 												$lcval+= floatval($value['total']);
 												$bnval+= floatval($value['bank_submit_value']);
+
+												if($value['submit_party_rdate'] == '0000-00-00') {
+													$spval+= floatval($value['total']);
+												}
 
 												if($value['delivery_status'] == '0') {
 													$value['delivery_status'] = 'Pending';
@@ -106,9 +111,11 @@
 										</tbody>	
 										<tfoot>
 											<tr>
-												<th colspan="6" class="text-right">Total Bank Submit :</th>
+												<th colspan="3" class="text-right">Total Submit Party Value :</th>
+												<th>$ <?php echo number_format((float)$spval, 2, '.', '');?></th>
+												<th colspan="3" class="text-right">Total Bank Submit :</th>
 												<th>$ <?php echo number_format((float)$bnval, 2, '.', '');?></th>
-												<th colspan="6" class="text-right">Total L.C. Value :</th>
+												<th colspan="5" class="text-right">Total L.C. Value :</th>
 												<th>$ <?php echo number_format((float)$lcval, 2, '.', '');?></th>
 											</tr>											
 										</tfoot>			
