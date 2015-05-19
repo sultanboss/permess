@@ -185,7 +185,7 @@ class Marketing_model extends CI_Model {
     {
         $this->datatables->select('
             ak_delivery.delivery_id, delivery_date, delivery_company_name, lc_no, lc_date, exp_date,
-            bank_name, party_name, bank_submit, purchase_date, purchase_tk,
+            bank_name, party_name, bank_submit_value, purchase_date, purchase_tk,
             delivery_status, delivery_lc_status, delivery_doc_status, ak_delivery.editor_id');   
         $this->datatables->where('delivery_payment', '0');
         $this->datatables->from('delivery');  
@@ -209,7 +209,7 @@ class Marketing_model extends CI_Model {
                 $res->aaData[$key][14] = '<a title="Edit Statements" class="simple_edit" href="'.base_url().'commercial/editlcstatements/'.$res->aaData[$key][0].'"><span class="icon-edit"></span></span></a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="'.base_url().'factory/editdelivery/'.$res->aaData[$key][0].'" title="View Issue"><span class="glyphicon glyphicon-th-large color-orange"></span></a>';
             }
 
-            if($res->aaData[$key][12] == '0') {
+            if($res->aaData[$key][12] == '0') { 
                 $res->aaData[$key][12] = 'No';
             }
             else {

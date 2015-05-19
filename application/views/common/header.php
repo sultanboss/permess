@@ -208,6 +208,9 @@
 							<li><a href="<?php echo base_url();?>reports/import">Imports</a></li>
 							<li><a href="<?php echo base_url();?>reports/sales">Sales</a></li>
 							<li><a href="<?php echo base_url();?>reports/stock">Stock</a></li>
+							<li><a href="<?php echo base_url();?>reports/commercial">Commercial</a></li>
+							<li><a href="<?php echo base_url();?>reports/marketing">Marketing</a></li>
+							<li><a href="<?php echo base_url();?>reports/account">Account</a></li>
 						</ul>
 					</li>					
 					<li>

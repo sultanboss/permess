@@ -109,6 +109,57 @@ class Reports_model extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 
+	function get_commercial_data($start, $end) 
+	{
+		$this->db->select('
+            ak_delivery.delivery_id, delivery_date, delivery_company_name, lc_no, lc_date, exp_date,
+            bank_name, party_name, bank_submit_value, purchase_date, purchase_tk,
+            delivery_status, delivery_lc_status, delivery_doc_status,
+			(select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total');         
+        $this->db->from('delivery'); 
+        $this->db->where('delivery_payment', '0');
+        $this->db->where('delivery_date >=', $start);
+		$this->db->where('delivery_date <=', $end);
+		$this->db->join('statements', 'statements.delivery_id = delivery.delivery_id');
+
+		return $this->db->get()->result_array();
+	}
+
+	function get_marketing_data($start, $end, $by) 
+	{
+		$this->db->select('delivery_id, delivery_date, delivery_company_name, 
+            (select SUM(order_quantity) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as order_quantity,
+            (select SUM(order_quantity*unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as pi_value,
+            (select SUM(order_quantity*over_invoice_unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as over_invoice,
+            (select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total,
+            buyer_order_reference, delivery_lc_status, delivery_status, delivery_request');
+        $this->db->from('delivery');
+        $this->db->where('delivery_date >=', $start);
+		$this->db->where('delivery_date <=', $end);
+
+		if($by != '') {
+			$this->db->where('delivery_by', $by);
+		}
+
+		return $this->db->get()->result_array();
+	}
+
+	function get_account_data($start, $end) 
+	{
+		$this->db->select('delivery_id, delivery_date, delivery_company_name, 
+            (select SUM(order_quantity*unit_price) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as pi_value,
+            (select bill_usd_rate from ak_bill where ak_bill.delivery_id = ak_delivery.delivery_id) as usd,
+            (select SUM(order_quantity*(unit_price+over_invoice_unit_price)) from ak_delivery_product where ak_delivery_product.delivery_id = ak_delivery.delivery_id) as total,
+            (select bill_received from ak_bill where ak_bill.delivery_id = ak_delivery.delivery_id) as total_received,
+            delivery_status, delivery_request');   
+        $this->db->where("delivery_payment", '1'); 
+        $this->db->from('delivery'); 
+        $this->db->where('delivery_date >=', $start);
+		$this->db->where('delivery_date <=', $end);
+
+		return $this->db->get()->result_array();
+	}
+
 
 	// Extra Function
 
@@ -154,5 +205,13 @@ class Reports_model extends CI_Model {
         $query = $this->db->get_where('users', array('id' => $user), 1);
         return $query->row()->fname.' '.$query->row()->lname;
     }
+
+    function get_normal_users()
+	{
+		$this->db->select('id, fname, lname');
+		$this->db->where('group_id', '501');
+		$query = $this->db->get('users');
+		return $query->result_array();
+	}
 
 }
