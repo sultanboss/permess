@@ -141,7 +141,7 @@
 																</div>	
 																<div class="form_sep">	
 																	<div class="col-sm-12 start">
-																		<label for="wastage_detail" class="unreq">Wastage Detail <small id="add_waste">(Enter reason if wastage > 0.5%)</small></label>
+																		<label for="wastage_detail" class="unreq">Wastage Detail <small id="add_waste">(Enter reason if wastage > 0.05%)</small></label>
 																		<textarea id="wastage_detail" name="wastage_detail" class="form-control"></textarea>
 																	</div>
 																</div>																			
@@ -239,7 +239,7 @@
 																</div>	
 																<div class="form_sep">	
 																	<div class="col-sm-12 start">
-																		<label for="edit_wastage_detail" class="unreq">Wastage Detail <small id="edit_waste">(Enter reason if wastage > 0.5%)</small></label>
+																		<label for="edit_wastage_detail" class="unreq">Wastage Detail <small id="edit_waste">(Enter reason if wastage > 0.05%)</small></label>
 																		<textarea id="edit_wastage_detail" name="edit_wastage_detail" class="form-control"></textarea>
 																	</div>
 																</div>																		

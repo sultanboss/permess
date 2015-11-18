@@ -655,7 +655,7 @@
 		.printable #sidebar {display:none}
 		.printable #main_content {margin:0;top:0;left:0;position:relative;width:680px;overflow:visible !important}
 		.printable #main_content * {visibility:visible}
-		.printable header,.printable #breadcrumbs,.printable nav,.printable footer,.printable #footer_space,.printable #style_switcher,.printable #top_navigation,.printable #invoice_print, .printable .top-right-btn, .printable .noprint {display:none !important}
+		.printable header,.printable #breadcrumbs,.printable nav,.printable footer,.printable #footer_space,.printable #style_switcher,.printable #top_navigation,.printable #invoice_print,.printable #chalan_print,.printable #chalan_print,.printable .challan_header, .printable #chalan_print_return, .printable .top-right-btn, .printable .noprint {display:none !important}
 		.printable .col-sm-1,.printable .col-sm-2,.printable .col-sm-3,.printable .col-sm-4,.printable .col-sm-5,.printable .col-sm-6,.printable .col-sm-7,.printable .col-sm-8,.printable .col-sm-9,.printable .col-sm-10,.printable .col-sm-11 { float: left }
 		.printable .col-sm-1 { width: 8.333333333333332% }
 		.printable .col-sm-2 { width: 16.666666666666664% }

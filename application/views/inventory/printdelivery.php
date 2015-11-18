@@ -109,7 +109,7 @@
 								<div class="panel panel-default">
 									<div class="panel_controls" style="border-bottom: none;">
 										<div class="print">											
-											<h4 class="heading_a text-center underline">Proforma Invoice <?php if($delivery[0]['delivery_revised'] == 1) { echo "- <b>Revised</b>"; } ?></h4>
+											<h4 class="heading_a text-center underline"><strong>Proforma Invoice</strong><?php if($delivery[0]['delivery_revised'] == 1) { echo "- <b>Revised</b>"; } ?></h4>
 											<div class="row">											
 												<div class="col-sm-4">
 													<p>To</p>
@@ -144,7 +144,7 @@
 														<thead>
 															<tr>
 																<th class="text-center">Description</th>
-																<th class="text-right">Quantity In (Yards)</th>
+																<th class="text-right">Quantity In (Yards/Meter)</th>
 																<th class="text-right">Unit Price USD</th>
 																<th class="text-right">Total Amount</th>
 															</tr>
@@ -184,7 +184,7 @@
 																<td class="text-center">
 																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
 																</td>
-																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?></td>
+																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?> (<?php echo $value['mtype']==2?'Meter':'Yards'; ?>)</td>
 																<td class="text-right">$ <?php echo number_format((float)($value['unit_price']+$value['over_invoice_unit_price']), 2, '.', ''); ?></td>
 																<td class="text-right">$ <?php echo number_format((float)($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price'])), 2, '.', ''); ?></td>
 															</tr>
@@ -223,7 +223,7 @@
 													<p><b>d)</b> All charges outside of beneficiary's bank are on opener's account.</p>
 													<p><b>e)</b> Please insert VAT Registration Certificate Number in the Letter of Credit.</p>
 													<p><b>f) UD MUST BE REQUIRED FOR DOCUMENTATION.</b></p>
-													<p><b>g) H.S.Code No: 5903.90.10</b></p> 
+													<p><b>g) H.S.Code No: <?=$delivery[0]['hs_code'];?></b></p> 
 													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;TIN NO: 150-200-5020/Circle-50, Dhaka.</b></p>
 													<p><b>&nbsp;&nbsp;&nbsp;&nbsp;Swift # UCBLBDDHPRB</b></p>												
 												</div>

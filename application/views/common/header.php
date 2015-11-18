@@ -200,7 +200,7 @@
 					</li>
 					<?php
 					}
-					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) {
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial') || $this->tank_auth->is_group_member('Accounts')) {
 					?>
 					<li>
 						<a href="javascript:void(0)">Reports</a>
@@ -208,11 +208,27 @@
 							<li><a href="<?php echo base_url();?>reports/import">Imports</a></li>
 							<li><a href="<?php echo base_url();?>reports/sales">Sales</a></li>
 							<li><a href="<?php echo base_url();?>reports/stock">Stock</a></li>
+							<?php
+							if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Commercial')) {
+							?>
 							<li><a href="<?php echo base_url();?>reports/commercial">Commercial</a></li>
+							<?php
+							}
+							?>
 							<li><a href="<?php echo base_url();?>reports/marketing">Marketing</a></li>
+							<?php
+							if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users') || $this->tank_auth->is_group_member('Accounts')) {
+							?>
 							<li><a href="<?php echo base_url();?>reports/account">Account</a></li>
+							<?php
+							}
+							?>
 						</ul>
-					</li>					
+					</li>
+					<?php
+					}
+					if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) {
+					?>					
 					<li>
 						<a href="javascript:void(0)">Settings</a>
 						<ul>

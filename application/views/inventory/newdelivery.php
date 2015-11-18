@@ -51,7 +51,7 @@
 															<label for="delivery_payment" class="req double-input">Payment Method</label>
 															<select id="delivery_payment" name="delivery_payment" class="form-control" data-required="true">
 															<?php 
-																$this->tank_auth->load_select_options(array('LC Payment', 'Cash Payment'), 0);
+																$this->tank_auth->load_select_options(array('LC Payment', 'Cash','Cheque','TT'), 0);
 															?>
 															</select>	
 														</div>
@@ -127,12 +127,16 @@
 																?>								
 																</select>
 																<div id="lc_date_box">													
-																<label for="delivery_lc_date"class="req double-input">L.C. Date</label>
+																<label for="delivery_lc_date" class="req double-input">L.C. Date</label>
 																<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 											                        <input id="delivery_lc_date" name="delivery_lc_date" class="form-control" type="text" data-required="true">
 																	<span class="input-group-addon"><i class="icon-calendar"></i></span>
 											                    </div>
 											                    </div>
+	                           									<label for="delivery_hs_code" class="req double-input">H.S. Code</label>
+																<input type="text" id="delivery_hs_code" name="delivery_hs_code" class="form-control">
+														
+
 										                    </div>
 														</div>
 													</div>
@@ -149,6 +153,7 @@
 															<th width="">Width</th>
 															<th width="">Softness</th>
 															<th width="">Color</th>
+															<th width="">Type</th>
 															<th width="8%">Order Quantity</th>										
 															<th width="8%">Delivery Quantity</th>		
 															<th width="8%">Unit Price</th>										
@@ -224,6 +229,12 @@
 																				?>				
 											                                </select>
 										                </td>
+                                                                                                                <td>
+                                                                                                                    <select name='mtype' class="mtype form-control" data-required="true">
+                                                                                                                            <option value="1">Yards</option>
+                                                                                                                            <option value="2">Meters</option>
+                                                                                                                    </select>
+														</td>
 														<td>
 																			<input name="order_quantity" class="order_quantity form-control" type="text" placeholder="0" data-required="true">
 														</td>

@@ -103,9 +103,9 @@
 							ar['delivery_doc_status']       = $('#delivery_doc_status').val();
 							ar['delivery_lc_status']        = $('#delivery_lc_status').val();
 							if(ar['delivery_lc_status'] == 0)
-								ar['delivery_lc_date']          = '';
+							   ar['delivery_lc_date']          = '';
 							else
-								ar['delivery_lc_date']          = $('#delivery_lc_date').val();                                
+							   ar['delivery_lc_date']          = $('#delivery_lc_date').val();                                
 							ar['delivery_item_no']          = $('#delivery_item_no').val();
 							ar['delivery_type']             = $('#delivery_type').val();
 							ar['delivery_company_name']     = $('#delivery_company_name').val();
@@ -119,6 +119,7 @@
 							ar['delivery_commission_status']= $('#delivery_commission_status').val();
 							ar['delivery_commission']       = $('#delivery_commission').val();
 							ar['editor_id']                 = $('#editor_id').val();
+                                                        ar['delivery_hs_code']                 = $('#delivery_hs_code').val();
 
 							var i = 0;
 							$('#delivery_product_table > tbody > tr').each(function() {  
@@ -127,6 +128,7 @@
 								ar['softness_id_' + i]              = $(this).find('select.softness_id').val();
 								ar['width_id_' + i]                 = $(this).find('select.width_id').val();
 								ar['color_id_' + i]                 = $(this).find('select.color_id').val();
+                                                                ar['mtype_' + i]                 = $(this).find('select.mtype').val();
 								ar['order_quantity_' + i]           = $(this).find('input.order_quantity').val();
 								ar['delivery_quantity_' + i]        = $(this).find('input.delivery_quantity').val();
 								ar['unit_price_' + i]               = $(this).find('input.unit_price').val();
@@ -200,7 +202,7 @@
 							ar['delivery_commission_status']= $('#delivery_commission_status').val();
 							ar['delivery_commission']       = $('#delivery_commission').val();
 							ar['editor_id']                 = $('#editor_id').val();
-
+                                                        ar['delivery_hs_code']                 = $('#delivery_hs_code').val();
 							var i = 0;
 							$('#delivery_product_table > tbody > tr').each(function() {  
 								ar['delivery_product_id_' + i]      = $(this).find('#delivery_product_id').val();
@@ -209,6 +211,7 @@
 								ar['softness_id_' + i]              = $(this).find('select.softness_id').val();
 								ar['width_id_' + i]                 = $(this).find('select.width_id').val();
 								ar['color_id_' + i]                 = $(this).find('select.color_id').val();
+                                                                ar['mtype_' + i]                 = $(this).find('select.mtype').val();
 								ar['order_quantity_' + i]           = $(this).find('input.order_quantity').val();
 								ar['delivery_quantity_' + i]        = $(this).find('input.delivery_quantity').val();
 								ar['unit_price_' + i]               = $(this).find('input.unit_price').val();

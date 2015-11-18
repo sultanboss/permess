@@ -123,7 +123,7 @@
 																</div>
 																<div class="form_sep">																	
 																	<div class="col-sm-6 start">
-																		<label for="raw_date" class="req">Import Date</label>
+																		<label for="raw_date" class="req">In House Date</label>
 																		<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 									                                        <input id="raw_date" name="raw_date" class="form-control" type="text" data-required="true">
 																			<span class="input-group-addon"><i class="icon-calendar"></i></span>
@@ -170,7 +170,7 @@
 										<thead>
 											<tr>
 												<th width="">ID</th>
-												<th width="">Date</th>
+												<th width="">Inhouse Date</th>
 												<th width="">P. I.</th>
 												<th width="">L. C.</th>
 												<th width="">Article</th>

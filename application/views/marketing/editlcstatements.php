@@ -129,6 +129,15 @@
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>	
 														</div>
+
+
+														<div class="col-sm-2">
+															<label for="realise_value" class="unreq">Realise Value</label>
+															<input id="realise_value" name="realise_value" class="form-control" value="<?=$del['realise_value'];?>" type="text" >
+														</div>
+
+
+
 														<div class="col-sm-2 right">
 															<label for="lc_status" class="req">LC Status</label>
 															<select id="lc_status" name="lc_status" class="form-control">

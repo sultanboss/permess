@@ -134,6 +134,20 @@
 															?>								
 															</select>
 														</div>
+													</div>
+													<div class="form_sep">														
+														<div class="col-sm-4">
+															<label for="advance_delivery" class="req">Approved for Advance Delivery</label>
+															<select id="advance_delivery" name="advance_delivery" class="form-control" data-required="true">
+															<?php 
+																$this->tank_auth->load_select_options(array('No', 'Yes'), $val['advance_delivery']);
+															?>								
+															</select>
+														</div>
+														<div class="col-sm-4" id="advance_details_box">
+															<label for="advance_delivery_details" class="req" data-required="true">Advance Delivery Details</label>
+															<textarea id="advance_delivery_details" name="advance_delivery_details" class="form-control double-text parsley-validated"><?php echo $val['advance_delivery_details']; ?></textarea>
+														</div>
 													</div>													
 													<div class="form_sep">
 														<div class="col-sm-12 text-right">	

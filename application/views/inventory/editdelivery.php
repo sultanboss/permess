@@ -248,6 +248,8 @@
 															</select>
 															<label for="delivery_commission" class="unreq double-input-unreq">Commission Amount ($)</label>
 															<input id="delivery_commission" name="delivery_commission" class="form-control" type="text" value="<?php echo $del['delivery_commission']; ?>">
+                                                                                                                        
+                                                                                                                        
 														</div>
 														<?php
 														}
@@ -268,6 +270,9 @@
 																	<span class="input-group-addon"><i class="icon-calendar"></i></span>
 											                    </div>
 											                    </div>
+                                                                <label for="delivery_hs_code" class="req double-input">H.S. Code</label>
+																<input id="delivery_hs_code" name="delivery_hs_code" class="form-control" type="text" value="<?php echo $del['hs_code']; ?>">
+                                                                                                                        
 										                    </div>
 														</div>
 													</div>
@@ -287,6 +292,7 @@
 															<th width="">Width</th>
 															<th width="">Softness</th>
 															<th width="">Color</th>
+                                                                                                                        <th width="">Type</th>
 															<th width="8%">Order Quantity</th>									
 															<th width="8%">Delivery Quantity</th>		
 															<th width="8%">Unit Price</th>										
@@ -401,7 +407,13 @@
 																				}																	
 																				?>				
 											                                </select>
-										                </td>
+                                                                                                                 <td>
+                                                                                                                    <select name='mtype' class="mtype form-control" data-required="true">
+                                                                                                                            <option value="1">Yards</option>
+                                                                                                                            <option value="2">Meters</option>
+                                                                                                                    </select>
+														</td>   
+         
 														<td>
 																			<input name="order_quantity" value="<?php echo $dp['order_quantity']; ?>" class="order_quantity form-control" type="text" placeholder="0" data-required="true">
 														</td>
@@ -512,6 +524,13 @@
 																				?>				
 											                                </select>
 										                </td>
+                                                                                                                <td>
+                                                                                                                    <select name='mtype' class="mtype form-control" data-required="true">
+                                                                                                                            <option value="1">Yards</option>
+                                                                                                                            <option value="2">Meters</option>
+                                                                                                                    </select>
+														</td>
+                                                                                                
 														<td>
 																			<input name="order_quantity" class="order_quantity form-control" type="text" placeholder="0" data-required="true">
 														</td>

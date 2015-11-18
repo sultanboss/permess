@@ -130,7 +130,7 @@ class Marketing_model extends CI_Model {
 
     function get_order_details_by_id($delivery_id)
     {
-        $this->db->select('delivery_id, delivery_request, buyer_order_reference, delivery_details');
+        $this->db->select('delivery_id, delivery_request, buyer_order_reference, delivery_details, advance_delivery, advance_delivery_details');
         $this->db->from('delivery');
         $this->db->where('delivery_id', $delivery_id);
         $q = $this->db->get();

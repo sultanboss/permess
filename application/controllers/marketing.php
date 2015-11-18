@@ -150,8 +150,14 @@ class Marketing extends CI_Controller
 			$data['data'] = array(
 				'buyer_order_reference'			=> $this->input->post('buyer_order_reference'),		
 				'delivery_request' 				=> $this->input->post('delivery_request'),	
-				'delivery_details' 				=> $this->input->post('delivery_details')
+				'delivery_details' 				=> $this->input->post('delivery_details'),	
+				'advance_delivery' 				=> $this->input->post('advance_delivery'),	
+				'advance_delivery_details' 		=> ''
 			);
+
+			if($this->input->post('advance_delivery') == '1') {
+				$data['data']['advance_delivery_details'] = $this->input->post('advance_delivery_details');
+			}
 
 			$this->marketing_model->update_order($this->input->post('delivery_id'), $data['data']);
 			$this->session->set_flashdata('msg', 'Order <b>\''.$this->input->post('delivery_id').'\'</b> updated successfully!');
@@ -325,7 +331,8 @@ class Marketing extends CI_Controller
 				'purchase_tk' 			=> $this->input->post('purchase_tk'),		
 				'due_date' 				=> $this->input->post('due_date'),		
 				'due_rdate' 			=> $this->input->post('due_rdate'),	
-				'editor_id' 			=> $this->session->userdata('user_id')
+				'editor_id' 			=> $this->session->userdata('user_id'),
+				'realise_value'			=> $this->input->post('realise_value')
 			);
 
 			$this->marketing_model->update_statements($this->input->post('delivery_id'), $data['data']);

@@ -238,7 +238,9 @@ class Inventory extends CI_Controller
 		$this->tank_auth->check_login();
 
 		$_POST = array_merge($_POST,json_decode(file_get_contents('php://input'),true));
-
+                
+             
+                
 		if ( isset($_POST['delivery_date']) && isset($_POST['delivery_by']) ) {
 			$data['data'] = array(
 				'delivery_date'				=> $this->input->post('delivery_date'),
@@ -261,9 +263,11 @@ class Inventory extends CI_Controller
 				'delivery_style'            => $this->input->post('delivery_style'),
 				'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
 				'delivery_commission'       => $this->input->post('delivery_commission'),
-				'editor_id' 				=> $this->session->userdata('user_id')
+                                'hs_code'=>$this->input->post('delivery_hs_code'),
+				'editor_id' => $this->session->userdata('user_id')
+				
 			);
-
+                             
 			$delivery_id = $this->inventory_model->add_delivery($data['data']);
 
 			for($i=0; $i<100; $i++)
@@ -285,7 +289,8 @@ class Inventory extends CI_Controller
 						'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
 						'unit_price'				=> $this->input->post('unit_price_'.$i),
 						'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
-						'editor_id' 				=> $this->session->userdata('user_id')
+						'editor_id' 				=> $this->session->userdata('user_id'),
+                                                'mtype'=>$this->input->post('mtype_'.$i)
 					);
 					$this->inventory_model->add_delivery_product($data['eq_product']);
 				}
@@ -384,6 +389,7 @@ class Inventory extends CI_Controller
 						'delivery_revised'          => $this->input->post('delivery_revised'),
 						'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
 						'delivery_commission'       => $this->input->post('delivery_commission'),
+                                                'hs_code'=>$this->input->post('delivery_hs_code'),
 						'editor_id' 				=> $this->session->userdata('user_id')
 					);
 				}
@@ -412,7 +418,9 @@ class Inventory extends CI_Controller
 					}
 				}
 				else {
-					$this->inventory_model->remove_delivery_product($this->input->post('delivery_id'));
+					//$this->inventory_model->remove_delivery_product($this->input->post('delivery_id'));
+
+					$remove_array = array();
 
 					for($i=0; $i<100; $i++)
 					{
@@ -420,6 +428,11 @@ class Inventory extends CI_Controller
 						{
 							$article_id = explode('-', $this->input->post('article_id_'.$i));
 							$article_id = $article_id[0];	
+
+							$delivery_product_id = explode('-', $this->input->post('delivery_product_id_'.$i));
+							$delivery_product_id = $delivery_product_id[0];	
+
+							$remove_array[$delivery_product_id] = true;
 											
 							$data['eq_product'] = array(
 								'delivery_id'				=> $this->input->post('delivery_id'),
@@ -433,12 +446,29 @@ class Inventory extends CI_Controller
 								'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
 								'unit_price'				=> $this->input->post('unit_price_'.$i),
 								'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
-								'editor_id' 				=> $this->session->userdata('user_id')
+								'editor_id' 				=> $this->session->userdata('user_id'),
+                                                                'mtype'=>$this->input->post('mtype_'.$i)
 							);
-							$this->inventory_model->add_delivery_product($data['eq_product']);
+
+							$check_product = $this->inventory_model->check_delivery_product($delivery_product_id, $data['eq_product']);
+
+							if($check_product != false) {
+								$data['eq_product']['delivery_quantity'] = $check_product + $data['eq_product']['delivery_quantity'];
+								$this->inventory_model->update_delivery_product($delivery_product_id, $data['eq_product']);
+								$remove_array[$delivery_product_id] = false;
+							}
+							else {
+								$this->inventory_model->add_delivery_product($data['eq_product']);
+							}							
 						}
 						else
 							$i = 100;
+					}
+
+					foreach ($remove_array as $key => $value) {
+						if($value == true) {
+							$this->inventory_model->remove_single_delivery_product($key);
+						}
 					}
 
 					if($this->input->post('delivery_payment') == '0')
@@ -568,10 +598,10 @@ class Inventory extends CI_Controller
 		}
 	}
 
-	function printchallan($id = null, $challanid = 0)
+	function printchallan($id = null, $challanid = 0,$rt=NULL)
 	{
 		$this->tank_auth->check_login();
-
+                $data['report_type']=$rt;
 		if ($id != null) {
 
 			if($this->tank_auth->is_group_member('Users')) {

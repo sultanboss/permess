@@ -147,11 +147,18 @@ class Inventory_model extends CI_Model {
 
 	function update_delivery_product($id, $data)
 	{
-		$this->db->where('delivery_product_id', $id);
-		if ($this->db->update('delivery_product', $data)) {
-			return true;	
+		if($data['delivery_quantity'] != '0') {
+			$this->db->set('prev_delivery_quantity', 'delivery_quantity', FALSE);
+			$this->db->where('delivery_product_id', $id);
+			$this->db->update('delivery_product');
+
+			$this->db->where('delivery_product_id', $id);
+			if ($this->db->update('delivery_product', $data)) {
+				return true;	
+			}
+			return NULL;
 		}
-		return NULL;
+		return true;
 	}
 
 	function update_delivery($id, $data)
@@ -191,6 +198,36 @@ class Inventory_model extends CI_Model {
 		return false;
 	}
 
+	function check_delivery_product($id, $data)
+	{
+		$this->db->where('delivery_id',$data['delivery_id']);
+		$this->db->where('article_id',$data['article_id']);
+		$this->db->where('article_alt',$data['article_alt']);
+		$this->db->where('description_id',$data['description_id']);
+		$this->db->where('softness_id',$data['softness_id']);
+		$this->db->where('width_id',$data['width_id']);
+		$this->db->where('color_id',$data['color_id']);
+
+		$query = $this->db->get('delivery_product');
+
+		if ($query->num_rows() > 0){
+			foreach ($query->result() as $row) {
+			    return $row->delivery_quantity;
+			}
+		}
+
+		return false;
+	}
+
+	function remove_single_delivery_product($id) 
+	{
+		$this->db->where('delivery_product_id',$id);
+		$this->db->delete('delivery_product');
+		if($this->db->affected_rows() > 0)
+			return true;
+		return false;
+	}
+
 	function add_challan($delivery_id)
 	{
 		$query = $this->db->get_where('delivery_product', array('delivery_id' => $delivery_id));
@@ -202,6 +239,8 @@ class Inventory_model extends CI_Model {
 				if($value['delivery_quantity'] > 0) {
 					$add = true;
 				}
+
+				$res[$key]['delivery_quantity'] = (int)$value['delivery_quantity'] - (int)$value['prev_delivery_quantity'];
 			}
 
 			$q = $this->db->get_where('challan', array('delivery_id' => $delivery_id), 1);
