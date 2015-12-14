@@ -112,11 +112,11 @@
 										<tfoot>
 											<tr>
 												<th colspan="3" class="text-right">Total Submit Party Value :</th>
-												<th>$ <?php echo number_format((float)$spval, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$spval, 4, '.', '');?></th>
 												<th colspan="3" class="text-right">Total Bank Submit :</th>
-												<th>$ <?php echo number_format((float)$bnval, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$bnval, 4, '.', '');?></th>
 												<th colspan="5" class="text-right">Total L.C. Value :</th>
-												<th>$ <?php echo number_format((float)$lcval, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$lcval, 4, '.', '');?></th>
 											</tr>											
 										</tfoot>			
 									</table>									

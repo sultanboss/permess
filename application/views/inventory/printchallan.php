@@ -280,13 +280,13 @@
 																</td>
 																<td class="text-right">
 																<?php 
-																	$qo = number_format((float)$value['order_quantity'], 2, '.', ''); 
+																	$qo = number_format((float)$value['order_quantity'], 4, '.', ''); 
 																	echo $qo;
 																?>
 																</td>
 																<td class="text-right">
 																<?php 
-																	$qd = number_format((float)(abs($value['delivery_quantity'])), 2, '.', ''); 																	
+																	$qd = number_format((float)(abs($value['delivery_quantity'])), 4, '.', ''); 																	
 																	echo $qd;
 																	$rc_return=$rc_return+abs($qd);
 																?>
@@ -294,8 +294,8 @@
 																<td class="text-right">
 																<?php 
                                                                                                                                 /*
-																	$qd = number_format((float)($value['delivery_quantity']), 2, '.', '');
-																	$qp = number_format((float)($qo-$qd), 2, '.', ''); 		
+																	$qd = number_format((float)($value['delivery_quantity']), 4, '.', '');
+																	$qp = number_format((float)($qo-$qd), 4, '.', ''); 		
 																	echo $qp; 
 																	$qtyp = $qtyp + $qp; 
                                                                                                                                  * 
@@ -309,7 +309,7 @@
                                                                                                                                 $deliver=$deliver+$qpds['delivery_quantity'];
 																																}
                                                                                                                                 $sum= ($qo-$deliver);
-                                                                                                                                echo number_format($sum,2,'.','');
+                                                                                                                                echo number_format($sum, 4, '.', '');
                                                                                                                                 $psum=$psum+$sum;
 																?>
                                                                                                                                 
@@ -331,9 +331,9 @@
 														<tfoot>
 															<tr>
 																<td class="text-right"><b>Total:</b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)abs($rc_return), 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)$psum, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qty, 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)abs($rc_return), 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$psum, 4, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
 													</table>
@@ -475,21 +475,21 @@
 																	</td>
 																	<td class="text-right">
 																	<?php 
-																		$qo = number_format((float)$value['order_quantity'], 2, '.', ''); 
+																		$qo = number_format((float)$value['order_quantity'], 4, '.', ''); 
 																		echo $qo;
                                                                                                                                                 
 																	?>
 																	</td>
 																	<td class="text-right">
 																	<?php 
-																		$qd = number_format((float)($value['cur_delivery_quantity']), 2, '.', ''); 																	
+																		$qd = number_format((float)($value['cur_delivery_quantity']), 4, '.', ''); 																	
 																		echo $qd;
 																	?>
 																	</td>
 																	<td class="text-right">
 																	<?php 
-																		$qd = number_format((float)($value['delivery_quantity']), 2, '.', '');
-																		$qp = number_format((float)($qo-$qd), 2, '.', ''); 																	
+																		$qd = number_format((float)($value['delivery_quantity']), 4, '.', '');
+																		$qp = number_format((float)($qo-$qd), 4, '.', ''); 																	
 																		echo $qp;
 																	?>
 																	</td>
@@ -507,9 +507,9 @@
 														<tfoot>
 															<tr>
 																<td class="text-right"><b>Total:</b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)$dqty, 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qtyp, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qty, 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$dqty, 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qtyp, 4, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
 													</table>
@@ -651,22 +651,22 @@
 																</td>
 																<td class="text-right">
 																<?php 
-																	$qo = number_format((float)$value['order_quantity'], 2, '.', ''); 
+																	$qo = number_format((float)$value['order_quantity'], 4, '.', ''); 
 																	echo $qo;
                                                                                                                                       //  $qdt_deliver=$qdt_deliver+$qo;
 																?>
 																</td>
 																<td class="text-right">
 																<?php 
-																	$qd = number_format((float)($value['delivery_quantity']), 2, '.', ''); 																	
+																	$qd = number_format((float)($value['delivery_quantity']), 4, '.', ''); 																	
 																	echo $qd;
 																?>
 																</td>
 																<td class="text-right">
 																<?php 
                                                                                                                                 /*
-																	$qd = number_format((float)($value['delivery_quantity']), 2, '.', '');
-																	$qp = number_format((float)($qo-$qd), 2, '.', ''); 		
+																	$qd = number_format((float)($value['delivery_quantity']), 4, '.', '');
+																	$qp = number_format((float)($qo-$qd), 4, '.', ''); 		
 																	echo $qp; 
 																	$qtyp = $qtyp + $qp; 
                                                                                                                                  * 
@@ -680,7 +680,7 @@
                                                                                                                                 }
                                                                                                                                 $sum= ($qo-$deliver);
                                                                                                                                 
-                                                                                                                                echo number_format($sum,2,'.','');
+                                                                                                                                echo number_format($sum, 4, '.', '');
                                                                                                                                 $psum=$psum+$sum;
 																?>
                                                                                                                                 
@@ -703,9 +703,9 @@
 														<tfoot>
 															<tr>
 																<td class="text-right"><b>Total:</b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qdt_deliver, 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)$psum, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qty, 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qdt_deliver, 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$psum, 4, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
 													</table>
@@ -847,20 +847,20 @@
 																	</td>
 																	<td class="text-right">
 																	<?php 
-																		$qo = number_format((float)$value['order_quantity'], 2, '.', ''); 
+																		$qo = number_format((float)$value['order_quantity'], 4, '.', ''); 
 																		echo $qo;
 																	?>
 																	</td>
 																	<td class="text-right">
 																	<?php 
-																		$qd = number_format((float)($value['cur_delivery_quantity']), 2, '.', ''); 																	
+																		$qd = number_format((float)($value['cur_delivery_quantity']), 4, '.', ''); 																	
 																		echo $qd;
 																	?>
 																	</td>
 																	<td class="text-right">
 																	<?php 
-																		$qd = number_format((float)($value['delivery_quantity']), 2, '.', '');
-																		$qp = number_format((float)($qo-$qd), 2, '.', ''); 																	
+																		$qd = number_format((float)($value['delivery_quantity']), 4, '.', '');
+																		$qp = number_format((float)($qo-$qd), 4, '.', ''); 																	
 																		echo $qp;
 																	?>
 																	</td>
@@ -878,9 +878,9 @@
 														<tfoot>
 															<tr>
 																<td class="text-right"><b>Total:</b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)$dqty, 2, '.', ''); ?></b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qtyp, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qty, 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$dqty, 4, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qtyp, 4, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
 													</table>

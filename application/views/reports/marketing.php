@@ -127,11 +127,11 @@
 										<tfoot>
 											<tr>
 												<th colspan="2" class="text-right">Total Order Quantity :</th>
-												<th><?php echo number_format((float)$qty, 2, '.', '');?></th>
+												<th><?php echo number_format((float)$qty, 4, '.', '');?></th>
 												<th colspan="2" class="text-right">Total Over Invoice :</th>
-												<th>$ <?php echo number_format((float)$over, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$over, 4, '.', '');?></th>
 												<th colspan="4" class="text-right">Total P.I. Value :</th>
-												<th>$ <?php echo number_format((float)$total, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$total, 4, '.', '');?></th>
 											</tr>											
 										</tfoot>			
 									</table>									

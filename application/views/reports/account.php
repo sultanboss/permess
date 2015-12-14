@@ -95,11 +95,11 @@
 										<tfoot>
 											<tr>
 												<th colspan="2" class="text-right">Total P.I. Value :</th>
-												<th>$ <?php echo number_format((float)$pival, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$pival, 4, '.', '');?></th>
 												<th colspan="2" class="text-right">Total Amount :</th>
-												<th>$ <?php echo number_format((float)$total, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$total, 4, '.', '');?></th>
 												<th colspan="2" class="text-right">Total Received :</th>
-												<th>$ <?php echo number_format((float)$receive, 2, '.', '');?></th>
+												<th>$ <?php echo number_format((float)$receive, 4, '.', '');?></th>
 											</tr>											
 										</tfoot>			
 									</table>									

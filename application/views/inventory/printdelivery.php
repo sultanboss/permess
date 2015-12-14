@@ -184,9 +184,9 @@
 																<td class="text-center">
 																Article: <?php echo $value['article_name']; ?>, Color: <?php echo $value['color_name']; ?>, Softness: <?php echo $value['softness_name']; ?>
 																</td>
-																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?> (<?php echo $value['mtype']==2?'Meter':'Yards'; ?>)</td>
-																<td class="text-right">$ <?php echo number_format((float)($value['unit_price']+$value['over_invoice_unit_price']), 2, '.', ''); ?></td>
-																<td class="text-right">$ <?php echo number_format((float)($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price'])), 2, '.', ''); ?></td>
+																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 4, '.', ''); ?> (<?php echo $value['mtype']==2?'Meter':'Yards'; ?>)</td>
+																<td class="text-right">$ <?php echo number_format((float)($value['unit_price']+$value['over_invoice_unit_price']), 4, '.', ''); ?></td>
+																<td class="text-right">$ <?php echo number_format((float)($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price'])), 4, '.', ''); ?></td>
 															</tr>
 															<?php
 																$qty = $qty + $value['order_quantity'];
@@ -198,13 +198,13 @@
 														<tfoot>
 															<tr>
 																<td class="text-right"><b>Total:</b></td>
-																<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b><?php echo number_format((float)$qty, 4, '.', ''); ?></b></td>
 																<td></td>
-																<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
+																<td class="text-right"><b>$ <?php echo number_format((float)$total, 4, '.', ''); ?></b></td>
 															</tr>
 														</tfoot>
 													</table>
-													<p><i><b>Amount in words:</b></i> <span class="upper">us dollar <?php echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', '')); ?> only.</span></p>												
+													<p><i><b>Amount in words:</b></i> <span class="upper">us dollar <?php echo $this->tank_auth->convertNumber(number_format((float)$total, 4, '.', '')); ?> only.</span></p>												
 												</div>										
 												<div class="col-sm-12">													
 													<p><strong class="underline">Terms & Conditions:</strong></p>

@@ -144,7 +144,7 @@ class Factory_model extends CI_Model {
         $res = json_decode($res);
 
         foreach ($res->aaData as $key => $value) {
-            $res->aaData[$key][5] = number_format((float)($res->aaData[$key][3] - $res->aaData[$key][4]), 2, '.', '');
+            $res->aaData[$key][5] = number_format((float)($res->aaData[$key][3] - $res->aaData[$key][4]), 4, '.', '');
         }
         
         return json_encode($res);

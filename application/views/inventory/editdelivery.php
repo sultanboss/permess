@@ -424,13 +424,13 @@
 																			<input name="unit_price" value="<?php echo $dp['unit_price']; ?>" class="unit_price form-control" type="text" placeholder="0.00" data-required="true">
 														</td>
 														<td>
-																			<input name="net_price" value="<?php echo number_format((float)$dp['unit_price'] * $dp['order_quantity'], 2, '.', ''); ?>" class="net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="net_price" value="<?php echo number_format((float)$dp['unit_price'] * $dp['order_quantity'], 4, '.', ''); ?>" class="net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
 														</td>
 														<td>
 																			<input name="over_invoice_unit_price" value="<?php echo $dp['over_invoice_unit_price']; ?>" class="over_invoice_unit_price form-control" type="text" placeholder="0.00" data-required="true">
 														</td>
 														<td>
-																			<input name="over_invoice_net_price" value="<?php echo number_format((float)$dp['over_invoice_unit_price'] * $dp['order_quantity'], 2, '.', ''); ?>" class="over_invoice_net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="over_invoice_net_price" value="<?php echo number_format((float)$dp['over_invoice_unit_price'] * $dp['order_quantity'], 4, '.', ''); ?>" class="over_invoice_net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
 														</td>
 														<?php
 														if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 

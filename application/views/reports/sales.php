@@ -85,11 +85,11 @@
 											<tr>
 												<th class="text-right">Total sales :</th>
 												<th colspan="3"><?php echo count($sales); ?></th>
-												<th class="text-right" colspan="2">$ <?php echo number_format((float)$amount, 2, '.', '');?></th>
-												<th class="text-right" colspan="2">$ <?php echo number_format((float)$tcom, 2, '.', '');?></th>
-												<th class="text-right"><?php echo number_format((float)$qty, 2, '.', '');?></th>
-												<th class="text-right"><?php echo number_format((float)$done, 2, '.', '');?></th>
-												<th class="text-right"><?php echo number_format((float)$left, 2, '.', '');?></th>
+												<th class="text-right" colspan="2">$ <?php echo number_format((float)$amount, 4, '.', '');?></th>
+												<th class="text-right" colspan="2">$ <?php echo number_format((float)$tcom, 4, '.', '');?></th>
+												<th class="text-right"><?php echo number_format((float)$qty, 4, '.', '');?></th>
+												<th class="text-right"><?php echo number_format((float)$done, 4, '.', '');?></th>
+												<th class="text-right"><?php echo number_format((float)$left, 4, '.', '');?></th>
 											</tr>											
 										</tfoot>				
 									</table>									

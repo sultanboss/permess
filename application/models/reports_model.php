@@ -70,10 +70,10 @@ class Reports_model extends CI_Model {
 
 			foreach ($pro as $k => $p) {
 				if($p['delivery_amount'] != null) {
-					$product[$key]['delivery_amount'] 	= number_format((float)$p['delivery_amount'], 2, '.', '');
-					$product[$key]['delivery_qty'] 		= number_format((float)$p['delivery_qty'], 2, '.', '');
+					$product[$key]['delivery_amount'] 	= number_format((float)$p['delivery_amount'], 4, '.', '');
+					$product[$key]['delivery_qty'] 		= number_format((float)$p['delivery_qty'], 4, '.', '');
 					$product[$key]['delivery_com'] 		= $p['delivery_com'];
-					$product[$key]['delivery_tcom'] 	= number_format((float)$p['delivery_tcom'], 2, '.', '');
+					$product[$key]['delivery_tcom'] 	= number_format((float)$p['delivery_tcom'], 4, '.', '');
 
 					if($p['delivery_qty'] == $p['delivery_done']) {
 						$product[$key]['delivery_done'] = 'Done';
@@ -81,11 +81,11 @@ class Reports_model extends CI_Model {
 					}
 					else if($p['delivery_done'] == 0) {
 						$product[$key]['delivery_done'] = '0.00';
-						$product[$key]['delivery_left'] = number_format((float)$p['delivery_qty'], 2, '.', '');;
+						$product[$key]['delivery_left'] = number_format((float)$p['delivery_qty'], 4, '.', '');;
 					}
 					else {
-						$product[$key]['delivery_done'] = number_format((float)$p['delivery_done'], 2, '.', '');;
-						$product[$key]['delivery_left'] = number_format((float)($p['delivery_qty'] - $p['delivery_done']), 2, '.', '');
+						$product[$key]['delivery_done'] = number_format((float)$p['delivery_done'], 4, '.', '');;
+						$product[$key]['delivery_left'] = number_format((float)($p['delivery_qty'] - $p['delivery_done']), 4, '.', '');
 					}
 				}
 			}

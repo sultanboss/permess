@@ -341,9 +341,9 @@
 																<?php
 																}
 																?>
-																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 2, '.', ''); ?></td>
-																<td class="text-right">$ <?php echo number_format((float)($value['unit_price']+$value['over_invoice_unit_price']), 2, '.', ''); ?></td>
-																<td class="text-right">$ <?php echo number_format((float)($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price'])), 2, '.', ''); ?></td>
+																<td class="text-right"><?php echo number_format((float)$value['order_quantity'], 4, '.', ''); ?></td>
+																<td class="text-right">$ <?php echo number_format((float)($value['unit_price']+$value['over_invoice_unit_price']), 4, '.', ''); ?></td>
+																<td class="text-right">$ <?php echo number_format((float)($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price'])), 4, '.', ''); ?></td>
 															</tr>
 															<?php
 																$qty = $qty + $value['order_quantity'];
@@ -355,12 +355,12 @@
 														<tfoot>
 															<td class="text-right"><b>Total:</b></td>
 															<td></td>
-															<td class="text-right"><b><?php echo number_format((float)$qty, 2, '.', ''); ?></b></td>
+															<td class="text-right"><b><?php echo number_format((float)$qty, 4, '.', ''); ?></b></td>
 															<td></td>
-															<td class="text-right"><b>$ <?php echo number_format((float)$total, 2, '.', ''); ?></b></td>
+															<td class="text-right"><b>$ <?php echo number_format((float)$total, 4, '.', ''); ?></b></td>
 														</tfoot>
 													</table>
-													<p><i><b>Amount in Words:</b></i> <span class="upper">us dollar <?php echo $this->tank_auth->convertNumber(number_format((float)$total, 2, '.', '')); ?> only.</span></p>
+													<p><i><b>Amount in Words:</b></i> <span class="upper">us dollar <?php echo $this->tank_auth->convertNumber(number_format((float)$total, 4, '.', '')); ?> only.</span></p>
 													<br>												
 												</div>
 												<div class="col-sm-12">
@@ -368,7 +368,7 @@
 													<p><b>Payment will be made by local currency - BDT: 
 													<?php 
 														if($payment[0]['bill_usd_rate'] != '0.00') {
-															echo number_format((float)($payment[0]['bill_usd_rate']*$total), 2, '.', '');
+															echo number_format((float)($payment[0]['bill_usd_rate']*$total), 4, '.', '');
 														}
 														else
 															echo "-";
@@ -378,7 +378,7 @@
 													<p>In-Words: <span class="upper">
 													<?php 
 														if($payment[0]['bill_usd_rate'] != '0.00') {
-															echo $this->tank_auth->convertNumber(number_format((float)($payment[0]['bill_usd_rate']*$total), 2, '.', ''));
+															echo $this->tank_auth->convertNumber(number_format((float)($payment[0]['bill_usd_rate']*$total), 4, '.', ''));
 														}
 														else
 															echo "-";
