@@ -14,7 +14,7 @@
 													<div class="form_sep">
 														<div class="col-sm-2">
 															<label for="delivery_pi_no" class="req">P.I. Number</label>
-															<input id="delivery_pi_no" name="delivery_pi_no" class="form-control" type="text" disabled="true" placeholder="auto">
+															<input id="delivery_pi_no" name="delivery_pi_no" class="form-control" type="text" placeholder="auto">
 										                    <label for="delivery_item_no" class="double-input-unreq">Item No</label>
 															<input id="delivery_item_no" name="delivery_item_no" class="form-control" type="text">
 														</div>

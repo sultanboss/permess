@@ -120,8 +120,21 @@ class Inventory_model extends CI_Model {
 	{
 		$data['created'] = date('Y-m-d H:i:s');
 
-		if ($this->db->insert('delivery', $data)) {
-			return $this->db->insert_id();
+		if(isset($data['delivery_id'])) {
+			$query = $this->db->get_where('delivery', array('delivery_id' => $data['delivery_id']));
+	        $count = $query->num_rows();
+
+	        if ($count === 0) {
+				if ($this->db->insert('delivery', $data)) {
+					return $this->db->insert_id();
+				}
+			}
+			return NULL;
+		}
+		else {
+			if ($this->db->insert('delivery', $data)) {
+				return $this->db->insert_id();
+			}
 		}
 		return NULL;
 	}
@@ -326,7 +339,10 @@ class Inventory_model extends CI_Model {
 		$this->db->where('delivery_id', $delivery_id);
 		$q = $this->db->get();
 		$res = $q->result_array();
-		return $res[0]['cost'];
+		if($res[0]['cost'] != NULL) {
+			return $res[0]['cost'];
+		}
+		return '0';
 	}
 
 	function accounts_delivery_check($delivery_id)

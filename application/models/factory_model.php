@@ -165,6 +165,7 @@ class Factory_model extends CI_Model {
     function get_all_article() 
     {
         $this->db->select('article_id, article_name, article_alt');
+        $this->db->order_by('article_name');
         $query = $this->db->get('article');
         return $query->result_array();        
     }

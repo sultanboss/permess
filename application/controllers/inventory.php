@@ -239,8 +239,6 @@ class Inventory extends CI_Controller
 
 		$_POST = array_merge($_POST,json_decode(file_get_contents('php://input'),true));
                 
-             
-                
 		if ( isset($_POST['delivery_date']) && isset($_POST['delivery_by']) ) {
 			$data['data'] = array(
 				'delivery_date'				=> $this->input->post('delivery_date'),
@@ -263,70 +261,80 @@ class Inventory extends CI_Controller
 				'delivery_style'            => $this->input->post('delivery_style'),
 				'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
 				'delivery_commission'       => $this->input->post('delivery_commission'),
-                                'hs_code'=>$this->input->post('delivery_hs_code'),
-				'editor_id' => $this->session->userdata('user_id')
-				
+                'hs_code'					=> $this->input->post('delivery_hs_code'),
+				'editor_id' 				=> $this->session->userdata('user_id')				
 			);
+
+			if ( isset($_POST['delivery_pi_no']) && $_POST['delivery_pi_no'] != '' ) {
+				$data['data']['delivery_id'] = $this->input->post('delivery_pi_no');
+			}
                              
 			$delivery_id = $this->inventory_model->add_delivery($data['data']);
 
-			for($i=0; $i<100; $i++)
-			{
-				if( isset($_POST['article_id_'.$i]) )
-				{	
-					$article_id = explode('-', $this->input->post('article_id_'.$i));
-					$article_id = $article_id[0];	
+			if($delivery_id != NULL) {
+				for($i=0; $i<100; $i++)
+				{
+					if( isset($_POST['article_id_'.$i]) )
+					{	
+						$article_id = explode('-', $this->input->post('article_id_'.$i));
+						$article_id = $article_id[0];	
 
-					$data['eq_product'] = array(
-						'delivery_id'				=> $delivery_id,
-						'article_id'				=> $article_id,
-						'article_alt'				=> $this->input->post('article_id_'.$i),
-						'description_id'			=> $this->input->post('description_id_'.$i),
-						'softness_id'				=> $this->input->post('softness_id_'.$i),
-						'width_id'					=> $this->input->post('width_id_'.$i),
-						'color_id'					=> $this->input->post('color_id_'.$i),
-						'order_quantity'			=> $this->input->post('order_quantity_'.$i),
-						'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
-						'unit_price'				=> $this->input->post('unit_price_'.$i),
-						'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
-						'editor_id' 				=> $this->session->userdata('user_id'),
-                                                'mtype'=>$this->input->post('mtype_'.$i)
+						$data['eq_product'] = array(
+							'delivery_id'				=> $delivery_id,
+							'article_id'				=> $article_id,
+							'article_alt'				=> $this->input->post('article_id_'.$i),
+							'description_id'			=> $this->input->post('description_id_'.$i),
+							'softness_id'				=> $this->input->post('softness_id_'.$i),
+							'width_id'					=> $this->input->post('width_id_'.$i),
+							'color_id'					=> $this->input->post('color_id_'.$i),
+							'order_quantity'			=> $this->input->post('order_quantity_'.$i),
+							'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
+							'unit_price'				=> $this->input->post('unit_price_'.$i),
+							'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
+							'editor_id' 				=> $this->session->userdata('user_id'),
+	                        'mtype'						=> $this->input->post('mtype_'.$i)
+						);
+						$this->inventory_model->add_delivery_product($data['eq_product']);
+					}
+					else
+						$i = 100;
+				}
+
+				if($this->input->post('delivery_payment') == '0')
+				{
+					$cost = $this->inventory_model->get_delivery_cost($delivery_id);
+
+					$data['statemetns'] = array(
+						'delivery_id'		=> $delivery_id,
+						'lc_date'			=> $this->input->post('delivery_lc_date'),
+						'value'				=> $cost,
+						'editor_id' 		=> $this->session->userdata('user_id')
 					);
-					$this->inventory_model->add_delivery_product($data['eq_product']);
+
+					$this->inventory_model->add_statements($data['statemetns']);
 				}
 				else
-					$i = 100;
+				{
+					$data['bill'] = array(
+						'delivery_id'		=> $delivery_id,
+						'editor_id' 		=> $this->session->userdata('user_id')
+					);
+
+					$this->accounts_model->add_bill($data['bill']);
+				}
+
+				$this->inventory_model->add_challan($delivery_id);
+
+				echo $delivery_id;
+
+				$this->session->set_flashdata('msg', 'Delivery added successfully!');
+				$this->session->set_flashdata('msg_type', 'success');
 			}
-
-			if($this->input->post('delivery_payment') == '0')
-			{
-				$cost = $this->inventory_model->get_delivery_cost($delivery_id);
-
-				$data['statemetns'] = array(
-					'delivery_id'		=> $delivery_id,
-					'lc_date'			=> $this->input->post('delivery_lc_date'),
-					'value'				=> $cost,
-					'editor_id' 		=> $this->session->userdata('user_id')
-				);
-
-				$this->inventory_model->add_statements($data['statemetns']);
+			else {
+				echo '';
+				$this->session->set_flashdata('msg', 'Invalid delivery input!');
+				$this->session->set_flashdata('msg_type', 'warning');
 			}
-			else
-			{
-				$data['bill'] = array(
-					'delivery_id'		=> $delivery_id,
-					'editor_id' 		=> $this->session->userdata('user_id')
-				);
-
-				$this->accounts_model->add_bill($data['bill']);
-			}
-
-			$this->inventory_model->add_challan($delivery_id);
-
-			echo $delivery_id;
-
-			$this->session->set_flashdata('msg', 'Delivery added successfully!');
-			$this->session->set_flashdata('msg_type', 'success');
 		}
 		else {
 			$this->session->set_flashdata('msg', 'Invalid delivery input!');
@@ -767,6 +775,8 @@ class Inventory extends CI_Controller
 	{
 		if($company_name != null) {
 			$company_name = urldecode($company_name);
+			$company_name = str_replace('&#40;', '(', $company_name);
+			$company_name = str_replace('&#41;', ')', $company_name);
 			$this->tank_auth->check_login();
 			$res = $this->inventory_model->get_delivery_address($company_name);	
 			foreach ($res as $key => $value) {				

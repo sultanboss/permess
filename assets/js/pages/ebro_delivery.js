@@ -24,24 +24,24 @@
 				e.preventDefault();
 				var qty = $(this).closest('tr').find('input.order_quantity').val();
 				var rate = $(this).closest('tr').find('input.unit_price').val();
-				$(this).closest('tr').find('input.net_price').val(parseFloat(Math.round(qty*rate * 100) / 100).toFixed(2));
+				$(this).closest('tr').find('input.net_price').val(parseFloat(Math.round(qty*rate * 100) / 100).toFixed(4));
 
 				var over = $(this).closest('tr').find('input.over_invoice_unit_price').val();
-				$(this).closest('tr').find('input.over_invoice_net_price').val(parseFloat(Math.round(qty*over * 100) / 100).toFixed(2));
+				$(this).closest('tr').find('input.over_invoice_net_price').val(parseFloat(Math.round(qty*over * 100) / 100).toFixed(4));
 			});
 
 			$('#delivery_product_table').on('change keyup paste mouseup','tr .unit_price',function(e){
 				e.preventDefault();
 				var qty = $(this).closest('tr').find('input.order_quantity').val();
 				var rate = $(this).closest('tr').find('input.unit_price').val();
-				$(this).closest('tr').find('input.net_price').val(parseFloat(Math.round(qty*rate * 100) / 100).toFixed(2));
+				$(this).closest('tr').find('input.net_price').val(parseFloat(Math.round(qty*rate * 100) / 100).toFixed(4));
 			});
 
 			$('#delivery_product_table').on('change keyup paste mouseup','tr .over_invoice_unit_price',function(e){
 				e.preventDefault();
 				var qty = $(this).closest('tr').find('input.order_quantity').val();
 				var over = $(this).closest('tr').find('input.over_invoice_unit_price').val();
-				$(this).closest('tr').find('input.over_invoice_net_price').val(parseFloat(Math.round(qty*over * 100) / 100).toFixed(2));
+				$(this).closest('tr').find('input.over_invoice_net_price').val(parseFloat(Math.round(qty*over * 100) / 100).toFixed(4));
 			});
 			
 
@@ -95,6 +95,7 @@
 							$('#btn_product_submit span').addClass('icon-spinner icon-spin icon-large');
 						
 							var ar = {};
+							ar['delivery_pi_no']            = $('#delivery_pi_no').val();
 							ar['delivery_date']             = $('#delivery_date').val();
 							ar['delivery_pi_name']          = $('#delivery_pi_name').val();
 							ar['delivery_po_no']            = $('#delivery_po_no').val();
@@ -141,8 +142,13 @@
 								data : JSON.stringify(ar),
 								contentType : 'application/json',
 								type : 'POST',
-								success: function (data) {                           
-									window.location = base_url + "factory/editdelivery/" + data;
+								success: function (data) {
+									if(data == '') {      
+										window.location = base_url + "newdelivery";
+									}
+									else {
+										window.location = base_url + "factory/editdelivery/" + data;
+									}
 								}
 							});
 
