@@ -271,9 +271,14 @@
 											                    </div>
 											                    </div>
                                                                 <label for="delivery_hs_code" class="req double-input">H.S. Code</label>
-																<input id="delivery_hs_code" name="delivery_hs_code" class="form-control" type="text" value="<?php echo $del['hs_code']; ?>">
-                                                                                                                        
+																<input id="delivery_hs_code" name="delivery_hs_code" class="form-control" type="text" value="<?php echo $del['hs_code']; ?>">                                                         
 										                    </div>
+														</div>
+													</div>
+													<div class="form_sep">														
+														<div class="col-sm-4">
+															<label for="delivery_remarks">Extras / Remarks</label>
+															<textarea id="delivery_remarks" name="delivery_remarks" class="form-control double-text" type="text"><?php echo $del['delivery_remarks']; ?></textarea>
 														</div>
 													</div>
 												</div>	

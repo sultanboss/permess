@@ -261,6 +261,7 @@ class Inventory extends CI_Controller
 				'delivery_style'            => $this->input->post('delivery_style'),
 				'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
 				'delivery_commission'       => $this->input->post('delivery_commission'),
+				'delivery_remarks'       	=> $this->input->post('delivery_remarks'),
                 'hs_code'					=> $this->input->post('delivery_hs_code'),
 				'editor_id' 				=> $this->session->userdata('user_id')				
 			);
@@ -396,8 +397,9 @@ class Inventory extends CI_Controller
 						'delivery_style'            => $this->input->post('delivery_style'),
 						'delivery_revised'          => $this->input->post('delivery_revised'),
 						'delivery_commission_status'=> $this->input->post('delivery_commission_status'),
-						'delivery_commission'       => $this->input->post('delivery_commission'),
-                                                'hs_code'=>$this->input->post('delivery_hs_code'),
+						'delivery_commission'       => $this->input->post('delivery_commission'),		
+						'delivery_remarks'       	=> $this->input->post('delivery_remarks'),
+                        'hs_code'					=> $this->input->post('delivery_hs_code'),
 						'editor_id' 				=> $this->session->userdata('user_id')
 					);
 				}

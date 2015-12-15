@@ -119,8 +119,9 @@
 							ar['delivery_style']            = $('#delivery_style').val();
 							ar['delivery_commission_status']= $('#delivery_commission_status').val();
 							ar['delivery_commission']       = $('#delivery_commission').val();
+							ar['delivery_remarks']       	= $('#delivery_remarks').val();
 							ar['editor_id']                 = $('#editor_id').val();
-                                                        ar['delivery_hs_code']                 = $('#delivery_hs_code').val();
+                            ar['delivery_hs_code']          = $('#delivery_hs_code').val();
 
 							var i = 0;
 							$('#delivery_product_table > tbody > tr').each(function() {  
@@ -207,6 +208,7 @@
 							ar['delivery_revised']          = $('#delivery_revised').val();						
 							ar['delivery_commission_status']= $('#delivery_commission_status').val();
 							ar['delivery_commission']       = $('#delivery_commission').val();
+							ar['delivery_remarks']       	= $('#delivery_remarks').val();
 							ar['editor_id']                 = $('#editor_id').val();
                                                         ar['delivery_hs_code']                 = $('#delivery_hs_code').val();
 							var i = 0;
