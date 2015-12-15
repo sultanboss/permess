@@ -792,4 +792,15 @@ class Inventory extends CI_Controller
 		}
 	}
 
+	function getArticleAddressPrice($address_id = null, $article_id = null)
+	{
+		if($article_id != null && $address_id != null) {
+			$article_id = urldecode($article_id);
+			$article = explode('-', $article_id);
+			$this->tank_auth->check_login();
+			$res = $this->inventory_model->get_article_address_price($address_id, $article[0]);	
+			echo $res;
+		}
+	}
+
 }

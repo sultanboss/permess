@@ -88,7 +88,7 @@
 															<?php
 															foreach ($companies as $key => $value) {							
 															?>
-																<option value="<?php echo $value['company_name']; ?>"><?php echo $value['company_name']; ?></option>
+																<option data-id="<?php echo $value['address_id']; ?>" value="<?php echo $value['company_name']; ?>"><?php echo $value['company_name']; ?></option>
 															<?php						
 															}																	
 															?>				
@@ -246,16 +246,16 @@
 																			<input name="delivery_quantity" class="delivery_quantity form-control" type="text" placeholder="0" data-required="true">
 														</td>
 														<td>
-																			<input name="unit_price" class="unit_price form-control" type="text" placeholder="0.00" data-required="true">
+																			<input name="unit_price" class="unit_price form-control" type="text" placeholder="0.0000" data-required="true">
 														</td>
 														<td>
-																			<input name="net_price" class="net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="net_price" class="net_price form-control" type="text" placeholder="0.0000" disabled="true" data-required="true">
 														</td>
 														<td>
-																			<input name="over_invoice_unit_price" class="over_invoice_unit_price form-control" type="text" placeholder="0.00" data-required="true">
+																			<input name="over_invoice_unit_price" class="over_invoice_unit_price form-control" type="text" placeholder="0.0000" data-required="true">
 														</td>
 														<td>
-																			<input name="over_invoice_net_price" class="over_invoice_net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="over_invoice_net_price" class="over_invoice_net_price form-control" type="text" placeholder="0.0000" disabled="true" data-required="true">
 														</td>
 														<td>
 																			<button class="eq_add_product_form_remove btn btn-danger btn-sm"><span class="icon-remove"></span></button>

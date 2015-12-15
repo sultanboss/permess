@@ -387,7 +387,8 @@ class Inventory_model extends CI_Model {
 
 	function get_companies()
 	{
-		$this->db->select('company_name');
+		$this->db->select('address_id, company_name');
+		$this->db->order_by('company_name');
 		$query = $this->db->get('address');
 		return $query->result_array();
 	}
@@ -407,6 +408,21 @@ class Inventory_model extends CI_Model {
 		$this->db->limit(1);
 		$q = $this->db->get();
 		return $q->result_array();
+	}
+
+	function get_article_address_price($address_id, $article_id) 
+	{
+		$this->db->select('price');
+		$this->db->from('address_price');
+		$this->db->where('address_id', $address_id);
+		$this->db->where('article_id', $article_id);
+		$this->db->limit(1);
+		$q = $this->db->get();
+		foreach ($q->result_array() as $key => $value) {				
+			return $value['price'];
+		}
+
+		return '0.0000';		
 	}
 
 }

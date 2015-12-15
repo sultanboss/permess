@@ -306,6 +306,39 @@
                 });
             }
 
+            if($('#address_pricetable').length) {
+                $('#address_pricetable').dataTable({
+                    "sPaginationType": "bootstrap_full",
+                    "bSort": true,
+                    "iDisplayLength": 25,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": base_url + "addressprice/data",
+                    "sServerMethod": "POST",
+                    "sDom": "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
+                    "fnInitComplete": function(oSettings, json) {
+                        $('.ColVis_Button').addClass('btn btn-info btn-sm').html('Columns <span class="icon-caret-down"></span>');
+                        
+                        $('#address_pricetable').delegate('.simple_edit', 'click', function() {
+                            $("#edit_address_id").val($(this).attr('data-address'));
+                            $("#edit_article_id").val($(this).attr('data-article'));
+                            $("#edit_price").val($(this).attr('data-price'));
+                            $("#edit_address_price_id").val($(this).attr('data-id'));
+                        });
+
+                        $('#address_pricetable').delegate('.bootbox_confirm', 'click', function(e) {
+                            e.preventDefault();
+                            var link = $(this).attr("href");     
+                            bootbox.confirm("<span class='icon-question icon-4x dil-icon'></span>Are you sure you want to delete this item?", function(result) {
+                                if(result == true) {
+                                    location.href = link;
+                                }
+                            }); 
+                        });
+                    }
+                });
+            }
+
             if($('#issue_table').length) {
                 $('#issue_table').dataTable({
                     "sPaginationType": "bootstrap_full",

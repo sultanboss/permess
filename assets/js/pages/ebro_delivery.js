@@ -10,6 +10,7 @@
 			$('#btn_product_add').on('click', function(e){
 				e.preventDefault();
 				$('#delivery_product_table > tbody').append('<tr>' + $('#eq_add_product_form tr').html() + '</tr>');
+
 			});
 
 			$('#delivery_product_table').on('click','tr .eq_add_product_form_remove',function(e){
@@ -271,6 +272,23 @@
 				}
 				else {
 					$(this).val(prev_val);
+				}
+			});
+
+			$('#delivery_product_table > tbody').on('change', '.article_id', function () {
+				var elmx = $(this);			
+				$(this).blur();
+				var address_id_val = $('#delivery_company_name').find('option:selected'); 
+        		address_id_val = address_id_val.attr("data-id"); 
+
+				if(this.value != "" && address_id_val != "") {
+					$.ajax({
+						url: base_url + 'inventory/getArticleAddressPrice/' + address_id_val + '/' + this.value,
+						success: function (data) {	
+							elmx.closest('tr').find('td:eq(8)').find('input').val(data);
+							elmx.closest('tr').find('td:eq(8)').find('input').trigger("change");
+						}
+					});
 				}
 			});
 

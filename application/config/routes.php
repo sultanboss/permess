@@ -67,6 +67,7 @@ $route['settings/products/source'] 				= 'source';
 $route['settings/products/description'] 		= 'description';
 
 $route['settings/address'] 						= 'address';
+$route['settings/addressprice'] 				= 'addressprice';
 $route['settings/price'] 						= 'price';
 $route['settings/issuetype'] 					= 'issue';
 

@@ -209,7 +209,7 @@
 																	$cselected = "";
 																}				
 															?>
-																<option value="<?php echo $value['company_name']; ?>" <?php echo $cselected; ?>><?php echo $value['company_name']; ?></option>
+																<option data-id="<?php echo $value['address_id']; ?>" value="<?php echo $value['company_name']; ?>" <?php echo $cselected; ?>><?php echo $value['company_name']; ?></option>
 															<?php						
 															}																	
 															?>				
@@ -426,16 +426,16 @@
 																			<input name="delivery_quantity" value="<?php echo $dp['delivery_quantity']; ?>" class="delivery_quantity form-control" type="text" placeholder="0" data-required="true">
 														</td>
 														<td>
-																			<input name="unit_price" value="<?php echo $dp['unit_price']; ?>" class="unit_price form-control" type="text" placeholder="0.00" data-required="true">
+																			<input name="unit_price" value="<?php echo $dp['unit_price']; ?>" class="unit_price form-control" type="text" placeholder="0.0000" data-required="true">
 														</td>
 														<td>
-																			<input name="net_price" value="<?php echo number_format((float)$dp['unit_price'] * $dp['order_quantity'], 4, '.', ''); ?>" class="net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="net_price" value="<?php echo number_format((float)$dp['unit_price'] * $dp['order_quantity'], 4, '.', ''); ?>" class="net_price form-control" type="text" placeholder="0.0000" disabled="true" data-required="true">
 														</td>
 														<td>
-																			<input name="over_invoice_unit_price" value="<?php echo $dp['over_invoice_unit_price']; ?>" class="over_invoice_unit_price form-control" type="text" placeholder="0.00" data-required="true">
+																			<input name="over_invoice_unit_price" value="<?php echo $dp['over_invoice_unit_price']; ?>" class="over_invoice_unit_price form-control" type="text" placeholder="0.0000" data-required="true">
 														</td>
 														<td>
-																			<input name="over_invoice_net_price" value="<?php echo number_format((float)$dp['over_invoice_unit_price'] * $dp['order_quantity'], 4, '.', ''); ?>" class="over_invoice_net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="over_invoice_net_price" value="<?php echo number_format((float)$dp['over_invoice_unit_price'] * $dp['order_quantity'], 4, '.', ''); ?>" class="over_invoice_net_price form-control" type="text" placeholder="0.0000" disabled="true" data-required="true">
 														</td>
 														<?php
 														if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
@@ -543,16 +543,16 @@
 																			<input name="delivery_quantity" class="delivery_quantity form-control" type="text" placeholder="0" data-required="true">
 														</td>
 														<td>
-																			<input name="unit_price" class="unit_price form-control" type="text" placeholder="0.00" data-required="true">
+																			<input name="unit_price" class="unit_price form-control" type="text" placeholder="0.0000" data-required="true">
 														</td>
 														<td>
-																			<input name="net_price" class="net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="net_price" class="net_price form-control" type="text" placeholder="0.0000" disabled="true" data-required="true">
 														</td>
 														<td>
-																			<input name="over_invoice_unit_price" class="over_invoice_unit_price form-control" type="text" placeholder="0.00" data-required="true">
+																			<input name="over_invoice_unit_price" class="over_invoice_unit_price form-control" type="text" placeholder="0.0000" data-required="true">
 														</td>
 														<td>
-																			<input name="over_invoice_net_price" class="over_invoice_net_price form-control" type="text" placeholder="0.00" disabled="true" data-required="true">
+																			<input name="over_invoice_net_price" class="over_invoice_net_price form-control" type="text" placeholder="0.0000" disabled="true" data-required="true">
 														</td>
 														<td>
 																			<button class="eq_add_product_form_remove btn btn-danger btn-sm"><span class="icon-remove"></span></button>
