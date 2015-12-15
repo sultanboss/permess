@@ -109,7 +109,7 @@
 								<div class="panel panel-default">
 									<div class="panel_controls" style="border-bottom: none;">
 										<div class="print">											
-											<h4 class="heading_a text-center underline"><strong>Proforma Invoice</strong><?php if($delivery[0]['delivery_revised'] == 1) { echo "- <b>Revised</b>"; } ?></h4>
+											<h4 class="heading_a text-center underline"><strong>Proforma Invoice</strong></h4>
 											<div class="row">											
 												<div class="col-sm-4">
 													<p>To</p>
@@ -125,10 +125,14 @@
 												</div>
 												<div class="col-sm-3">&nbsp;</div>
 												<div class="col-sm-5">
+													<?php if($delivery[0]['delivery_revised'] == 1) { 
+														echo "<p><b>Revised.</b></p>"; 
+													} ?>
 													<p><b>P/I #</b> PSEAL/<?php	if($delivery[0]['delivery_pi_name'] != '') { echo $delivery[0]['delivery_pi_name'].'/'; } ?><?php echo $delivery[0]['delivery_id'];?>/<?php echo date('Y');?></p>
 													<p><b>Date:</b> <?php echo $delivery[0]['delivery_date'];?></p>
 													<p><b>Contact Person:</b> <?php echo $delivery[0]['delivery_contact_person'];?></p>
 													<p><b>Buyer</b> - <?php echo $delivery[0]['delivery_buyer'];?></p>
+													<p><b>P/O Number</b> # <?php echo $delivery[0]['delivery_po_no'];?></p>
 													<p><b>By:</b> <?php echo $delivery_user;?></p>
 													<p><b>Payment</b> - 
 													<?php 
@@ -138,7 +142,10 @@
 														echo "Cash/Cheque/TT Payment";
 													?>
 												</div>
-												<div class="clear text-center"><p>Style:- <?php echo $delivery[0]['delivery_style'];?></p></div>
+												<div class="col-sm-12">
+													<p>Style:- <?php echo $delivery[0]['delivery_style'];?></p>
+													<p>Remarks:- <?php echo $delivery[0]['delivery_remarks'];?></p>
+												</div>
 												<div class="col-sm-12">
 													<table class="table table-bordered table-print">
 														<thead>
