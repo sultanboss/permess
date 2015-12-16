@@ -17,6 +17,7 @@
 									<table id="expissues_table" class="table table-hover table-striped">
 										<thead>
 											<tr>
+												<th width="10%">File. No.</th>
 												<th width="10%">Exp. No.</th>
 												<th width="15%">Exp. Issue Date</th>
 												<th width="20%">Company Name</th>												

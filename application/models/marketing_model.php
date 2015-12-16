@@ -265,7 +265,7 @@ class Marketing_model extends CI_Model {
 
     function get_expissues_data() 
     {
-        $this->datatables->select('export_id, issue_date, party_name, editor_id');   
+        $this->datatables->select('file_no, exp_no, issue_date, party_name, editor_id, export_id');   
         $this->datatables->from('export');   
 
         $this->datatables->edit_column('editor_id', '<a title="edit" href="'.base_url().'commercial/editexpissues/$1"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a title="delete" class="bootbox_confirm" href="'.base_url().'commercial/deleteexpissues/$1"><span class="icon-trash"></span></a>', 'export_id');

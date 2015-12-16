@@ -10,12 +10,10 @@
 
             setdate('lc_date');  
             setdate('ship_date');
-            setdate('lc_rdate');
             setdate('exp_date');
             setdate('bank_submit_date');
             setdate('submit_party_date');
             setdate('submit_party_rdate');
-            setdate('acc_date');
             setdate('purchase_date');
             setdate('due_date');
             setdate('due_rdate');  

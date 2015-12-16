@@ -116,28 +116,23 @@
 										                    </div>	
 														</div>																
 														<div class="col-sm-2">
-															<div id="lc_rdate_value" class="hide"><?php echo $del['lc_rdate']; ?></div>
-															<label for="lc_rdate" class="unreq">LC Receive Date</label>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="lc_rdate" name="lc_rdate" class="form-control" type="text">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>	
 															<div id="exp_date_value" class="hide"><?php echo $del['exp_date']; ?></div>
-															<label for="exp_date" class="double-input-unreq">Export Date</label>
+															<label for="exp_date" class="unreq">Expired Date</label>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 										                        <input id="exp_date" name="exp_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>	
+															<label for="tenor" class="double-input-unreq">Tenor</label>
+															<select id="tenor" name="tenor" class="form-control">
+															<?php 
+																$this->tank_auth->load_select_options(array('60 days', '90 days', '120 days', '160 days'), $del['tenor']);
+															?>						
+															</select>	
 														</div>
-
-
 														<div class="col-sm-2">
 															<label for="realise_value" class="unreq">Realise Value</label>
 															<input id="realise_value" name="realise_value" class="form-control" value="<?=$del['realise_value'];?>" type="text" >
 														</div>
-
-
-
 														<div class="col-sm-2 right">
 															<label for="lc_status" class="req">LC Status</label>
 															<select id="lc_status" name="lc_status" class="form-control">
@@ -172,7 +167,7 @@
 										                </div>
 														<div class="col-sm-2">
 															<div id="submit_party_date_value" class="hide"><?php echo $del['submit_party_date']; ?></div>
-															<label for="submit_party_date" class="unreq">Submit Party Date</label>
+															<label for="submit_party_date" class="unreq">Submit Document (Party)</label>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 										                        <input id="submit_party_date" name="submit_party_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
@@ -182,17 +177,17 @@
 														</div>													
 														<div class="col-sm-2">
 															<div id="submit_party_rdate_value" class="hide"><?php echo $del['submit_party_rdate']; ?></div>
-															<label for="submit_party_date" class="unreq">Submit Party Receive Date</label>
+															<label for="submit_party_date" class="unreq">Receive Document (Party)</label>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 										                        <input id="submit_party_rdate" name="submit_party_rdate" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>	
-										                    <div id="acc_date_value" class="hide"><?php echo $del['acc_date']; ?></div>
-															<label for="acc_date" class="double-input-unreq">Acc. Date</label>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="acc_date" name="acc_date" class="form-control" type="text">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>	
+															<label for="payment_clause" class="double-input-unreq">Payment Clause</label>
+															<select id="payment_clause" name="payment_clause" class="form-control">
+															<?php 
+																$this->tank_auth->load_select_options(array('USD', 'BDT', 'Others'), $del['payment_clause']);
+															?>						
+															</select>	
 										                </div>
 														<div class="col-sm-2 right">															
 														</div>
@@ -212,7 +207,7 @@
 														</div>
 														<div class="col-sm-2">
 															<div id="due_date_value" class="hide"><?php echo $del['due_date']; ?></div>
-															<label for="due_date" class="unreq">Due Date</label>
+															<label for="due_date" class="unreq">Realize Date</label>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 										                        <input id="due_date" name="due_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
