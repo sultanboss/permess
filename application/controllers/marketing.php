@@ -466,8 +466,10 @@ class Marketing extends CI_Controller
 			redirect('');
 		}
 
-		if ( isset($_POST['issue_date']) ) {
+		if ( isset($_POST['file_no']) ) {
 			$data['data'] = array(
+				'file_no'						=> $this->input->post('file_no'),
+				'exp_no'						=> $this->input->post('exp_no'),
 				'issue_date'					=> $this->input->post('issue_date'),
 				'send_date'						=> $this->input->post('send_date'),
 				'receive_date'					=> $this->input->post('receive_date'),
@@ -476,11 +478,11 @@ class Marketing extends CI_Controller
 				'party_name'					=> $this->input->post('party_name'),
 				'region'						=> $this->input->post('region'),
 				'value'							=> $this->input->post('value'),
-				'status'						=> $this->input->post('status'),
+				'realize_date'					=> $this->input->post('realize_date'),
 				'bank_submit_date'				=> $this->input->post('exp_bank_submit_date'),
 				'due_date'						=> $this->input->post('exp_due_date'),
 				'payment_collection_date'		=> $this->input->post('payment_collection_date'),
-				'charge'						=> $this->input->post('charte'),
+				'lc_sale_contact'				=> $this->input->post('lc_sale_contact'),
 				'remarks'						=> $this->input->post('remarks'),
 				'editor_id' 					=> $this->session->userdata('user_id')
 			);
@@ -572,6 +574,8 @@ class Marketing extends CI_Controller
 
 		if ( isset($_POST['export_id']) ) {
 			$data['data'] = array(
+				'file_no'						=> $this->input->post('file_no'),
+				'exp_no'						=> $this->input->post('exp_no'),
 				'issue_date'					=> $this->input->post('issue_date'),
 				'send_date'						=> $this->input->post('send_date'),
 				'receive_date'					=> $this->input->post('receive_date'),
@@ -580,11 +584,11 @@ class Marketing extends CI_Controller
 				'party_name'					=> $this->input->post('party_name'),
 				'region'						=> $this->input->post('region'),
 				'value'							=> $this->input->post('value'),
-				'status'						=> $this->input->post('status'),
+				'realize_date'					=> $this->input->post('realize_date'),
 				'bank_submit_date'				=> $this->input->post('exp_bank_submit_date'),
 				'due_date'						=> $this->input->post('exp_due_date'),
 				'payment_collection_date'		=> $this->input->post('payment_collection_date'),
-				'charge'						=> $this->input->post('charte'),
+				'lc_sale_contact'				=> $this->input->post('lc_sale_contact'),
 				'remarks'						=> $this->input->post('remarks'),
 				'editor_id' 					=> $this->session->userdata('user_id')
 			);

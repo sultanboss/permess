@@ -22,13 +22,23 @@
 												<div class="col-sm-12">	
 													<div class="form_sep">
 														<div class="col-sm-2">
-															<label for="export_id" class="req">Export No.</label>
 															<input type="hidden" name="export_id" id="export_id" value="<?php echo $value['export_id'] ?>">
-															<input id="export_id_old" name="export_id_old" class="form-control" type="text" disabled="true" data-required="true" value="<?php echo $value['export_id'] ?>">
-															<label for="ip_date" class="double-input-unreq">IP Date</label>
+															<label for="file_no" class="req">File No.</label>
+															<input id="file_no" name="file_no" class="form-control" type="text" value="<?php echo $value['file_no']; ?>" data-required="true">
+															<label for="ip_date_value" class="double-input-unreq">IP Date</label>
 															<div id="ip_date_value" class="hide"><?php echo $value['ip_date']; ?></div>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 										                        <input id="ip_date" name="ip_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>	
+														</div>
+														<div class="col-sm-2">
+															<label for="exp_no" class="unreq">Exp. No.</label>
+															<input id="exp_no" name="exp_no" class="form-control" type="text" value="<?php echo $value['exp_no']; ?>">
+										                    <label for="up_date" class="double-input-unreq">Up Date</label>
+															<div id="up_date_value" class="hide"><?php echo $value['up_date']; ?></div>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="up_date" name="up_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>	
 														</div>
@@ -39,28 +49,14 @@
 										                        <input id="issue_date" name="issue_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>	
-										                    <label for="up_date" class="double-input-unreq">Up Date</label>
-															<div id="up_date_value" class="hide"><?php echo $value['up_date']; ?></div>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="up_date" name="up_date" class="form-control" type="text">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>	
-														</div>
+										                    <label for="party_name" class="double-input-unreq">Party Name</label>
+															<input id="party_name" name="party_name" class="form-control" type="text" value="<?php echo $value['party_name'] ?>">
+														</div>																
 														<div class="col-sm-2">
 															<label for="send_date" class="unreq">Exp. Send Date</label>
 															<div id="send_date_value" class="hide"><?php echo $value['send_date']; ?></div>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 										                        <input id="send_date" name="send_date" class="form-control" type="text">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>	
-										                    <label for="party_name" class="double-input-unreq">Party Name</label>
-															<input id="party_name" name="party_name" class="form-control" type="text" value="<?php echo $value['party_name'] ?>">
-														</div>																
-														<div class="col-sm-2">
-															<label for="receive_date" class="unreq">Exp. Receive Date</label>
-															<div id="receive_date_value" class="hide"><?php echo $value['receive_date']; ?></div>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="receive_date" name="receive_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>
 															<label for="region" class="double-input-unreq">Region</label>
@@ -70,8 +66,14 @@
 															?>								
 															</select>
 														</div>
-														<div class="col-sm-2">
-															<label for="value" class="unreq">Value</label>
+														<div class="col-sm-2">	
+															<label for="receive_date" class="unreq">Exp. Receive Date</label>
+															<div id="receive_date_value" class="hide"><?php echo $value['receive_date']; ?></div>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="receive_date" name="receive_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>
+															<label for="value" class="double-input-unreq">Value</label>
 															<input id="value" name="value" class="form-control" type="text" value="<?php echo $value['value'] ?>">
 														</div>
 														<div class="col-sm-2 right">
@@ -105,20 +107,16 @@
 										                    </div>
 														</div>													
 														<div class="col-sm-2">
-															<label for="status" class="unreq">Used / Unused</label>
-															<select id="status" name="status" class="form-control" data-required="true">
-															<?php 
-																$this->tank_auth->load_select_options(array('Used', 'Unused'), $value['status']);
-															?>						
-															</select>
+															<label for="realize_date" class="unreq">Realize Date</label>
+															<div id="realize_date_value" class="hide"><?php echo $value['realize_date']; ?></div>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="realize_date" name="realize_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>
 										                </div>
-														<div class="col-sm-2 right">														
-															<label for="charge" class="unreq">Disc / Any Charge</label>
-															<select id="charge" name="charge" class="form-control" data-required="true">
-															<?php 
-																$this->tank_auth->load_select_options(array('Dollar', 'Taka'), $value['charge']);
-															?>						
-															</select>
+														<div class="col-sm-2">														
+															<label for="lc_sale_contact" class="unreq">LC / Sales Contact No.</label>
+															<input id="lc_sale_contact" name="lc_sale_contact" class="form-control" type="text" value="<?php echo $value['lc_sale_contact']; ?>">
 														</div>
 													</div>
 													<div class="form_sep">

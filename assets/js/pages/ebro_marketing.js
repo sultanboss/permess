@@ -20,19 +20,9 @@
             setdate('due_date');
             setdate('due_rdate');  
 
-            var lcval = $('#advance_delivery').find(':selected')[0].value;
-            if(lcval == '1') {
-                $('#advance_details_box').show(200);
-                $("#advance_delivery_details").attr("data-required","true");
-            }
-            else {
-                $('#advance_details_box').hide(200);
-                $("#advance_delivery_details").removeAttr("data-required");
-            }
-
-            $('#advance_delivery').change(function(){
-                var value = $(this).find(':selected')[0].value;
-                if(value == '1') {
+            if($('#advance_delivery').length) {
+                var lcval = $('#advance_delivery').find(':selected')[0].value;
+                if(lcval == '1') {
                     $('#advance_details_box').show(200);
                     $("#advance_delivery_details").attr("data-required","true");
                 }
@@ -40,7 +30,19 @@
                     $('#advance_details_box').hide(200);
                     $("#advance_delivery_details").removeAttr("data-required");
                 }
-            });
+
+                $('#advance_delivery').change(function(){
+                    var value = $(this).find(':selected')[0].value;
+                    if(value == '1') {
+                        $('#advance_details_box').show(200);
+                        $("#advance_delivery_details").attr("data-required","true");
+                    }
+                    else {
+                        $('#advance_details_box').hide(200);
+                        $("#advance_delivery_details").removeAttr("data-required");
+                    }
+                });
+            }
         },
 
         exportissues: function() {   
@@ -53,6 +55,7 @@
             setdate('exp_bank_submit_date');
             setdate('exp_due_date');
             setdate('payment_collection_date');
+            setdate('realize_date');
         }
     }
 

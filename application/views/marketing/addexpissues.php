@@ -15,11 +15,20 @@
 												<div class="col-sm-12">	
 													<div class="form_sep">
 														<div class="col-sm-2">
-															<label for="export_id" class="req">Export No.</label>
-															<input id="export_id" name="export_id" class="form-control" type="text" value="auto" disabled="true" data-required="true">
+															<label for="file_no" class="req">File No.</label>
+															<input id="file_no" name="file_no" class="form-control" type="text" value="" data-required="true">
 															<label for="ip_date" class="double-input-unreq">IP Date</label>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
 										                        <input id="ip_date" name="ip_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>	
+														</div>
+														<div class="col-sm-2">	
+															<label for="exp_no" class="unreq">Exp. No.</label>
+															<input id="exp_no" name="exp_no" class="form-control" type="text" value="">
+										                    <label for="up_date" class="double-input-unreq">Up Date</label>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="up_date" name="up_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>	
 														</div>
@@ -29,25 +38,13 @@
 										                        <input id="issue_date" name="issue_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>	
-										                    <label for="up_date" class="double-input-unreq">Up Date</label>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="up_date" name="up_date" class="form-control" type="text">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>	
-														</div>
-														<div class="col-sm-2">
-															<label for="send_date" class="unreq">Exp. Send Date</label>
-															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="send_date" name="send_date" class="form-control" type="text">
-																<span class="input-group-addon"><i class="icon-calendar"></i></span>
-										                    </div>	
 										                    <label for="party_name" class="double-input-unreq">Party Name</label>
 															<input id="party_name" name="party_name" class="form-control" type="text">
 														</div>																
 														<div class="col-sm-2">
-															<label for="receive_date" class="unreq">Exp. Receive Date</label>
+															<label for="send_date" class="unreq">Exp. Send Date</label>
 															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
-										                        <input id="receive_date" name="receive_date" class="form-control" type="text">
+										                        <input id="send_date" name="send_date" class="form-control" type="text">
 																<span class="input-group-addon"><i class="icon-calendar"></i></span>
 										                    </div>
 															<label for="region" class="double-input-unreq">Region</label>
@@ -58,7 +55,12 @@
 															</select>
 														</div>
 														<div class="col-sm-2">
-															<label for="value" class="unreq">Value</label>
+															<label for="receive_date" class="unreq">Exp. Receive Date</label>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="receive_date" name="receive_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>
+															<label for="value" class="double-input-unreq">Value</label>
 															<input id="value" name="value" class="form-control" type="text">
 														</div>
 														<div class="col-sm-2 right">
@@ -89,20 +91,15 @@
 										                    </div>
 														</div>													
 														<div class="col-sm-2">
-															<label for="status" class="unreq">Used / Unused</label>
-															<select id="status" name="status" class="form-control" data-required="true">
-															<?php 
-																$this->tank_auth->load_select_options(array('Used', 'Unused'), '');
-															?>						
-															</select>
+															<label for="realize_date" class="unreq">Realize Date</label>
+															<div class="input-group date ebro_datepicker" data-date-format="yyyy-mm-dd" data-date-autoclose="true">
+										                        <input id="realize_date" name="realize_date" class="form-control" type="text">
+																<span class="input-group-addon"><i class="icon-calendar"></i></span>
+										                    </div>
 										                </div>
-														<div class="col-sm-2 right">														
-															<label for="charge" class="unreq">Disc / Any Charge</label>
-															<select id="charge" name="charge" class="form-control" data-required="true">
-															<?php 
-																$this->tank_auth->load_select_options(array('Dollar', 'Taka'), '');
-															?>						
-															</select>
+														<div class="col-sm-2">														
+															<label for="lc_sale_contact" class="unreq">LC / Sales Contact No.</label>
+															<input id="lc_sale_contact" name="lc_sale_contact" class="form-control" type="text" value="">
 														</div>
 													</div>
 													<div class="form_sep">

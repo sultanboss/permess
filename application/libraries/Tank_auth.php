@@ -756,7 +756,7 @@ class Tank_auth
 	function load_division_select_options($val)
 	{
 		$i = 0;
-		$ar = array('Dhaka', 'Chittagong');
+		$ar = array('KONEPZ', 'CTGEPZ', 'DHKEPZ', 'COMEPZ', 'ADMEPZ');
 		foreach ($ar as $key => $value) {
 			if($i == $val)
 				echo '<option value="'.$i.'" selected>'.$value.'</option>';
@@ -769,7 +769,7 @@ class Tank_auth
 	function load_division_name($val)
 	{
 		$i = 0;
-		$ar = array('Dhaka', 'Chittagong');
+		$ar = array('KONEPZ', 'CTGEPZ', 'DHKEPZ', 'COMEPZ', 'ADMEPZ');
 		foreach ($ar as $key => $value) {
 			if($i == $val) {
 				echo $value;
