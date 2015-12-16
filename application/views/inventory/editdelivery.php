@@ -297,13 +297,19 @@
 															<th width="">Width</th>
 															<th width="">Softness</th>
 															<th width="">Color</th>
-                                                                                                                        <th width="">Type</th>
+                                                            <th width="">Type</th>
 															<th width="8%">Order Quantity</th>									
-															<th width="8%">Delivery Quantity</th>		
+															<th width="8%">Delivery Quantity</th>
+															<?php
+															if(!$this->tank_auth->is_group_member('Factory')) {
+															?>		
 															<th width="8%">Unit Price</th>										
 															<th width="8%">Net Price</th>			
 															<th width="8%">Over Invoice</th>									
-															<th width="8%">Net Over Invoice</th>								
+															<th width="8%">Net Over Invoice</th>	
+															<?php
+															}
+															?>							
 														</tr>
 													</thead>
 													<tbody>	
@@ -425,6 +431,9 @@
 														<td>
 																			<input name="delivery_quantity" value="<?php echo $dp['delivery_quantity']; ?>" class="delivery_quantity form-control" type="text" placeholder="0" data-required="true">
 														</td>
+														<?php
+														if(!$this->tank_auth->is_group_member('Factory')) {
+														?>
 														<td>
 																			<input name="unit_price" value="<?php echo $dp['unit_price']; ?>" class="unit_price form-control" type="text" placeholder="0.0000" data-required="true">
 														</td>
@@ -438,6 +447,7 @@
 																			<input name="over_invoice_net_price" value="<?php echo number_format((float)$dp['over_invoice_unit_price'] * $dp['order_quantity'], 4, '.', ''); ?>" class="over_invoice_net_price form-control" type="text" placeholder="0.0000" disabled="true" data-required="true">
 														</td>
 														<?php
+														}
 														if($this->tank_auth->is_admin() || $this->tank_auth->is_group_member('Super Users')) 
 		            									{
 		            									?>

@@ -232,6 +232,21 @@ class Inventory_model extends CI_Model {
 		return false;
 	}
 
+	function check_delivery_product_factory($id)
+	{
+		$this->db->where('delivery_product_id',$id);
+
+		$query = $this->db->get('delivery_product');
+
+		if ($query->num_rows() > 0){
+			foreach ($query->result() as $row) {
+			    return $row->delivery_quantity;
+			}
+		}
+
+		return false;
+	}
+
 	function remove_single_delivery_product($id) 
 	{
 		$this->db->where('delivery_product_id',$id);
@@ -247,21 +262,27 @@ class Inventory_model extends CI_Model {
 		if($query->num_rows() > 0) {
 			$res = $query->result_array();
 
-			$add = false;
-			foreach ($res as $key => $value) {
-				if($value['delivery_quantity'] > 0) {
-					$add = true;
-				}
-
-				$res[$key]['delivery_quantity'] = (int)$value['delivery_quantity'] - (int)$value['prev_delivery_quantity'];
-			}
+			$add = false;	
 
 			$q = $this->db->get_where('challan', array('delivery_id' => $delivery_id), 1);
 			if($q->num_rows() > 0) {
-				$add = true;
+				foreach ($res as $key => $value) {
+					$res[$key]['delivery_quantity'] = (int)$value['delivery_quantity'] - (int)$value['prev_delivery_quantity'];
+					if($res[$key]['delivery_quantity'] > 0) {
+						$add = true;
+					}					
+				}
+			}
+			else {
+				foreach ($res as $key => $value) {
+					$res[$key]['delivery_quantity'] = (int)$value['delivery_quantity'] - (int)$value['prev_delivery_quantity'];
+					if($res[$key]['delivery_quantity'] > 0) {
+						$add = true;
+					}
+				}
 			}
 
-			if($add == true) {
+			if($add === true) {
 				$challan_data['delivery_id'] 	= $delivery_id;
 				$challan_data['challan_info'] 	= serialize($res);
 				$challan_data['editor_id'] 		= $this->session->userdata('user_id');

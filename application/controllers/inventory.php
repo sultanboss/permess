@@ -421,7 +421,11 @@ class Inventory extends CI_Controller
 								'delivery_quantity'			=> $this->input->post('delivery_quantity_'.$i),
 								'editor_id' 				=> $this->session->userdata('user_id')
 							);
-							$this->inventory_model->update_delivery_product($delivery_product_id, $data['eq_product']);
+
+							$check_product = $this->inventory_model->check_delivery_product_factory($delivery_product_id);
+
+							$data['eq_product']['delivery_quantity'] = $check_product + $data['eq_product']['delivery_quantity'];
+							$this->inventory_model->update_delivery_product($delivery_product_id, $data['eq_product']);						
 						}
 						else
 							$i = 100;
@@ -457,7 +461,7 @@ class Inventory extends CI_Controller
 								'unit_price'				=> $this->input->post('unit_price_'.$i),
 								'over_invoice_unit_price'	=> $this->input->post('over_invoice_unit_price_'.$i),
 								'editor_id' 				=> $this->session->userdata('user_id'),
-                                                                'mtype'=>$this->input->post('mtype_'.$i)
+                                'mtype'						=> $this->input->post('mtype_'.$i)
 							);
 
 							$check_product = $this->inventory_model->check_delivery_product($delivery_product_id, $data['eq_product']);
