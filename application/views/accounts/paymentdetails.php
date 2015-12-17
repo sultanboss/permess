@@ -116,6 +116,12 @@
 										                    </div>	
 															<label for="bill_usd_rate" class="unreq double-input-unreq">USD $1 = ? (BDT)</label>
 															<input id="bill_usd_rate" name="bill_usd_rate" class="form-control" type="text" value="<?php echo $value['bill_usd_rate']; ?>">
+														</div>		
+														<div class="col-sm-2">
+															<label for="bill_received" class="unreq">Total Amount Received</label>
+															<input id="bill_received" name="bill_received" class="form-control" type="text" value="<?php echo $value['bill_received']; ?>">
+															<label for="bill_comission_usd_rate" class="unreq double-input-unreq">Comission USD $1 = ? (BDT)</label>
+															<input id="bill_comission_usd_rate" name="bill_comission_usd_rate" class="form-control" type="text" value="<?php echo $value['bill_comission_usd_rate']; ?>">
 														</div>																
 														<div class="col-sm-2">
 															<label for="bill_challan" class="unreq">Challan Info <small>(With Date)</small></label>
@@ -134,11 +140,7 @@
 																$this->tank_auth->load_select_options(array('Cash', 'Cheque', 'TT'), $value['bill_payment_method']);
 															?>						
 															</select>
-														</div>	
-														<div class="col-sm-2">
-															<label for="bill_received" class="unreq">Total Amount Received</label>
-															<input id="bill_received" name="bill_received" class="form-control" type="text" value="<?php echo $value['bill_received']; ?>">
-														</div>	
+														</div>
 													</div>	
 													<div class="form_sep">
 														<div class="col-sm-2">
@@ -297,6 +299,7 @@
 															$des = '';
 															$wid = '';
 															$ttl = 0;
+															$over_invoice_total = 0;
 															foreach ($delivery_products as $key => $value) {
 															if($des != $value['description_name'] || $wid != $value['width_name']) {
 																$des = $value['description_name'];
@@ -347,6 +350,7 @@
 															</tr>
 															<?php
 																$qty = $qty + $value['order_quantity'];
+																$over_invoice_total = $over_invoice_total + ($value['order_quantity']* $value['over_invoice_unit_price']);
 																$total = $total + ($value['order_quantity']*($value['unit_price']+$value['over_invoice_unit_price']));
 																$x++;
 															}
@@ -365,9 +369,9 @@
 												</div>
 												<div class="col-sm-12">
 													<br>
-													<p><b>Payment will be made by local currency - BDT: 
+													<p><b>Payment will be made by local currency - BDT 
 													<?php 
-														if($payment[0]['bill_usd_rate'] != '0.00') {
+														if($payment[0]['bill_usd_rate'] != '0.0000') {
 															echo number_format((float)($payment[0]['bill_usd_rate']*$total), 4, '.', '');
 														}
 														else
@@ -377,7 +381,7 @@
 													</p>
 													<p>In-Words: <span class="upper">
 													<?php 
-														if($payment[0]['bill_usd_rate'] != '0.00') {
+														if($payment[0]['bill_usd_rate'] != '0.0000') {
 															echo $this->tank_auth->convertNumber(number_format((float)($payment[0]['bill_usd_rate']*$total), 4, '.', ''));
 														}
 														else
@@ -385,9 +389,19 @@
 													?>
 													 TAKA ONLY.</span>
 													</p>
+													<p>Total Commission - BDT 
+													<?php 
+														if($payment[0]['bill_comission_usd_rate'] != '0.0000') {
+															echo number_format((float)($payment[0]['bill_comission_usd_rate']*$over_invoice_total), 4, '.', '');
+														}
+														else
+															echo "-";
+													?>
+													 Taka
+													</p>
 													<p>Note: USD $1 = 
 													<?php 
-														if($payment[0]['bill_usd_rate'] != '0.00') {
+														if($payment[0]['bill_usd_rate'] != '0.0000') {
 															echo $payment[0]['bill_usd_rate'];
 														}
 														else

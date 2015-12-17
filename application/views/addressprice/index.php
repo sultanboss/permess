@@ -21,20 +21,20 @@
 															<form action="<?php echo base_url(); ?>addressprice/add" method="post" id="parsley_addcat">
 															<div class="modal-body">
 																<div class="form_sep">
-																	<label for="address_id" class="req">Company Name</label>
-																	<select id="address_id" name="address_id" class="form-control" data-required="true">
-																		<option value="">Select</option>
-																	<?php
-																	foreach ($companies as $key => $value) {							
-																	?>
-																		<option value="<?php echo $value['address_id']; ?>"><?php echo $value['company_name']; ?></option>
-																	<?php						
-																	}																	
-																	?>				
-													                </select>
-																</div>	
-																<div class="form_sep">
 																	<div class="col-sm-6 start">
+																		<label for="address_id" class="req">Company Name</label>
+																		<select id="address_id" name="address_id" class="form-control" data-required="true">
+																			<option value="">Select</option>
+																		<?php
+																		foreach ($companies as $key => $value) {							
+																		?>
+																			<option value="<?php echo $value['address_id']; ?>"><?php echo $value['company_name']; ?></option>
+																		<?php						
+																		}																	
+																		?>				
+														                </select>
+													                </div>
+																	<div class="col-sm-6 end">
 																		<label for="article_id" class="req">Article Name</label>
 																		<select id="article_id" name="article_id" class="form-control" data-required="true">
 																			<option value="">Select</option>
@@ -47,9 +47,15 @@
 																			?>				
 														                </select>
 																	</div>
-																	<div class="col-sm-6 end">
+																</div>	
+																<div class="form_sep">
+																	<div class="col-sm-6 start">
 																		<label for="price" class="req">Price</label>
 																		<input id="price" name="price" class="form-control parsley-validated" type="text" data-required="true">
+																	</div>
+																	<div class="col-sm-6 end">
+																		<label for="over_invoice" class="req">Over Invoice Price</label>
+																		<input id="over_invoice" name="over_invoice" class="form-control parsley-validated" type="text" data-required="true">
 																	</div>
 																</div>				
 																<div class="form_sep text-right">
@@ -68,8 +74,9 @@
 											<tr>
 												<th width="10%">ID</th>
 												<th width="30%">Company Name</th>
-												<th width="25%">Article Name</th>
-												<th width="25%">Price</th>
+												<th width="20%">Article Name</th>
+												<th width="15%">Price</th>
+												<th width="15%">Over Invoice Price</th>
 												<th width="10%">Change</th>
 											</tr>
 										</thead>
@@ -85,21 +92,21 @@
 												<form action="<?php echo base_url(); ?>addressprice/edit" method="post" id="parsley_editcat">
 												<div class="modal-body">
 													<div class="form_sep">
-														<input id="edit_address_price_id" name="edit_address_price_id" type="hidden" value="">
-														<label for="edit_address_id" class="req">Company Name</label>
-														<select id="edit_address_id" name="edit_address_id" class="form-control" data-required="true">
-															<option value="">Select</option>
-														<?php
-														foreach ($companies as $key => $value) {							
-														?>
-															<option value="<?php echo $value['address_id']; ?>"><?php echo $value['company_name']; ?></option>
-														<?php						
-														}																	
-														?>				
-										                </select>
-													</div>	
-													<div class="form_sep">
 														<div class="col-sm-6 start">
+															<input id="edit_address_price_id" name="edit_address_price_id" type="hidden" value="">
+															<label for="edit_address_id" class="req">Company Name</label>
+															<select id="edit_address_id" name="edit_address_id" class="form-control" data-required="true">
+																<option value="">Select</option>
+															<?php
+															foreach ($companies as $key => $value) {							
+															?>
+																<option value="<?php echo $value['address_id']; ?>"><?php echo $value['company_name']; ?></option>
+															<?php						
+															}																	
+															?>				
+											                </select>
+											            </div>
+										                <div class="col-sm-6 end">
 															<label for="edit_article_id" class="req">Article Name</label>
 															<select id="edit_article_id" name="edit_article_id" class="form-control" data-required="true">
 																<option value="">Select</option>
@@ -112,9 +119,15 @@
 																?>				
 											                </select>
 														</div>
-														<div class="col-sm-6 end">
+													</div>	
+													<div class="form_sep">														
+														<div class="col-sm-6 start">
 															<label for="edit_price" class="unreq">Price</label>
 															<input id="edit_price" name="edit_price" class="form-control parsley-validated" type="text">
+														</div>
+														<div class="col-sm-6 end">
+															<label for="edit_over_invoice" class="unreq">Over Invoice Price</label>
+															<input id="edit_over_invoice" name="edit_over_invoice" class="form-control parsley-validated" type="text">
 														</div>
 													</div>							
 													<div class="form_sep text-right">

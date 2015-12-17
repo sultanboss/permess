@@ -323,6 +323,7 @@
                             $("#edit_address_id").val($(this).attr('data-address'));
                             $("#edit_article_id").val($(this).attr('data-article'));
                             $("#edit_price").val($(this).attr('data-price'));
+                            $("#edit_over_invoice").val($(this).attr('data-over-invoice'));
                             $("#edit_address_price_id").val($(this).attr('data-id'));
                         });
 

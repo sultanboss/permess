@@ -38,13 +38,13 @@ class Address_price_model extends CI_Model {
 
     function get_address_price_data() 
     {
-        $this->datatables->select('address_price_id, ak_address.company_name, ak_article.article_name, price, ak_address_price.editor_id, ak_address_price.address_id, ak_address_price.article_id');   
+        $this->datatables->select('address_price_id, ak_address.company_name, ak_article.article_name, price, over_invoice, ak_address_price.editor_id, ak_address_price.address_id, ak_address_price.article_id');   
         $this->datatables->from('address_price');  
 
         $this->datatables->join('article', 'ak_article.article_id = ak_address_price.article_id');
         $this->datatables->join('address', 'ak_address.address_id = ak_address_price.address_id');     
 
-        $this->datatables->edit_column('ak_address_price.editor_id', '<a class="simple_edit" data-id="$1" data-address="$2" data-article="$3" data-price="$4" data-toggle="modal" href="#edit_address_price"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a class=" bootbox_confirm" href="'.base_url().'addressprice/delete/$1"><span class="icon-trash"></span></a>', 'address_price_id, ak_address_price.address_id, ak_address_price.article_id, price');
+        $this->datatables->edit_column('ak_address_price.editor_id', '<a class="simple_edit" data-id="$1" data-address="$2" data-article="$3" data-price="$4" data-over-invoice="$5" data-toggle="modal" href="#edit_address_price"><span class="icon-edit"></span></a> &nbsp; &nbsp;<a class=" bootbox_confirm" href="'.base_url().'addressprice/delete/$1"><span class="icon-trash"></span></a>', 'address_price_id, ak_address_price.address_id, ak_address_price.article_id, price, over_invoice');
 
         $res = $this->datatables->generate();
         

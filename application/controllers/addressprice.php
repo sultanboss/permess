@@ -72,6 +72,7 @@ class Addressprice extends CI_Controller
 				'address_id'				=> $this->input->post('address_id'),
 				'article_id'				=> $this->input->post('article_id'),
 				'price'						=> $this->input->post('price'),
+				'over_invoice'				=> $this->input->post('over_invoice'),
 				'editor_id' 				=> $this->session->userdata('user_id')
 			);
 
@@ -102,6 +103,7 @@ class Addressprice extends CI_Controller
 				'address_id'				=> $this->input->post('edit_address_id'),
 				'article_id'				=> $this->input->post('edit_article_id'),
 				'price'						=> $this->input->post('edit_price'),
+				'over_invoice'				=> $this->input->post('edit_over_invoice'),
 				'editor_id' 				=> $this->session->userdata('user_id')
 			);
 

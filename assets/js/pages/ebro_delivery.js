@@ -284,9 +284,12 @@
 				if(this.value != "" && address_id_val != "") {
 					$.ajax({
 						url: base_url + 'inventory/getArticleAddressPrice/' + address_id_val + '/' + this.value,
-						success: function (data) {	
-							elmx.closest('tr').find('td:eq(8)').find('input').val(data);
+						success: function (data) {
+							data = data.split('|');
+							elmx.closest('tr').find('td:eq(8)').find('input').val(data[0]);
 							elmx.closest('tr').find('td:eq(8)').find('input').trigger("change");
+							elmx.closest('tr').find('td:eq(10)').find('input').val(data[1]);
+							elmx.closest('tr').find('td:eq(10)').find('input').trigger("change");
 						}
 					});
 				}

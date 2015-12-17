@@ -433,17 +433,17 @@ class Inventory_model extends CI_Model {
 
 	function get_article_address_price($address_id, $article_id) 
 	{
-		$this->db->select('price');
+		$this->db->select('price, over_invoice');
 		$this->db->from('address_price');
 		$this->db->where('address_id', $address_id);
 		$this->db->where('article_id', $article_id);
 		$this->db->limit(1);
 		$q = $this->db->get();
 		foreach ($q->result_array() as $key => $value) {				
-			return $value['price'];
+			return $value['price'] . '|' . $value['over_invoice'];
 		}
 
-		return '0.0000';		
+		return '0.0000|0.0000';		
 	}
 
 }
